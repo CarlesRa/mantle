@@ -1,0 +1,36 @@
+[gd_scene format=3 uid="uid://c8uxatqpck3i1"]
+
+[ext_resource type="Script" uid="uid://c3coh5i4elwrq" path="res://entities/player/player.gd" id="1_bls4j"]
+[ext_resource type="Texture2D" uid="uid://cgjt48e16vs1n" path="res://icon.svg" id="2_8fjmc"]
+[ext_resource type="Script" uid="uid://ck8xgcqtq0oe7" path="res://_common/state_machine/state_machine.gd" id="2_fkugw"]
+[ext_resource type="Script" uid="uid://cxiktttybe14c" path="res://entities/player/states/player_idle_state.gd" id="4_fkugw"]
+[ext_resource type="Script" uid="uid://lusnt3w8nvm7" path="res://entities/player/states/player_move_state.gd" id="5_fkugw"]
+[ext_resource type="Script" uid="uid://cwcoele0pymka" path="res://entities/player/states/player_jump_state.gd" id="6_qiwj3"]
+[ext_resource type="Script" uid="uid://brnttabavw2f1" path="res://entities/player/states/player_fall_state.gd" id="7_26q78"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fkugw"]
+
+[node name="Player" type="CharacterBody2D" unique_id=871748280]
+script = ExtResource("1_bls4j")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=597616617]
+texture = ExtResource("2_8fjmc")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=933392897]
+shape = SubResource("RectangleShape2D_fkugw")
+
+[node name="StateMachine" type="Node" parent="." unique_id=555755209 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_fkugw")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="StateMachine" unique_id=2118650775]
+script = ExtResource("4_fkugw")
+
+[node name="Move" type="Node" parent="StateMachine" unique_id=128275940]
+script = ExtResource("5_fkugw")
+
+[node name="Jump" type="Node" parent="StateMachine" unique_id=1351402104]
+script = ExtResource("6_qiwj3")
+
+[node name="Fall" type="Node" parent="StateMachine" unique_id=609090083]
+script = ExtResource("7_26q78")
