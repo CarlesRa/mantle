@@ -1,0 +1,21 @@
+[gd_resource type="Resource" script_class="PlayerForm" format=3 uid="uid://d04dcpmilyh2l"]
+
+[ext_resource type="Script" uid="uid://do51y0xqtaore" path="res://entities/player/forms/player_form.gd" id="1_k4kwo"]
+[ext_resource type="SpriteFrames" uid="uid://cg3pgmg6isw5p" path="res://entities/player/forms/base/base_frames.tres" id="2_tc5te"]
+
+[resource]
+script = ExtResource("1_k4kwo")
+sprite_frames = ExtResource("2_tc5te")
+id = &"base"
+display_name = "Base"
+move_speed = 160.0
+jump_velocity = -330.0
+air_jumps = 0
+glide_fall_speed = 0.0
+hitbox_size = Vector2(14, 38)
+sprite_frames = ExtResource("2_frames")
+sprite_offset = Vector2(0, -20.0)
+portal_color = Color(1.0, 0.78, 0.45, 1)
+world_tint = Color(1.0, 0.92, 0.8, 1)
+world_saturation = 0.55
+world_contrast = 0.95
