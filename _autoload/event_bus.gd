@@ -15,5 +15,9 @@ signal player_landed
 @warning_ignore("unused_signal")
 signal player_form_changed(form: PlayerForm)
 
+## Emmited when the plyayer 
 @warning_ignore("unused_signal")
 signal player_hit
+
+@warning_ignore("unused_signal")
+signal player_died

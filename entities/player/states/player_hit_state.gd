@@ -8,6 +8,8 @@ var _time_left: float = 0.0
 
 func enter() -> void:
 	_time_left = stun_time
+	player.velocity = player.knockback
+	player.face(-player.knockback.x)
 	player.play_animation(PlayerAnimations.HIT)
 
 func exit() -> void:

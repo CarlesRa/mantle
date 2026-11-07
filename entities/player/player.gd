@@ -3,6 +3,8 @@ extends CharacterBody2D
 
 const GRAVITY_SETTING: String = "physics/2d/default_gravity"
 
+## Maximum player health.
+@export var max_health: int = 3
 ## Form the player starts with.
 @export var initial_form: PlayerForm
 ## Maximum downward speed in px/s.
@@ -14,8 +16,12 @@ const GRAVITY_SETTING: String = "physics/2d/default_gravity"
 ## Seconds the player cannot be hit again after taking a hit.
 @export var invulnerability_time: float = 1.0
 
+var health: int = 0
+var is_dead: bool = false
+
 ## Current form. Use change_form() to modify it.
 var form: PlayerForm
+
 ## Stats copied from the current form.
 var move_speed: float = 200.0
 var jump_velocity: float = -400.0
@@ -23,6 +29,7 @@ var glide_fall_speed: float = 0.0
 var max_air_jumps: int = 0
 
 var gravity: float = float(ProjectSettings.get_setting(GRAVITY_SETTING))
+
 ## Downward speed limit for the current frame. States lower it to glide.
 var fall_speed_limit: float = 800.0
 var air_jumps_left: int = 0
@@ -46,6 +53,7 @@ func _enter_tree() -> void:
 		_apply_form(initial_form)
 
 func _ready() -> void:
+	health = max_health
 	if form:
 		# Deferred so every listener in the scene is ready.
 		EventBus.player_form_changed.emit.call_deferred(form)
@@ -66,7 +74,7 @@ func _physics_process(delta: float) -> void:
 ## Switches to another form. Returns false if it is already the current form
 ## or if the new hitbox does not fit where the player stands.
 func change_form(new_form: PlayerForm) -> bool:
-	if not new_form or new_form == form:
+	if is_dead or not new_form or new_form == form:
 		return false
 	if not _fits(new_form):
 		return false
@@ -108,6 +116,10 @@ func _fits(candidate: PlayerForm) -> bool:
 	query.exclude = [get_rid()]
 	return get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
 
+## Copies everything a form defines into the player: stats, hitbox, sprite
+## frames and sprite offset. Does not check that the new hitbox fits and does
+## not emit player_form_changed; change_form() does both, so call that instead
+## unless it is the initial form.
 func _apply_form(new_form: PlayerForm) -> void:
 	form = new_form
 	move_speed = new_form.move_speed
@@ -133,11 +145,24 @@ func _flash() -> void:
 		var tween: Tween = create_tween()
 		tween.tween_property(_visuals, "modulate", Color.WHITE, 0.3).from(Color(3.0, 3.0, 3.0))
 
-func take_hit(source_position: Vector2) -> void:
-	if _invulnerable_left > 0.0:
+## Tries to hurt the player. Called by anything dangerous (hazards, enemies).
+## Ignored while dead or invulnerable. Otherwise it takes [param damage] from
+## health, stores a knockback away from [param source_position] and goes to
+## Hit, or to Death if health reaches zero. Emits player_hit when it lands.
+func take_hit(source_position: Vector2, damage: int = 1) -> void:
+	if is_dead or _invulnerable_left > 0.0:
 		return
-	_invulnerable_left = invulnerability_time
 	var side: float = signf(global_position.x - source_position.x)
 	knockback = Vector2(side * 150.0, -200.0)
-	($StateMachine as StateMachine).change_to(PlayerStates.HIT)
+	health -= damage
 	EventBus.player_hit.emit()
+	if health <= 0:
+		_die()
+		return
+	_invulnerable_left = invulnerability_time
+	($StateMachine as StateMachine).change_to(PlayerStates.HIT)
+
+func _die() -> void:
+	is_dead = true
+	_invulnerable_left = 0.0
+	($StateMachine as StateMachine).change_to(PlayerStates.DEATH)
