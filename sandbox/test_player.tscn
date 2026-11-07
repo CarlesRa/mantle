@@ -2,6 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://c8uxatqpck3i1" path="res://entities/player/player.tscn" id="1_gcdhb"]
 [ext_resource type="Script" uid="uid://qsjlyngnulls" path="res://sandbox/event_bus_logger.gd" id="2_d4y0h"]
+[ext_resource type="Resource" uid="uid://d04dcpmilyh2l" path="res://entities/player/forms/base/base.tres" id="2_ei8uu"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u7n6u"]
 size = Vector2(1152, 88)
@@ -9,8 +10,12 @@ size = Vector2(1152, 88)
 [node name="TestPlayer" type="Node2D" unique_id=295437706]
 
 [node name="Player" parent="." unique_id=871748280 instance=ExtResource("1_gcdhb")]
-position = Vector2(576, 200)
+position = Vector2(579, 484)
 collision_layer = 2
+initial_form = ExtResource("2_ei8uu")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=852029762]
+zoom = Vector2(2, 2)
 
 [node name="StaticBody2D" type="StaticBody2D" parent="." unique_id=1705606719]
 position = Vector2(1, 570)
@@ -19,6 +24,13 @@ collision_mask = 0
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D" unique_id=1009750909]
 position = Vector2(574, 34)
 shape = SubResource("RectangleShape2D_u7n6u")
+
+[node name="ColorRect" type="ColorRect" parent="StaticBody2D" unique_id=45258658]
+offset_left = -2.0
+offset_top = -10.0
+offset_right = 1150.0
+offset_bottom = 78.0
+color = Color(1, 0.22352941, 1, 1)
 
 [node name="EventBusLogger" type="Node" parent="." unique_id=1042492627]
 script = ExtResource("2_d4y0h")
