@@ -4,8 +4,7 @@ extends PlayerState
 var _jump_buffer: float = 0.0
 
 func enter() -> void:
-	_jump_buffer = 0.0
-	# start fall animation
+	_start_fall()
 
 func exit() -> void:
 	# stop fall animation
@@ -16,6 +15,12 @@ func physics_update(delta: float) -> void:
 	if _jump_buffer > 0.0:
 		_jump_buffer = maxf(_jump_buffer - delta, 0.0)
 	if Input.is_action_just_pressed("jump"):
+		if player.coyote_left > 0.0 and player.velocity.y >= 0.0:
+			change_state.emit(PlayerStates.JUMP)
+			return
+		if player.consume_air_jump():
+			change_state.emit(PlayerStates.JUMP)
+			return
 		_jump_buffer = player.jump_buffer_time
 	if player.is_on_floor() and player.velocity.y >= 0.0:
 		if _jump_buffer > 0.0:
@@ -30,3 +35,7 @@ func physics_update(delta: float) -> void:
 func _land(next_state: StringName) -> void:
 	EventBus.player_landed.emit()
 	change_state.emit(next_state)
+
+func _start_fall() -> void:
+	_jump_buffer = 0.0
+	player.play_animation(PlayerAnimations.FALL)
