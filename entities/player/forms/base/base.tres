@@ -6,16 +6,4 @@
 [resource]
 script = ExtResource("1_k4kwo")
 sprite_frames = ExtResource("2_tc5te")
-id = &"base"
-display_name = "Base"
-move_speed = 160.0
-jump_velocity = -330.0
-air_jumps = 0
-glide_fall_speed = 0.0
-hitbox_size = Vector2(14, 38)
-sprite_frames = ExtResource("2_frames")
-sprite_offset = Vector2(0, -20.0)
-portal_color = Color(1.0, 0.78, 0.45, 1)
-world_tint = Color(1.0, 0.92, 0.8, 1)
-world_saturation = 0.55
-world_contrast = 0.95
+sprite_offset = Vector2(0, -20)
