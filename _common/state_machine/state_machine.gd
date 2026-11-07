@@ -81,3 +81,7 @@ func _execute_change_state(state: State) -> void:
 		print("change state to %s" % state.name)
 	current_state = state
 	current_state.enter()
+
+## Forces a transition from outside, e.g. when the actor is hit.
+func change_to(state_name: StringName) -> void:
+	_handle_state(state_name)
