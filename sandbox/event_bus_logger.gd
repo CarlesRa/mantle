@@ -1,7 +1,6 @@
 extends Node
 ## Script for testing signal transmission.
 
-# Called when the node enters the scene tree for the first time.
 func _ready() -> void:
 	EventBus.player_jumped.connect(_on_player_jumped)
 	EventBus.player_landed.connect(_on_player_landed)
@@ -11,3 +10,6 @@ func _on_player_jumped() -> void:
 
 func _on_player_landed() -> void:
 	print("Signal player_landed emmited.")
+
+func _on_player_hit() -> void:
+	print("Signal player_hit emmited.")

@@ -140,4 +140,4 @@ func take_hit(source_position: Vector2) -> void:
 	var side: float = signf(global_position.x - source_position.x)
 	knockback = Vector2(side * 150.0, -200.0)
 	($StateMachine as StateMachine).change_to(PlayerStates.HIT)
-	EventBus.player_hit.emit()   # hecho: ya ha pasado
+	EventBus.player_hit.emit()
