@@ -11,6 +11,8 @@ const GRAVITY_SETTING: String = "physics/2d/default_gravity"
 @export var jump_buffer_time: float = 0.1
 ## Time in seconds after leaving a ledge during which a jump is still allowed.
 @export var coyote_time: float = 0.08
+## Seconds the player cannot be hit again after taking a hit.
+@export var invulnerability_time: float = 1.0
 
 ## Current form. Use change_form() to modify it.
 var form: PlayerForm
@@ -25,6 +27,9 @@ var gravity: float = float(ProjectSettings.get_setting(GRAVITY_SETTING))
 var fall_speed_limit: float = 800.0
 var air_jumps_left: int = 0
 var coyote_left: float = 0.0
+## Set by take_hit(). The Hit state applies it as velocity on enter.
+var knockback: Vector2 = Vector2.ZERO
+var _invulnerable_left: float = 0.0
 
 var _visuals: Node2D
 var _sprite: AnimatedSprite2D
@@ -46,6 +51,8 @@ func _ready() -> void:
 		EventBus.player_form_changed.emit.call_deferred(form)
 
 func _physics_process(delta: float) -> void:
+	_invulnerable_left = maxf(_invulnerable_left - delta, 0.0)
+	_visuals.visible = _invulnerable_left <= 0.0 or int(_invulnerable_left * 10.0) % 2 == 0
 	if is_on_floor() and velocity.y >= 0.0:
 		coyote_left = coyote_time
 		air_jumps_left = max_air_jumps
@@ -125,3 +132,12 @@ func _apply_form(new_form: PlayerForm) -> void:
 func _flash() -> void:
 		var tween: Tween = create_tween()
 		tween.tween_property(_visuals, "modulate", Color.WHITE, 0.3).from(Color(3.0, 3.0, 3.0))
+
+func take_hit(source_position: Vector2) -> void:
+	if _invulnerable_left > 0.0:
+		return
+	_invulnerable_left = invulnerability_time
+	var side: float = signf(global_position.x - source_position.x)
+	knockback = Vector2(side * 150.0, -200.0)
+	($StateMachine as StateMachine).change_to(PlayerStates.HIT)
+	EventBus.player_hit.emit()   # hecho: ya ha pasado

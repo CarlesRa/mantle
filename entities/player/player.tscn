@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://lusnt3w8nvm7" path="res://entities/player/states/player_move_state.gd" id="5_fkugw"]
 [ext_resource type="Script" uid="uid://cwcoele0pymka" path="res://entities/player/states/player_jump_state.gd" id="6_qiwj3"]
 [ext_resource type="Script" uid="uid://brnttabavw2f1" path="res://entities/player/states/player_fall_state.gd" id="7_26q78"]
+[ext_resource type="Script" uid="uid://p8jc54risynx" path="res://entities/player/states/player_hit_state.gd" id="8_26q78"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fkugw"]
 
@@ -38,3 +39,6 @@ script = ExtResource("6_qiwj3")
 
 [node name="Fall" type="Node" parent="StateMachine" unique_id=609090083]
 script = ExtResource("7_26q78")
+
+[node name="Hit" type="Node" parent="StateMachine" unique_id=2129263317]
+script = ExtResource("8_26q78")
