@@ -3,7 +3,7 @@ extends PlayerState
 
 func enter() -> void:
 	player.velocity.x = 0.0
-	# start idle animation
+	player.play_animation(PlayerAnimations.IDLE)
 
 func exit() -> void:
 	# stop idle animation

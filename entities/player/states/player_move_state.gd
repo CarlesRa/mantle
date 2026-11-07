@@ -2,11 +2,11 @@ class_name PlayerMoveState
 extends PlayerState
 
 func enter() -> void:
-	# start move animation
-	pass
+	player.play_animation(PlayerAnimations.RUN)
 
 func exit() -> void:
 	# stop move animation
+	print('exit move_state')
 	pass
 
 func physics_update(_delta: float) -> void:
