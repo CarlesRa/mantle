@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bsuintmcjew6e"
-path="res://.godot/imported/Fall.png-4f58b63d3ad400323b8f0aced62b6cd8.ctex"
+uid="uid://dgytthemnq0qn"
+path="res://.godot/imported/run.png-a0dda272eec715e382af987fc82c3b2b.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/forms/female_wizard/sprites/Fall.png"
-dest_files=["res://.godot/imported/Fall.png-4f58b63d3ad400323b8f0aced62b6cd8.ctex"]
+source_file="res://entities/player/forms/female_wizard/sprites/run.png"
+dest_files=["res://.godot/imported/run.png-a0dda272eec715e382af987fc82c3b2b.ctex"]
 
 [params]
 

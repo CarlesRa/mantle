@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://oft8gaydphv4"]
 
 [ext_resource type="Script" uid="uid://dgny5eu4i3h8d" path="res://entities/player/forms/female_wizard/female_wizard_projectile.gd" id="1_g1unc"]
-[ext_resource type="Texture2D" uid="uid://mvmd6lgg8lcx" path="res://entities/player/forms/female_wizard/sprites/projectil.png" id="2_7rp2a"]
+[ext_resource type="Texture2D" uid="uid://mvmd6lgg8lcx" path="res://entities/player/forms/female_wizard/sprites/projectile.png" id="2_7rp2a"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4lmc1"]
 atlas = ExtResource("2_7rp2a")

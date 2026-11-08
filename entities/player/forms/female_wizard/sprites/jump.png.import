@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://btvkxuru8wetj"
-path="res://.godot/imported/Fall.png-96a480786ce96647adb83368ed9e3157.ctex"
+uid="uid://doxn13052h17e"
+path="res://.godot/imported/jump.png-87de7cad100e6d7b36454666bc777949.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/forms/male_wizard/sprites/Fall.png"
-dest_files=["res://.godot/imported/Fall.png-96a480786ce96647adb83368ed9e3157.ctex"]
+source_file="res://entities/player/forms/female_wizard/sprites/jump.png"
+dest_files=["res://.godot/imported/jump.png-87de7cad100e6d7b36454666bc777949.ctex"]
 
 [params]
 

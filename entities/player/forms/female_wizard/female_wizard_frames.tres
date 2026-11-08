@@ -1,12 +1,12 @@
 [gd_resource type="SpriteFrames" format=3 uid="uid://csf3558f6727a"]
 
-[ext_resource type="Texture2D" uid="uid://ikh5iset4yyb" path="res://entities/player/forms/female_wizard/sprites/Attack.png" id="1_xox35"]
-[ext_resource type="Texture2D" uid="uid://pucffbse0ysc" path="res://entities/player/forms/female_wizard/sprites/Death.png" id="2_qpoli"]
-[ext_resource type="Texture2D" uid="uid://bsuintmcjew6e" path="res://entities/player/forms/female_wizard/sprites/Fall.png" id="3_oa4pm"]
-[ext_resource type="Texture2D" uid="uid://bhuceuupyqvpj" path="res://entities/player/forms/female_wizard/sprites/Get hit.png" id="4_55atr"]
-[ext_resource type="Texture2D" uid="uid://b6a0tx7nap83d" path="res://entities/player/forms/female_wizard/sprites/Idle.png" id="5_p62gh"]
-[ext_resource type="Texture2D" uid="uid://doxn13052h17e" path="res://entities/player/forms/female_wizard/sprites/Jump.png" id="6_ihb2u"]
-[ext_resource type="Texture2D" uid="uid://dgytthemnq0qn" path="res://entities/player/forms/female_wizard/sprites/Run.png" id="7_rtcil"]
+[ext_resource type="Texture2D" uid="uid://ikh5iset4yyb" path="res://entities/player/forms/female_wizard/sprites/attack.png" id="1_xox35"]
+[ext_resource type="Texture2D" uid="uid://pucffbse0ysc" path="res://entities/player/forms/female_wizard/sprites/death.png" id="2_qpoli"]
+[ext_resource type="Texture2D" uid="uid://bsuintmcjew6e" path="res://entities/player/forms/female_wizard/sprites/fall.png" id="3_oa4pm"]
+[ext_resource type="Texture2D" uid="uid://bhuceuupyqvpj" path="res://entities/player/forms/female_wizard/sprites/hit.png" id="4_55atr"]
+[ext_resource type="Texture2D" uid="uid://b6a0tx7nap83d" path="res://entities/player/forms/female_wizard/sprites/idle.png" id="5_p62gh"]
+[ext_resource type="Texture2D" uid="uid://doxn13052h17e" path="res://entities/player/forms/female_wizard/sprites/jump.png" id="6_ihb2u"]
+[ext_resource type="Texture2D" uid="uid://dgytthemnq0qn" path="res://entities/player/forms/female_wizard/sprites/run.png" id="7_rtcil"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_la7ag"]
 atlas = ExtResource("1_xox35")

@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bx3cwibub5tih"
-path="res://.godot/imported/Take hit.png-a9a28498856805038130a8386873209e.ctex"
+uid="uid://btvkxuru8wetj"
+path="res://.godot/imported/fall.png-4adcd8ce96d969c3b40bc31e03b2281e.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/forms/male_wizard/sprites/Take hit.png"
-dest_files=["res://.godot/imported/Take hit.png-a9a28498856805038130a8386873209e.ctex"]
+source_file="res://entities/player/forms/male_wizard/sprites/fall.png"
+dest_files=["res://.godot/imported/fall.png-4adcd8ce96d969c3b40bc31e03b2281e.ctex"]
 
 [params]
 

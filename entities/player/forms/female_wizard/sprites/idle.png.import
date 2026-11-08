@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://doxn13052h17e"
-path="res://.godot/imported/Jump.png-b78bfb825fc3f8358e0fd3e0edc46aa0.ctex"
+uid="uid://b6a0tx7nap83d"
+path="res://.godot/imported/idle.png-77f9be626b199823721a35b374435fc6.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/forms/female_wizard/sprites/Jump.png"
-dest_files=["res://.godot/imported/Jump.png-b78bfb825fc3f8358e0fd3e0edc46aa0.ctex"]
+source_file="res://entities/player/forms/female_wizard/sprites/idle.png"
+dest_files=["res://.godot/imported/idle.png-77f9be626b199823721a35b374435fc6.ctex"]
 
 [params]
 

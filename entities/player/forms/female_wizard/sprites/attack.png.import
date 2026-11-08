@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ikh5iset4yyb"
-path="res://.godot/imported/Attack.png-6573421e812b709f7c26fe8f129dc26b.ctex"
+path="res://.godot/imported/attack.png-0f21c3c3f52759c8707910db3577af5f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/forms/female_wizard/sprites/Attack.png"
-dest_files=["res://.godot/imported/Attack.png-6573421e812b709f7c26fe8f129dc26b.ctex"]
+source_file="res://entities/player/forms/female_wizard/sprites/attack.png"
+dest_files=["res://.godot/imported/attack.png-0f21c3c3f52759c8707910db3577af5f.ctex"]
 
 [params]
 

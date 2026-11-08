@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://mvmd6lgg8lcx"
-path="res://.godot/imported/projectil.png-4f3cf7ede768ed52333b3aa33b586932.ctex"
+uid="uid://bx3cwibub5tih"
+path="res://.godot/imported/hit.png-43b54b11df873feb666ba91db777aa9c.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/forms/female_wizard/sprites/projectil.png"
-dest_files=["res://.godot/imported/projectil.png-4f3cf7ede768ed52333b3aa33b586932.ctex"]
+source_file="res://entities/player/forms/male_wizard/sprites/hit.png"
+dest_files=["res://.godot/imported/hit.png-43b54b11df873feb666ba91db777aa9c.ctex"]
 
 [params]
 

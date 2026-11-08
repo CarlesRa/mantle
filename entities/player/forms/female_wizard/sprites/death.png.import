@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dthpej6xi8ktf"
-path="res://.godot/imported/Jump.png-942fba4696e2718760725bb60aa2b495.ctex"
+uid="uid://pucffbse0ysc"
+path="res://.godot/imported/death.png-d144135bac2d90d33cf0bf14970e1398.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/forms/male_wizard/sprites/Jump.png"
-dest_files=["res://.godot/imported/Jump.png-942fba4696e2718760725bb60aa2b495.ctex"]
+source_file="res://entities/player/forms/female_wizard/sprites/death.png"
+dest_files=["res://.godot/imported/death.png-d144135bac2d90d33cf0bf14970e1398.ctex"]
 
 [params]
 
