@@ -105,13 +105,13 @@ offset_bottom = 484.0
 text = "Test Attack"
 
 [node name="FemaleWizardPortal" parent="." unique_id=1039796977 instance=ExtResource("6_jbxrc")]
-position = Vector2(677, 560)
+position = Vector2(787, 560)
 form = ExtResource("7_xvwap")
 
 [node name="MaleWizardPortal" parent="." unique_id=1025706907 instance=ExtResource("6_jbxrc")]
-position = Vector2(832, 560)
+position = Vector2(1054, 560)
 form = ExtResource("8_a8p66")
 
 [node name="BasePortal" parent="." unique_id=687469125 instance=ExtResource("6_jbxrc")]
-position = Vector2(968, 560)
+position = Vector2(913, 560)
 form = ExtResource("2_dynb8")
