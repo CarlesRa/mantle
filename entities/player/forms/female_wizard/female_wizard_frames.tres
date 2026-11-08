@@ -1,4 +1,4 @@
-[gd_resource type="SpriteFrames" format=3 uid="uid://cg3pgmg6isw5p"]
+[gd_resource type="SpriteFrames" format=3 uid="uid://csf3558f6727a"]
 
 [ext_resource type="Texture2D" uid="uid://ikh5iset4yyb" path="res://entities/player/forms/female_wizard/sprites/Attack.png" id="1_xox35"]
 [ext_resource type="Texture2D" uid="uid://pucffbse0ysc" path="res://entities/player/forms/female_wizard/sprites/Death.png" id="2_qpoli"]
