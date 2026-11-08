@@ -27,7 +27,6 @@ var move_speed: float = 200.0
 var jump_velocity: float = -400.0
 var glide_fall_speed: float = 0.0
 var max_air_jumps: int = 0
-var attack_duration: float = 0.3
 var attack_damage: int = 1
 
 var gravity: float = float(ProjectSettings.get_setting(GRAVITY_SETTING))
@@ -43,7 +42,7 @@ var _invulnerable_left: float = 0.0
 var _visuals: Node2D
 var _sprite: AnimatedSprite2D
 var _collision: CollisionShape2D
-var _attack_hitbox: Area2D 
+var _attack_hitbox: Area2D
 var _attack_collision: CollisionShape2D
 
 # Nodes are cached on enter_tree because the StateMachine (a child) runs its
@@ -134,12 +133,6 @@ func _apply_form(new_form: PlayerForm) -> void:
 	glide_fall_speed = new_form.glide_fall_speed
 	max_air_jumps = new_form.air_jumps
 	air_jumps_left = mini(air_jumps_left, max_air_jumps)
-	attack_duration = new_form.attack_duration
-	attack_damage = new_form.attack_damage
-	var attack_shape: RectangleShape2D = RectangleShape2D.new()
-	attack_shape.size = new_form.attack_hitbox_size
-	_attack_collision.shape = attack_shape
-	_attack_collision.position = new_form.attack_hitbox_offset
 
 	# A new shape per form: sub-resources of a scene are shared by all instances.
 	var shape: RectangleShape2D = RectangleShape2D.new()
@@ -161,6 +154,19 @@ func _flash() -> void:
 func set_attack_active(active: bool) -> void:
 	_attack_hitbox.set_deferred("monitoring", active)
 	_attack_hitbox.set_deferred("monitorable", active)
+
+## Attack data for a button slot (0 = primary, 1 = secondary). Null if none.
+func get_attack(slot: int) -> AttackData:
+	return form.primary_attack if slot == 0 else form.secondary_attack
+
+## Sets up the hit area and damage of an attack and turns the hitbox on.
+func start_attack(data: AttackData) -> void:
+	attack_damage = data.damage
+	var shape: RectangleShape2D = RectangleShape2D.new()
+	shape.size = data.hitbox_size
+	_attack_collision.shape = shape
+	_attack_collision.position = data.hitbox_offset
+	set_attack_active(true)
 
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body.has_method("take_hit"):
