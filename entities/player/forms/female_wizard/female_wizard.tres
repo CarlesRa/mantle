@@ -1,0 +1,26 @@
+[gd_resource type="Resource" script_class="PlayerForm" format=3 uid="uid://olej6kc6om2r"]
+
+[ext_resource type="Script" uid="uid://drmmief64qgf" path="res://entities/player/forms/attack_data.gd" id="1_80sgk"]
+[ext_resource type="PackedScene" uid="uid://oft8gaydphv4" path="res://entities/player/forms/female_wizard/female_wizard_projectile.tscn" id="1_ck02r"]
+[ext_resource type="Script" uid="uid://do51y0xqtaore" path="res://entities/player/forms/player_form.gd" id="2_ck02r"]
+[ext_resource type="SpriteFrames" uid="uid://cg3pgmg6isw5p" path="res://entities/player/forms/female_wizard/female_wizard_frames.tres" id="3_fejxq"]
+
+[sub_resource type="Resource" id="Resource_ef8vx"]
+script = ExtResource("1_80sgk")
+duration = 0.53
+damage = 2
+hitbox_size = Vector2(80, 35)
+projectile_scene = ExtResource("1_ck02r")
+metadata/_custom_type_script = "uid://drmmief64qgf"
+
+[resource]
+script = ExtResource("2_ck02r")
+id = &"female_wizard"
+display_name = "Female Wizard"
+move_speed = 190.0
+jump_velocity = -560.0
+air_jumps = 1
+sprite_frames = ExtResource("3_fejxq")
+sprite_offset = Vector2(0, -20)
+primary_attack = SubResource("Resource_ef8vx")
+metadata/_custom_type_script = "uid://do51y0xqtaore"
