@@ -5,6 +5,9 @@
 [ext_resource type="Script" uid="uid://qsjlyngnulls" path="res://sandbox/event_bus_logger.gd" id="3_dynb8"]
 [ext_resource type="Script" uid="uid://u3llnjqbseu2" path="res://sandbox/player/hazard.gd" id="4_uk1b4"]
 [ext_resource type="Script" uid="uid://d1qg377fqgc23" path="res://sandbox/player/test_dummy.gd" id="5_dynb8"]
+[ext_resource type="PackedScene" uid="uid://bkd47bkfpuky" path="res://entities/portal/portal.tscn" id="6_jbxrc"]
+[ext_resource type="Resource" uid="uid://olej6kc6om2r" path="res://entities/player/forms/female_wizard/female_wizard.tres" id="7_xvwap"]
+[ext_resource type="Resource" uid="uid://y6jrarxuu1sy" path="res://entities/player/forms/male_wizard/male_wizard.tres" id="8_a8p66"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u7n6u"]
 size = Vector2(1152, 88)
@@ -43,7 +46,7 @@ offset_bottom = 78.0
 color = Color(1, 0.22352941, 1, 1)
 
 [node name="Hazard" type="Area2D" parent="." unique_id=994076752]
-position = Vector2(662, 520)
+position = Vector2(339, 520)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("4_uk1b4")
@@ -70,6 +73,7 @@ text = "Test Hit"
 script = ExtResource("3_dynb8")
 
 [node name="TestDummy" type="StaticBody2D" parent="." unique_id=1460891965]
+position = Vector2(2, 1)
 collision_layer = 4
 collision_mask = 0
 script = ExtResource("5_dynb8")
@@ -99,3 +103,15 @@ offset_top = 461.0
 offset_right = 506.0
 offset_bottom = 484.0
 text = "Test Attack"
+
+[node name="FemaleWizardPortal" parent="." unique_id=1039796977 instance=ExtResource("6_jbxrc")]
+position = Vector2(677, 560)
+form = ExtResource("7_xvwap")
+
+[node name="MaleWizardPortal" parent="." unique_id=1025706907 instance=ExtResource("6_jbxrc")]
+position = Vector2(832, 560)
+form = ExtResource("8_a8p66")
+
+[node name="BasePortal" parent="." unique_id=687469125 instance=ExtResource("6_jbxrc")]
+position = Vector2(968, 560)
+form = ExtResource("2_dynb8")
