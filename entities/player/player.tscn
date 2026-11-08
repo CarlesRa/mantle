@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://bv74uq41814u" path="res://entities/player/states/player_attack_state.gd" id="10_wvtmh"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mnca8"]
+size = Vector2(0, 0)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fkugw"]
 
@@ -62,3 +63,7 @@ script = ExtResource("9_bectd")
 
 [node name="Attack" type="Node" parent="StateMachine" unique_id=1663734474]
 script = ExtResource("10_wvtmh")
+
+[node name="AttackSecondary" type="Node" parent="StateMachine" unique_id=940958481]
+script = ExtResource("10_wvtmh")
+slot = 1
