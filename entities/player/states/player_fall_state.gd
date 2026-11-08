@@ -1,5 +1,5 @@
 class_name PlayerFallState
-extends PlayerState
+extends PlayerControlledState
 
 var _jump_buffer: float = 0.0
 
@@ -10,7 +10,7 @@ func exit() -> void:
 	# stop fall animation
 	pass
 
-func physics_update(delta: float) -> void:
+func _controlled_update(delta: float) -> void:
 	_apply_horizontal_movement()
 	if _jump_buffer > 0.0:
 		_jump_buffer = maxf(_jump_buffer - delta, 0.0)

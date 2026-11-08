@@ -1,5 +1,5 @@
 class_name PlayerMoveState
-extends PlayerState
+extends PlayerControlledState
 
 func enter() -> void:
 	player.play_animation(PlayerAnimations.RUN)
@@ -9,7 +9,7 @@ func exit() -> void:
 	print('exit move_state')
 	pass
 
-func physics_update(_delta: float) -> void:
+func _controlled_update(_delta: float) -> void:
 	if not player.is_on_floor():
 		change_state.emit(PlayerStates.FALL)
 		return

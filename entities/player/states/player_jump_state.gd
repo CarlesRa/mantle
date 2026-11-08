@@ -1,5 +1,5 @@
 class_name PlayerJumpState
-extends PlayerState
+extends PlayerControlledState
 
 func enter() -> void:
 	EventBus.player_jumped.emit()
@@ -10,7 +10,7 @@ func exit() -> void:
 	# stop jump animation
 	pass
 
-func physics_update(_delta: float) -> void:
+func _controlled_update(_delta: float) -> void:
 	_apply_horizontal_movement()
 	if player.velocity.y >= 0.0:
 		change_state.emit(PlayerStates.FALL)
