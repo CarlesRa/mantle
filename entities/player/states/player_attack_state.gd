@@ -11,16 +11,18 @@ var _time_left: float = 0.0
 
 func enter() -> void:
 	_data = player.get_attack(slot)
+	
 	if not _data:
 		push_warning("Form %s has no attack in slot %d" % [player.form.id, slot])
 		change_state.emit(PlayerStates.IDLE)
 		return
+
 	_time_left = _data.duration
 	player.play_animation(_data.animation, true)
 	player.start_attack(_data)
 
 func exit() -> void:
-	player.set_attack_active(false)
+	player.finish_attack()
 
 func physics_update(delta: float) -> void:
 	if player.is_on_floor():

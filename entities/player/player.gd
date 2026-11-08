@@ -39,6 +39,11 @@ var coyote_left: float = 0.0
 var knockback: Vector2 = Vector2.ZERO
 var _invulnerable_left: float = 0.0
 
+## Attack currently being executed. Null when no attack is active.
+var _active_attack: AttackData
+## Prevents the same animation frame from spawning multiple projectiles.
+var _projectile_launched: bool = false
+
 var _visuals: Node2D
 var _sprite: AnimatedSprite2D
 var _collision: CollisionShape2D
@@ -60,6 +65,7 @@ func _enter_tree() -> void:
 func _ready() -> void:
 	health = max_health
 	_attack_hitbox.body_entered.connect(_on_attack_hitbox_body_entered)
+	_sprite.frame_changed.connect(_on_sprite_frame_changed)
 	if form:
 		# Deferred so every listener in the scene is ready.
 		EventBus.player_form_changed.emit.call_deferred(form)
@@ -159,14 +165,72 @@ func set_attack_active(active: bool) -> void:
 func get_attack(slot: int) -> AttackData:
 	return form.primary_attack if slot == 0 else form.secondary_attack
 
-## Sets up the hit area and damage of an attack and turns the hitbox on.
+
+## Sets up a melee or projectile attack.
 func start_attack(data: AttackData) -> void:
+	_active_attack = data
+	_projectile_launched = false
 	attack_damage = data.damage
+
+	# Projectile attacks do not use the player's fixed hitbox.
+	if data.projectile_scene:
+		set_attack_active(false)
+		return
+
+	# Melee attacks keep the existing hitbox behavior.
 	var shape: RectangleShape2D = RectangleShape2D.new()
 	shape.size = data.hitbox_size
 	_attack_collision.shape = shape
 	_attack_collision.position = data.hitbox_offset
 	set_attack_active(true)
+
+
+## Checks whether the current animation frame launches a projectile.
+func _on_sprite_frame_changed() -> void:
+	if not _active_attack or not _active_attack.projectile_scene:
+		return
+
+	if _projectile_launched:
+		return
+
+	if _sprite.animation != _active_attack.animation:
+		return
+
+	if _sprite.frame != _active_attack.launch_frame:
+		return
+
+	_projectile_launched = true
+	_spawn_projectile(_active_attack)
+
+
+## Creates and launches the projectile belonging to the current attack.
+func _spawn_projectile(data: AttackData) -> void:
+	var projectile: Node2D = data.projectile_scene.instantiate() as Node2D
+
+	if not projectile:
+		push_error("Projectile scene root must inherit from Node2D.")
+		return
+
+	get_tree().current_scene.add_child(projectile)
+
+	var direction: float = signf(_visuals.scale.x)
+	if is_zero_approx(direction):
+		direction = 1.0
+
+	var offset: Vector2 = data.projectile_offset
+	offset.x *= direction
+
+	projectile.global_position = global_position + offset
+
+	if projectile.has_method("launch"):
+		projectile.launch(direction, data.damage)
+
+
+## Clears the active attack.
+func finish_attack() -> void:
+	set_attack_active(false)
+	_active_attack = null
+	_projectile_launched = false
 
 func _on_attack_hitbox_body_entered(body: Node2D) -> void:
 	if body.has_method("take_hit"):
