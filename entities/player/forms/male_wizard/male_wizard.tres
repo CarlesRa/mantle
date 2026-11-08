@@ -1,0 +1,37 @@
+[gd_resource type="Resource" script_class="PlayerForm" format=3 uid="uid://y6jrarxuu1sy"]
+
+[ext_resource type="Script" uid="uid://do51y0xqtaore" path="res://entities/player/forms/player_form.gd" id="1_8f183"]
+[ext_resource type="Script" uid="uid://drmmief64qgf" path="res://entities/player/forms/attack_data.gd" id="1_sdkrp"]
+[ext_resource type="SpriteFrames" uid="uid://cbymtso388jnd" path="res://entities/player/forms/male_wizard/male_wizard_frames.tres" id="2_4nxa3"]
+
+[sub_resource type="Resource" id="Resource_wvtmh"]
+script = ExtResource("1_sdkrp")
+animation = &"attack1"
+duration = 0.4
+damage = 2
+hitbox_size = Vector2(160, 120)
+hitbox_offset = Vector2(35, -40)
+metadata/_custom_type_script = "uid://drmmief64qgf"
+
+[sub_resource type="Resource" id="Resource_3mm8w"]
+script = ExtResource("1_sdkrp")
+animation = &"attack2"
+duration = 0.4
+damage = 2
+hitbox_size = Vector2(150, 180)
+hitbox_offset = Vector2(45, -20)
+metadata/_custom_type_script = "uid://drmmief64qgf"
+
+[resource]
+script = ExtResource("1_8f183")
+id = &"male_wizard"
+display_name = "Male Wizard"
+move_speed = 170.0
+jump_velocity = -380.0
+glide_fall_speed = 70.0
+hitbox_size = Vector2(14, 50)
+sprite_frames = ExtResource("2_4nxa3")
+sprite_offset = Vector2(6, -42)
+primary_attack = SubResource("Resource_wvtmh")
+secondary_attack = SubResource("Resource_3mm8w")
+metadata/_custom_type_script = "uid://do51y0xqtaore"
