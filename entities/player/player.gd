@@ -146,12 +146,12 @@ func _apply_form(new_form: PlayerForm) -> void:
 	_collision.shape = shape
 	_collision.position = Vector2(0.0, -new_form.hitbox_size.y / 2.0)
 
-	#var current_animation: StringName = _sprite.animation
+	var current_animation: StringName = _sprite.animation
 	_sprite.sprite_frames = new_form.sprite_frames
 	_sprite.offset = new_form.sprite_offset
-	#if not _sprite.sprite_frames.has_animation(current_animation):
-		#current_animation = PlayerAnimations.IDLE
-	#_sprite.play(current_animation)
+	if not _sprite.sprite_frames.has_animation(current_animation):
+		current_animation = PlayerAnimations.IDLE
+	_sprite.play(current_animation)
 
 func _flash() -> void:
 	var tween: Tween = create_tween()
