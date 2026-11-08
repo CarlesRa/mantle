@@ -7,3 +7,6 @@
 script = ExtResource("1_k4kwo")
 sprite_frames = ExtResource("2_tc5te")
 sprite_offset = Vector2(0, -20)
+attack_duration = 0.286
+attack_hitbox_size = Vector2(50, 38)
+attack_hitbox_offset = Vector2(30, -20)

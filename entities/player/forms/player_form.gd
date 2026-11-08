@@ -27,6 +27,16 @@ extends Resource
 ## Color of the portals that give this form.
 @export var portal_color: Color = Color.WHITE
 
+@export_group("Combat")
+## Seconds the Attack state lasts. Should match the length of the attack animation.
+@export var attack_duration: float = 0.3
+@export var attack_damage: int = 1
+## Melee hitbox with the character facing right and the origin at the feet.
+@export var attack_hitbox_size: Vector2 = Vector2(24.0, 30.0)
+@export var attack_hitbox_offset: Vector2 = Vector2(20.0, -20.0)
+## If set, the attack spawns this instead of using the melee hitbox.
+@export var attack_projectile: PackedScene
+
 @export_group("World look")
 ## Multiplies the screen color while this form is active.
 @export var world_tint: Color = Color.WHITE
