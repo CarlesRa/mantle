@@ -9,10 +9,14 @@
 [ext_resource type="Script" uid="uid://brnttabavw2f1" path="res://entities/player/states/player_fall_state.gd" id="7_26q78"]
 [ext_resource type="Script" uid="uid://p8jc54risynx" path="res://entities/player/states/player_hit_state.gd" id="8_26q78"]
 [ext_resource type="Script" uid="uid://y6a0iw3wlujj" path="res://entities/player/states/player_death_state.gd" id="9_bectd"]
+[ext_resource type="Script" uid="uid://bv74uq41814u" path="res://entities/player/states/player_attack_state.gd" id="10_wvtmh"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mnca8"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fkugw"]
 
 [node name="Player" type="CharacterBody2D" unique_id=871748280]
+collision_layer = 2
 script = ExtResource("1_bls4j")
 
 [node name="Visuals" type="Node2D" parent="." unique_id=1170673224]
@@ -21,6 +25,15 @@ script = ExtResource("1_bls4j")
 sprite_frames = ExtResource("2_qiwj3")
 animation = &"run"
 autoplay = "idle"
+
+[node name="AttackHitbox" type="Area2D" parent="Visuals" unique_id=2027634368]
+collision_layer = 0
+collision_mask = 4
+monitoring = false
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Visuals/AttackHitbox" unique_id=717719269]
+shape = SubResource("RectangleShape2D_mnca8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=933392897]
 shape = SubResource("RectangleShape2D_fkugw")
@@ -46,3 +59,6 @@ script = ExtResource("8_26q78")
 
 [node name="Death" type="Node" parent="StateMachine" unique_id=983751430]
 script = ExtResource("9_bectd")
+
+[node name="Attack" type="Node" parent="StateMachine" unique_id=1663734474]
+script = ExtResource("10_wvtmh")

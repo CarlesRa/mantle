@@ -27,6 +27,8 @@ var move_speed: float = 200.0
 var jump_velocity: float = -400.0
 var glide_fall_speed: float = 0.0
 var max_air_jumps: int = 0
+var attack_duration: float = 0.3
+var attack_damage: int = 1
 
 var gravity: float = float(ProjectSettings.get_setting(GRAVITY_SETTING))
 
@@ -41,6 +43,8 @@ var _invulnerable_left: float = 0.0
 var _visuals: Node2D
 var _sprite: AnimatedSprite2D
 var _collision: CollisionShape2D
+var _attack_hitbox: Area2D 
+var _attack_collision: CollisionShape2D
 
 # Nodes are cached on enter_tree because the StateMachine (a child) runs its
 # first state before this node's _ready.
@@ -48,12 +52,15 @@ func _enter_tree() -> void:
 	_visuals = $Visuals as Node2D
 	_sprite = $Visuals/AnimatedSprite2D as AnimatedSprite2D
 	_collision = $CollisionShape2D as CollisionShape2D
+	_attack_hitbox = $Visuals/AttackHitbox as Area2D
+	_attack_collision = $Visuals/AttackHitbox/CollisionShape2D as CollisionShape2D
 	fall_speed_limit = max_fall_speed
 	if initial_form:
 		_apply_form(initial_form)
 
 func _ready() -> void:
 	health = max_health
+	_attack_hitbox.body_entered.connect(_on_attack_hitbox_body_entered)
 	if form:
 		# Deferred so every listener in the scene is ready.
 		EventBus.player_form_changed.emit.call_deferred(form)
@@ -127,6 +134,12 @@ func _apply_form(new_form: PlayerForm) -> void:
 	glide_fall_speed = new_form.glide_fall_speed
 	max_air_jumps = new_form.air_jumps
 	air_jumps_left = mini(air_jumps_left, max_air_jumps)
+	attack_duration = new_form.attack_duration
+	attack_damage = new_form.attack_damage
+	var attack_shape: RectangleShape2D = RectangleShape2D.new()
+	attack_shape.size = new_form.attack_hitbox_size
+	_attack_collision.shape = attack_shape
+	_attack_collision.position = new_form.attack_hitbox_offset
 
 	# A new shape per form: sub-resources of a scene are shared by all instances.
 	var shape: RectangleShape2D = RectangleShape2D.new()
@@ -142,8 +155,16 @@ func _apply_form(new_form: PlayerForm) -> void:
 	#_sprite.play(current_animation)
 
 func _flash() -> void:
-		var tween: Tween = create_tween()
-		tween.tween_property(_visuals, "modulate", Color.WHITE, 0.3).from(Color(3.0, 3.0, 3.0))
+	var tween: Tween = create_tween()
+	tween.tween_property(_visuals, "modulate", Color.WHITE, 0.3).from(Color(3.0, 3.0, 3.0))
+
+func set_attack_active(active: bool) -> void:
+	_attack_hitbox.set_deferred("monitoring", active)
+	_attack_hitbox.set_deferred("monitorable", active)
+
+func _on_attack_hitbox_body_entered(body: Node2D) -> void:
+	if body.has_method("take_hit"):
+		body.take_hit(global_position, attack_damage)
 
 ## Tries to hurt the player. Called by anything dangerous (hazards, enemies).
 ## Ignored while dead or invulnerable. Otherwise it takes [param damage] from
