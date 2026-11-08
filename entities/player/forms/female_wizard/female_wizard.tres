@@ -11,6 +11,7 @@ duration = 0.53
 damage = 2
 hitbox_size = Vector2(80, 35)
 projectile_scene = ExtResource("1_ck02r")
+projectile_offset = Vector2(25, -40)
 metadata/_custom_type_script = "uid://drmmief64qgf"
 
 [resource]
@@ -20,7 +21,8 @@ display_name = "Female Wizard"
 move_speed = 190.0
 jump_velocity = -560.0
 air_jumps = 1
+hitbox_size = Vector2(14, 50)
 sprite_frames = ExtResource("3_fejxq")
-sprite_offset = Vector2(0, -20)
+sprite_offset = Vector2(2, -27)
 primary_attack = SubResource("Resource_ef8vx")
 metadata/_custom_type_script = "uid://do51y0xqtaore"

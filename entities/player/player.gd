@@ -196,7 +196,7 @@ func _on_sprite_frame_changed() -> void:
 	if _sprite.animation != _active_attack.animation:
 		return
 
-	if _sprite.frame != _active_attack.launch_frame:
+	if _sprite.frame < _active_attack.launch_frame:
 		return
 
 	_projectile_launched = true
