@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://cc3ffl1nxhr64"]
 
 [ext_resource type="PackedScene" uid="uid://c8uxatqpck3i1" path="res://entities/player/player.tscn" id="1_1j5om"]
-[ext_resource type="Resource" uid="uid://d04dcpmilyh2l" path="res://entities/player/forms/base/base.tres" id="2_uk1b4"]
+[ext_resource type="Resource" uid="uid://d04dcpmilyh2l" path="res://entities/player/forms/base/base.tres" id="2_dynb8"]
 [ext_resource type="Script" uid="uid://qsjlyngnulls" path="res://sandbox/event_bus_logger.gd" id="3_dynb8"]
 [ext_resource type="Script" uid="uid://u3llnjqbseu2" path="res://sandbox/player/hazard.gd" id="4_uk1b4"]
 [ext_resource type="Script" uid="uid://d1qg377fqgc23" path="res://sandbox/player/test_dummy.gd" id="5_dynb8"]
@@ -10,7 +10,7 @@
 size = Vector2(1152, 88)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mnca8"]
-size = Vector2(24, 24)
+size = Vector2(24, 52)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_omcpb"]
 size = Vector2(50, 55)
@@ -22,7 +22,7 @@ size = Vector2(49, 55)
 
 [node name="Player" parent="." unique_id=871748280 instance=ExtResource("1_1j5om")]
 position = Vector2(579, 484)
-initial_form = ExtResource("2_uk1b4")
+initial_form = ExtResource("2_dynb8")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=852029762]
 zoom = Vector2(2, 2)
@@ -49,7 +49,22 @@ collision_mask = 2
 script = ExtResource("4_uk1b4")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Hazard" unique_id=823567323]
+position = Vector2(0, 14)
 shape = SubResource("RectangleShape2D_mnca8")
+
+[node name="ColorRect" type="ColorRect" parent="Hazard" unique_id=1473080239]
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 40.0
+color = Color(0.765843, 0.2517152, 0.25914112, 1)
+
+[node name="Label" type="Label" parent="Hazard" unique_id=385097137]
+offset_left = -28.0
+offset_top = -44.0
+offset_right = 32.0
+offset_bottom = -21.0
+text = "Test Hit"
 
 [node name="EventBusLogger" type="Node" parent="." unique_id=1042492627]
 script = ExtResource("3_dynb8")
@@ -64,11 +79,11 @@ position = Vector2(460, 530.5)
 shape = SubResource("RectangleShape2D_omcpb")
 
 [node name="ColorRect" type="ColorRect" parent="TestDummy" unique_id=1061016507]
-visible = false
-offset_left = 433.0
-offset_top = 519.0
-offset_right = 457.0
+offset_left = 435.0
+offset_top = 504.0
+offset_right = 485.0
 offset_bottom = 559.0
+color = Color(0.28830066, 0.4972412, 0.14517257, 1)
 
 [node name="DamageZone" type="Area2D" parent="TestDummy" unique_id=1504044654]
 collision_layer = 0
@@ -77,3 +92,10 @@ collision_mask = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TestDummy/DamageZone" unique_id=855266949]
 position = Vector2(459.5, 530.5)
 shape = SubResource("RectangleShape2D_fm8js")
+
+[node name="Label" type="Label" parent="TestDummy" unique_id=1725715487]
+offset_left = 419.0
+offset_top = 461.0
+offset_right = 506.0
+offset_bottom = 484.0
+text = "Test Attack"
