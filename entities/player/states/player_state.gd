@@ -24,3 +24,4 @@ func setup(new_actor: CharacterBody2D) -> bool:
 func _apply_horizontal_movement() -> void:
 	var direction: float = Input.get_axis("move_left", "move_right")
 	player.velocity.x = direction * player.move_speed
+	player.face(direction)

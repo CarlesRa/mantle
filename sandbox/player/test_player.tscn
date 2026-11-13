@@ -1,0 +1,117 @@
+[gd_scene format=3 uid="uid://cc3ffl1nxhr64"]
+
+[ext_resource type="PackedScene" uid="uid://c8uxatqpck3i1" path="res://entities/player/player.tscn" id="1_1j5om"]
+[ext_resource type="Resource" uid="uid://d04dcpmilyh2l" path="res://entities/player/forms/base/base.tres" id="2_dynb8"]
+[ext_resource type="Script" uid="uid://qsjlyngnulls" path="res://sandbox/event_bus_logger.gd" id="3_dynb8"]
+[ext_resource type="Script" uid="uid://u3llnjqbseu2" path="res://sandbox/player/hazard.gd" id="4_uk1b4"]
+[ext_resource type="Script" uid="uid://d1qg377fqgc23" path="res://sandbox/player/test_dummy.gd" id="5_dynb8"]
+[ext_resource type="PackedScene" uid="uid://bkd47bkfpuky" path="res://entities/portal/portal.tscn" id="6_jbxrc"]
+[ext_resource type="Resource" uid="uid://olej6kc6om2r" path="res://entities/player/forms/female_wizard/female_wizard.tres" id="7_xvwap"]
+[ext_resource type="Resource" uid="uid://y6jrarxuu1sy" path="res://entities/player/forms/male_wizard/male_wizard.tres" id="8_a8p66"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_u7n6u"]
+size = Vector2(1152, 88)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_mnca8"]
+size = Vector2(24, 52)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_omcpb"]
+size = Vector2(50, 55)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_fm8js"]
+size = Vector2(49, 55)
+
+[node name="TestPlayer" type="Node2D" unique_id=295437706]
+
+[node name="Player" parent="." unique_id=871748280 instance=ExtResource("1_1j5om")]
+position = Vector2(579, 484)
+initial_form = ExtResource("2_dynb8")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=852029762]
+zoom = Vector2(2, 2)
+
+[node name="Land" type="StaticBody2D" parent="." unique_id=1705606719]
+position = Vector2(1, 570)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Land" unique_id=1009750909]
+position = Vector2(574, 34)
+shape = SubResource("RectangleShape2D_u7n6u")
+
+[node name="ColorRect" type="ColorRect" parent="Land" unique_id=45258658]
+offset_left = -2.0
+offset_top = -10.0
+offset_right = 1150.0
+offset_bottom = 78.0
+color = Color(1, 0.22352941, 1, 1)
+
+[node name="Hazard" type="Area2D" parent="." unique_id=994076752]
+position = Vector2(339, 520)
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("4_uk1b4")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazard" unique_id=823567323]
+position = Vector2(0, 14)
+shape = SubResource("RectangleShape2D_mnca8")
+
+[node name="ColorRect" type="ColorRect" parent="Hazard" unique_id=1473080239]
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 40.0
+color = Color(0.765843, 0.2517152, 0.25914112, 1)
+
+[node name="Label" type="Label" parent="Hazard" unique_id=385097137]
+offset_left = -28.0
+offset_top = -44.0
+offset_right = 32.0
+offset_bottom = -21.0
+text = "Test Hit"
+
+[node name="EventBusLogger" type="Node" parent="." unique_id=1042492627]
+script = ExtResource("3_dynb8")
+
+[node name="TestDummy" type="StaticBody2D" parent="." unique_id=1460891965]
+position = Vector2(2, 1)
+collision_layer = 4
+collision_mask = 0
+script = ExtResource("5_dynb8")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestDummy" unique_id=353706811]
+position = Vector2(460, 530.5)
+shape = SubResource("RectangleShape2D_omcpb")
+
+[node name="ColorRect" type="ColorRect" parent="TestDummy" unique_id=1061016507]
+offset_left = 435.0
+offset_top = 504.0
+offset_right = 485.0
+offset_bottom = 559.0
+color = Color(0.28830066, 0.4972412, 0.14517257, 1)
+
+[node name="DamageZone" type="Area2D" parent="TestDummy" unique_id=1504044654]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestDummy/DamageZone" unique_id=855266949]
+position = Vector2(459.5, 530.5)
+shape = SubResource("RectangleShape2D_fm8js")
+
+[node name="Label" type="Label" parent="TestDummy" unique_id=1725715487]
+offset_left = 419.0
+offset_top = 461.0
+offset_right = 506.0
+offset_bottom = 484.0
+text = "Test Attack"
+
+[node name="FemaleWizardPortal" parent="." unique_id=1039796977 instance=ExtResource("6_jbxrc")]
+position = Vector2(787, 560)
+form = ExtResource("7_xvwap")
+
+[node name="MaleWizardPortal" parent="." unique_id=1025706907 instance=ExtResource("6_jbxrc")]
+position = Vector2(1054, 560)
+form = ExtResource("8_a8p66")
+
+[node name="BasePortal" parent="." unique_id=687469125 instance=ExtResource("6_jbxrc")]
+position = Vector2(913, 560)
+form = ExtResource("2_dynb8")

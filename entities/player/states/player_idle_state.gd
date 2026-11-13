@@ -1,15 +1,15 @@
 class_name PlayerIdleState
-extends PlayerState
+extends PlayerControlledState
 
 func enter() -> void:
 	player.velocity.x = 0.0
-	# start idle animation
+	player.play_animation(PlayerAnimations.IDLE)
 
 func exit() -> void:
 	# stop idle animation
 	pass
 
-func physics_update(_delta: float) -> void:
+func _controlled_update(_delta: float) -> void:
 	if not player.is_on_floor():
 		change_state.emit(PlayerStates.FALL)
 		return
