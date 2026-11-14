@@ -255,7 +255,7 @@ func _spawn_projectile(data: AttackData) -> void:
 	projectile.global_position = global_position + offset
 
 	if projectile.has_method("launch"):
-		projectile.launch(direction, data.damage)
+		projectile.launch(direction, data, self)
 
 
 ## Clears the active attack.

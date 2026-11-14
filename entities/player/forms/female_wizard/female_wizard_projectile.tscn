@@ -2,6 +2,7 @@
 
 [ext_resource type="Script" uid="uid://dgny5eu4i3h8d" path="res://entities/player/forms/female_wizard/female_wizard_projectile.gd" id="1_g1unc"]
 [ext_resource type="Texture2D" uid="uid://mvmd6lgg8lcx" path="res://entities/player/forms/female_wizard/sprites/projectile.png" id="2_7rp2a"]
+[ext_resource type="Script" uid="uid://bxngq5a8rgq82" path="res://_common/combat/hitbox.gd" id="3_hitbox"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_4lmc1"]
 atlas = ExtResource("2_7rp2a")
@@ -38,4 +39,13 @@ sprite_frames = SubResource("SpriteFrames_7rp2a")
 frame_progress = 0.13169709
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2006733874]
+shape = SubResource("CircleShape2D_mnca8")
+
+[node name="Hitbox" type="Area2D" parent="." unique_id=1874269012]
+collision_layer = 16
+collision_mask = 8
+script = ExtResource("3_hitbox")
+metadata/_custom_type_script = "uid://bxngq5a8rgq82"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hitbox" unique_id=736159201]
 shape = SubResource("CircleShape2D_mnca8")
