@@ -27,7 +27,9 @@ func exit() -> void:
 func physics_update(delta: float) -> void:
 	if player.is_on_floor():
 		# On the ground the attack brakes the player.
-		player.velocity.x = move_toward(player.velocity.x, 0.0, player.move_speed * brake_rate * delta)
+		player.velocity.x = (
+			move_toward(player.velocity.x, 0.0, player.move_speed * brake_rate * delta)
+		)
 	else:
 		# In the air the player keeps control.
 		_apply_horizontal_movement()

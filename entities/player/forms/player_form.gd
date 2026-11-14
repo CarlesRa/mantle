@@ -16,9 +16,15 @@ extends Resource
 ## Max fall speed in px/s while holding jump. 0.0 disables gliding.
 @export var glide_fall_speed: float = 0.0
 
-@export_group("Hitbox")
+@export_group("Collisions")
 ## Size in px. The player origin is at its feet, so the box sits right above it.
-@export var hitbox_size: Vector2 = Vector2(14.0, 38.0)
+@export var collision_size: Vector2 = Vector2(14.0, 38.0)
+## Offset of the physical collision shape, relative to the player's facing direction.
+@export var collision_offset: Vector2 = Vector2.ZERO
+## Size of the area where this form can receive damage.
+@export var hurtbox_size: Vector2 = Vector2(14.0, 38.0)
+## Offset of the hurtbox shape, relative to the player's facing direction.
+@export var hurtbox_offset: Vector2 = Vector2.ZERO
 
 @export_group("Visuals")
 @export var sprite_frames: SpriteFrames
