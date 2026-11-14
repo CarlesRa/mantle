@@ -14,9 +14,14 @@ config/name="mantle"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="uid://cbuboqsrt084v"
+
 [autoload]
 
 EventBus="*uid://crp7i4qboinhv"
+AudioManager="*uid://dsyja668bd54p"
 
 [debug]
 
