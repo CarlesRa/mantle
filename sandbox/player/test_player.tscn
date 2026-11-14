@@ -3,7 +3,6 @@
 [ext_resource type="PackedScene" uid="uid://c8uxatqpck3i1" path="res://entities/player/player.tscn" id="1_1j5om"]
 [ext_resource type="Resource" uid="uid://d04dcpmilyh2l" path="res://entities/player/forms/base/base.tres" id="2_dynb8"]
 [ext_resource type="Script" uid="uid://qsjlyngnulls" path="res://sandbox/event_bus_logger.gd" id="3_dynb8"]
-[ext_resource type="Script" uid="uid://u3llnjqbseu2" path="res://sandbox/player/hazard.gd" id="4_uk1b4"]
 [ext_resource type="Script" uid="uid://d1qg377fqgc23" path="res://sandbox/player/test_dummy.gd" id="5_dynb8"]
 [ext_resource type="PackedScene" uid="uid://bkd47bkfpuky" path="res://entities/portal/portal.tscn" id="6_jbxrc"]
 [ext_resource type="Resource" uid="uid://olej6kc6om2r" path="res://entities/player/forms/female_wizard/female_wizard.tres" id="7_xvwap"]
@@ -14,19 +13,19 @@
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u7n6u"]
 size = Vector2(1152, 88)
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_mnca8"]
-size = Vector2(24, 52)
-
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqw7p"]
-size = Vector2(24, 54)
+size = Vector2(24, 23)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_kblvr"]
-size = Vector2(24, 54)
+size = Vector2(24, 22)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_jgpgp"]
+size = Vector2(24, 23)
 
 [node name="TestPlayer" type="Node2D" unique_id=295437706]
 
 [node name="Player" parent="." unique_id=871748280 instance=ExtResource("1_1j5om")]
-position = Vector2(579, 484)
+position = Vector2(44, 484)
 initial_form = ExtResource("2_dynb8")
 
 [node name="Camera2D" type="Camera2D" parent="Player" unique_id=852029762]
@@ -47,47 +46,23 @@ offset_right = 1150.0
 offset_bottom = 78.0
 color = Color(1, 0.22352941, 1, 1)
 
-[node name="Hazard" type="Area2D" parent="." unique_id=994076752]
-position = Vector2(339, 520)
-collision_layer = 0
-collision_mask = 2
-script = ExtResource("4_uk1b4")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Hazard" unique_id=823567323]
-position = Vector2(0, 14)
-shape = SubResource("RectangleShape2D_mnca8")
-
-[node name="ColorRect" type="ColorRect" parent="Hazard" unique_id=1473080239]
-offset_left = -12.0
-offset_top = -12.0
-offset_right = 12.0
-offset_bottom = 40.0
-color = Color(0.765843, 0.2517152, 0.25914112, 1)
-
-[node name="Label" type="Label" parent="Hazard" unique_id=385097137]
-offset_left = -28.0
-offset_top = -44.0
-offset_right = 32.0
-offset_bottom = -21.0
-text = "Test Hit"
-
 [node name="EventBusLogger" type="Node" parent="." unique_id=1042492627]
 script = ExtResource("3_dynb8")
 
 [node name="FemaleWizardPortal" parent="." unique_id=1039796977 instance=ExtResource("6_jbxrc")]
-position = Vector2(787, 560)
+position = Vector2(286, 560)
 form = ExtResource("7_xvwap")
 
 [node name="MaleWizardPortal" parent="." unique_id=1025706907 instance=ExtResource("6_jbxrc")]
-position = Vector2(1054, 560)
+position = Vector2(954, 560)
 form = ExtResource("8_a8p66")
 
 [node name="BasePortal" parent="." unique_id=687469125 instance=ExtResource("6_jbxrc")]
-position = Vector2(913, 560)
+position = Vector2(421, 560)
 form = ExtResource("2_dynb8")
 
 [node name="TestDummy" type="Node2D" parent="." unique_id=164193041]
-position = Vector2(13, 0)
+position = Vector2(-333, -1)
 script = ExtResource("5_dynb8")
 
 [node name="Hurtbox" type="Area2D" parent="TestDummy" unique_id=651367155 node_paths=PackedStringArray("owner_entity")]
@@ -98,12 +73,12 @@ owner_entity = NodePath("..")
 metadata/_custom_type_script = "uid://cqekdvpfe3qod"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TestDummy/Hurtbox" unique_id=1235820115]
-position = Vector2(438, 533)
+position = Vector2(438, 548.5)
 shape = SubResource("RectangleShape2D_hqw7p")
 
 [node name="ColorRect" type="ColorRect" parent="TestDummy" unique_id=164447228]
 offset_left = 426.0
-offset_top = 506.0
+offset_top = 537.0
 offset_right = 450.0
 offset_bottom = 560.0
 color = Color(0, 0.751216, 0.71942663, 1)
@@ -125,5 +100,113 @@ source = NodePath("..")
 metadata/_custom_type_script = "uid://bxngq5a8rgq82"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="TestDummy/Hitbox" unique_id=601817532]
+position = Vector2(114, -1)
+shape = SubResource("RectangleShape2D_kblvr")
+
+[node name="ContactDetector" type="Area2D" parent="TestDummy" unique_id=2096944888]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestDummy/ContactDetector" unique_id=859620569]
+position = Vector2(438, 548.5)
+shape = SubResource("RectangleShape2D_jgpgp")
+
+[node name="TestDummy3" type="Node2D" parent="." unique_id=264302296]
+position = Vector2(605, -2)
+script = ExtResource("5_dynb8")
+
+[node name="Hurtbox" type="Area2D" parent="TestDummy3" unique_id=76667613 node_paths=PackedStringArray("owner_entity")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("8_xvwap")
+owner_entity = NodePath("..")
+metadata/_custom_type_script = "uid://cqekdvpfe3qod"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestDummy3/Hurtbox" unique_id=865364817]
+position = Vector2(438, 548.5)
+shape = SubResource("RectangleShape2D_hqw7p")
+
+[node name="ColorRect" type="ColorRect" parent="TestDummy3" unique_id=1653094375]
+offset_left = 426.0
+offset_top = 537.0
+offset_right = 450.0
+offset_bottom = 560.0
+color = Color(0, 0.751216, 0.71942663, 1)
+
+[node name="Label" type="Label" parent="TestDummy3" unique_id=624735500]
+offset_left = 412.0
+offset_top = 475.0
+offset_right = 499.0
+offset_bottom = 498.0
+text = "Dummy"
+
+[node name="Hitbox" type="Area2D" parent="TestDummy3" unique_id=1176274470 node_paths=PackedStringArray("source")]
+position = Vector2(324, 550)
+collision_layer = 16
+collision_mask = 8
+monitoring = false
+script = ExtResource("10_er2pq")
+source = NodePath("..")
+metadata/_custom_type_script = "uid://bxngq5a8rgq82"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestDummy3/Hitbox" unique_id=929838372]
+position = Vector2(114, -1)
+shape = SubResource("RectangleShape2D_kblvr")
+
+[node name="ContactDetector" type="Area2D" parent="TestDummy3" unique_id=743186880]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestDummy3/ContactDetector" unique_id=169642637]
+position = Vector2(438, 548.5)
+shape = SubResource("RectangleShape2D_jgpgp")
+
+[node name="TestDummy2" type="Node2D" parent="." unique_id=1517185537]
+position = Vector2(200, 1)
+script = ExtResource("5_dynb8")
+
+[node name="Hurtbox" type="Area2D" parent="TestDummy2" unique_id=55125405 node_paths=PackedStringArray("owner_entity")]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("8_xvwap")
+owner_entity = NodePath("..")
+metadata/_custom_type_script = "uid://cqekdvpfe3qod"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestDummy2/Hurtbox" unique_id=107158523]
+position = Vector2(438, 533)
+shape = SubResource("RectangleShape2D_hqw7p")
+
+[node name="ColorRect" type="ColorRect" parent="TestDummy2" unique_id=205232901]
+offset_left = 426.0
+offset_top = 506.0
+offset_right = 450.0
+offset_bottom = 560.0
+color = Color(0, 0.751216, 0.71942663, 1)
+
+[node name="Label" type="Label" parent="TestDummy2" unique_id=1913048900]
+offset_left = 412.0
+offset_top = 475.0
+offset_right = 499.0
+offset_bottom = 498.0
+text = "Dummy"
+
+[node name="Hitbox" type="Area2D" parent="TestDummy2" unique_id=38072230 node_paths=PackedStringArray("source")]
+position = Vector2(324, 550)
+collision_layer = 16
+collision_mask = 8
+monitoring = false
+script = ExtResource("10_er2pq")
+source = NodePath("..")
+metadata/_custom_type_script = "uid://bxngq5a8rgq82"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestDummy2/Hitbox" unique_id=780115525]
 position = Vector2(114, -17)
 shape = SubResource("RectangleShape2D_kblvr")
+
+[node name="ContactDetector" type="Area2D" parent="TestDummy2" unique_id=1397312161]
+collision_layer = 0
+collision_mask = 8
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="TestDummy2/ContactDetector" unique_id=1818738986]
+position = Vector2(438, 533)
+shape = SubResource("RectangleShape2D_jgpgp")
