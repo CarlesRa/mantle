@@ -15,6 +15,11 @@ var _active: bool = false
 var _hit_targets: Array[Node2D] = []
 
 
+func _init() -> void:
+	collision_layer = 16
+	collision_mask = 8
+
+
 func _ready() -> void:
 	monitoring = false
 	area_entered.connect(_on_area_entered)

@@ -42,8 +42,6 @@ frame_progress = 0.13169709
 shape = SubResource("CircleShape2D_mnca8")
 
 [node name="Hitbox" type="Area2D" parent="." unique_id=1874269012]
-collision_layer = 16
-collision_mask = 8
 script = ExtResource("3_hitbox")
 metadata/_custom_type_script = "uid://bxngq5a8rgq82"
 
