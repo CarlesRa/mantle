@@ -8,17 +8,23 @@ extends Area2D
 @export var fade_time: float = 0.5
 
 var _direction: float = 0.0
-var _damage: int = 1
+var _source: Node2D
 var _launched: bool = false
 var _time_left: float = 0.0
+var _hitbox: Hitbox
 
 func _ready() -> void:
 	_time_left = lifetime
 	body_entered.connect(_on_body_entered)
+	_hitbox = $Hitbox as Hitbox
+	_hitbox.area_entered.connect(_on_hurtbox_entered)
 
-func launch(direction: float, damage: int) -> void:
+func launch(direction: float, attack_data: AttackData, source: Node2D) -> void:
 	_direction = signf(direction)
-	_damage = damage
+	_source = source
+	_hitbox.damage = attack_data.damage
+	_hitbox.source = source
+	_hitbox.activate()
 	_launched = true
 	$AnimatedSprite2D.flip_h = _direction < 0.0
 
@@ -37,9 +43,17 @@ func _physics_process(delta: float) -> void:
 	else:
 		modulate.a = 1.0
 
-## Damages the body on impact and destroys the projectile.
+## Solid body collisions destroy the projectile, except for its owner.
 func _on_body_entered(body: Node2D) -> void:
-	if body.has_method("take_hit"):
-		body.take_hit(global_position, _damage)
+	if body == _source:
+		return
 
 	queue_free()
+
+## A valid hurtbox collision is handled by Hitbox and consumes this projectile.
+func _on_hurtbox_entered(area: Area2D) -> void:
+	if area is Hurtbox:
+		var hurtbox: Hurtbox = area
+		if hurtbox.owner_entity == _source:
+			return
+		queue_free()
