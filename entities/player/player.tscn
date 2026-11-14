@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://ck8xgcqtq0oe7" path="res://_common/state_machine/state_machine.gd" id="2_fkugw"]
 [ext_resource type="SpriteFrames" uid="uid://cg3pgmg6isw5p" path="res://entities/player/forms/base/base_frames.tres" id="2_qiwj3"]
 [ext_resource type="Script" uid="uid://bxngq5a8rgq82" path="res://_common/combat/hitbox.gd" id="3_7thud"]
+[ext_resource type="Script" uid="uid://cqekdvpfe3qod" path="res://_common/combat/hurtbox.gd" id="4_a1qjk"]
 [ext_resource type="Script" uid="uid://cxiktttybe14c" path="res://entities/player/states/player_idle_state.gd" id="4_fkugw"]
 [ext_resource type="Script" uid="uid://lusnt3w8nvm7" path="res://entities/player/states/player_move_state.gd" id="5_fkugw"]
 [ext_resource type="Script" uid="uid://cwcoele0pymka" path="res://entities/player/states/player_jump_state.gd" id="6_qiwj3"]
@@ -14,6 +15,8 @@
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mnca8"]
 size = Vector2(0, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hqw7p"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fkugw"]
 
@@ -38,6 +41,16 @@ metadata/_custom_type_script = "uid://bxngq5a8rgq82"
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Visuals/Hitbox" unique_id=717719269]
 shape = SubResource("RectangleShape2D_mnca8")
+
+[node name="Hurtbox" type="Area2D" parent="Visuals" unique_id=1726384342]
+collision_layer = 8
+collision_mask = 0
+script = ExtResource("4_a1qjk")
+metadata/_custom_type_script = "uid://cqekdvpfe3qod"
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Visuals/Hurtbox" unique_id=19124490]
+shape = SubResource("RectangleShape2D_hqw7p")
+debug_color = Color(0.9843137, 0.41568628, 0.36862746, 0.34901962)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=933392897]
 shape = SubResource("RectangleShape2D_fkugw")

@@ -48,6 +48,9 @@ var _sprite: AnimatedSprite2D
 var _collision: CollisionShape2D
 var _hitbox: Hitbox
 var _hitbox_collision: CollisionShape2D
+var _hurtbox: Hurtbox
+var _hurtbox_collision: CollisionShape2D
+
 
 # Nodes are cached on enter_tree because the StateMachine (a child) runs its
 # first state before this node's _ready.
@@ -58,6 +61,9 @@ func _enter_tree() -> void:
 	_hitbox = $Visuals/Hitbox as Hitbox
 	_hitbox.source = self
 	_hitbox_collision = $Visuals/Hitbox/CollisionShape2D as CollisionShape2D
+	_hurtbox = $Visuals/Hurtbox
+	_hurtbox.owner_entity = self
+	_hurtbox_collision = $Visuals/Hurtbox/CollisionShape2D as CollisionShape2D
 	fall_speed_limit = max_fall_speed
 	if initial_form:
 		_apply_form(initial_form)
@@ -83,7 +89,7 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 ## Switches to another form. Returns false if it is already the current form
-## or if the new hitbox does not fit where the player stands.
+## or if the new collision shape does not fit where the player stands.
 func change_form(new_form: PlayerForm) -> bool:
 	if is_dead or not new_form or new_form == form:
 		return false
@@ -124,10 +130,7 @@ func _fits(candidate: PlayerForm) -> bool:
 
 	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 	query.shape = shape
-	query.transform = Transform2D(
-		0.0,
-		global_position + _get_collision_position(candidate)
-	)
+	query.transform = Transform2D(0.0, global_position + _get_collision_position(candidate))
 	query.collision_mask = collision_mask
 	query.exclude = [get_rid()]
 
@@ -151,6 +154,15 @@ func _apply_form(new_form: PlayerForm) -> void:
 	_collision.shape = shape
 	_collision.position = _get_collision_position(form)
 
+	var hurtbox_shape := RectangleShape2D.new()
+	hurtbox_shape.size = new_form.hurtbox_size
+	_hurtbox_collision.shape = hurtbox_shape
+
+	_hurtbox_collision.position = Vector2(
+		new_form.hurtbox_offset.x,
+		-new_form.hurtbox_size.y / 2.0 + new_form.hurtbox_offset.y,
+	)
+
 	var current_animation: StringName = _sprite.animation
 	_sprite.sprite_frames = new_form.sprite_frames
 	_sprite.offset = new_form.sprite_offset
@@ -171,10 +183,8 @@ func _get_collision_position(target_form: PlayerForm) -> Vector2:
 	var offset: Vector2 = target_form.collision_offset
 	offset.x *= direction
 
-	return Vector2(
-		offset.x,
-		-target_form.collision_size.y / 2.0 + offset.y
-	)
+	return Vector2(offset.x, -target_form.collision_size.y / 2.0 + offset.y)
+
 
 func set_attack_active(active: bool) -> void:
 	if active:
@@ -196,7 +206,7 @@ func start_attack(data: AttackData) -> void:
 	if data.projectile_scene:
 		set_attack_active(false)
 		return
-	
+
 	_hitbox.damage = data.damage
 
 	# Melee attacks keep the existing hitbox behavior.
