@@ -49,6 +49,9 @@ func _on_area_entered(area: Area2D) -> void:
 	if _hit_targets.has(target):
 		return
 
+	if target == source:
+		return
+
 	_hit_targets.append(target)
 
 	var impact := HitData.new(
