@@ -12,3 +12,5 @@ func receive_hit(hit_data: HitData) -> void:
 
 	if owner_entity.has_method("receive_hit"):
 		owner_entity.receive_hit(hit_data)
+	else:
+		push_warning("%s has a Hurtbox but no receive_hit()" % owner_entity.name)
