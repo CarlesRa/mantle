@@ -1,28 +1,31 @@
-
 class_name TestDummy
 extends Node2D
 
 ## If on, it also hurts the player on contact.
-@export var hurts_player: bool = false
+@export var hurts_player: bool = true
 
 @onready var _hitbox: Hitbox = $Hitbox
+@onready var _contact_detector: Area2D = $ContactDetector
 
 
 func _ready() -> void:
+	_hitbox.source = self
 	_hitbox.deactivate()
-	_hitbox.body_entered.connect(_on_hitbox_body_entered)
-	_hitbox.body_exited.connect(_on_hitbox_body_exited)
+
+	_contact_detector.area_entered.connect(_on_contact_detector_area_entered)
+	_contact_detector.area_exited.connect(_on_contact_detector_area_exited)
 
 
-func _on_hitbox_body_entered(body: Node2D) -> void:
+func _on_contact_detector_area_entered(area: Area2D) -> void:
 	if not hurts_player:
 		return
-	if body is Player:
+
+	if area is Hurtbox and area.owner_entity is Player:
 		_hitbox.activate()
 
 
-func _on_hitbox_body_exited(body: Node2D) -> void:
-	if body is Player:
+func _on_contact_detector_area_exited(area: Area2D) -> void:
+	if area is Hurtbox and area.owner_entity is Player:
 		_hitbox.deactivate()
 
 
