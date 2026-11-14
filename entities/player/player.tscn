@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://c3coh5i4elwrq" path="res://entities/player/player.gd" id="1_bls4j"]
 [ext_resource type="Script" uid="uid://ck8xgcqtq0oe7" path="res://_common/state_machine/state_machine.gd" id="2_fkugw"]
 [ext_resource type="SpriteFrames" uid="uid://cg3pgmg6isw5p" path="res://entities/player/forms/base/base_frames.tres" id="2_qiwj3"]
+[ext_resource type="Script" uid="uid://bxngq5a8rgq82" path="res://_common/combat/hitbox.gd" id="3_7thud"]
 [ext_resource type="Script" uid="uid://cxiktttybe14c" path="res://entities/player/states/player_idle_state.gd" id="4_fkugw"]
 [ext_resource type="Script" uid="uid://lusnt3w8nvm7" path="res://entities/player/states/player_move_state.gd" id="5_fkugw"]
 [ext_resource type="Script" uid="uid://cwcoele0pymka" path="res://entities/player/states/player_jump_state.gd" id="6_qiwj3"]
@@ -27,13 +28,15 @@ sprite_frames = ExtResource("2_qiwj3")
 animation = &"run"
 autoplay = "idle"
 
-[node name="AttackHitbox" type="Area2D" parent="Visuals" unique_id=2027634368]
-collision_layer = 0
-collision_mask = 4
+[node name="Hitbox" type="Area2D" parent="Visuals" unique_id=1120552756 node_paths=PackedStringArray("source")]
+collision_layer = 16
+collision_mask = 8
 monitoring = false
-monitorable = false
+script = ExtResource("3_7thud")
+source = NodePath("../..")
+metadata/_custom_type_script = "uid://bxngq5a8rgq82"
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Visuals/AttackHitbox" unique_id=717719269]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Visuals/Hitbox" unique_id=717719269]
 shape = SubResource("RectangleShape2D_mnca8")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=933392897]

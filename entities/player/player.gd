@@ -27,7 +27,6 @@ var move_speed: float = 200.0
 var jump_velocity: float = -400.0
 var glide_fall_speed: float = 0.0
 var max_air_jumps: int = 0
-var attack_damage: int = 1
 
 var gravity: float = float(ProjectSettings.get_setting(GRAVITY_SETTING))
 
@@ -47,8 +46,8 @@ var _projectile_launched: bool = false
 var _visuals: Node2D
 var _sprite: AnimatedSprite2D
 var _collision: CollisionShape2D
-var _attack_hitbox: Area2D
-var _attack_collision: CollisionShape2D
+var _hitbox: Hitbox
+var _hitbox_collision: CollisionShape2D
 
 # Nodes are cached on enter_tree because the StateMachine (a child) runs its
 # first state before this node's _ready.
@@ -56,15 +55,15 @@ func _enter_tree() -> void:
 	_visuals = $Visuals as Node2D
 	_sprite = $Visuals/AnimatedSprite2D as AnimatedSprite2D
 	_collision = $CollisionShape2D as CollisionShape2D
-	_attack_hitbox = $Visuals/AttackHitbox as Area2D
-	_attack_collision = $Visuals/AttackHitbox/CollisionShape2D as CollisionShape2D
+	_hitbox = $Visuals/Hitbox as Hitbox
+	_hitbox.source = self
+	_hitbox_collision = $Visuals/Hitbox/CollisionShape2D as CollisionShape2D
 	fall_speed_limit = max_fall_speed
 	if initial_form:
 		_apply_form(initial_form)
 
 func _ready() -> void:
 	health = max_health
-	_attack_hitbox.body_entered.connect(_on_attack_hitbox_body_entered)
 	_sprite.frame_changed.connect(_on_sprite_frame_changed)
 	if form:
 		# Deferred so every listener in the scene is ready.
@@ -105,9 +104,10 @@ func play_animation(animation: StringName, restart: bool = false) -> void:
 
 ## Turns the sprite towards the horizontal direction. 0 keeps the current side.
 func face(direction: float) -> void:
-	if is_zero_approx(direction):
+	if is_zero_approx(direction) or not form:
 		return
 	_visuals.scale.x = signf(direction)
+	_collision.position = _get_collision_position(form)
 
 ## Spends one air jump. Returns false if none is left.
 func consume_air_jump() -> bool:
@@ -116,16 +116,21 @@ func consume_air_jump() -> bool:
 	air_jumps_left -= 1
 	return true
 
-## True if the hitbox of the candidate form does not overlap the world.
+## True if the candidate form's collision shape does not overlap the world.
 func _fits(candidate: PlayerForm) -> bool:
 	var shape: RectangleShape2D = RectangleShape2D.new()
 	# Slightly smaller so standing on the floor is not counted as overlapping.
-	shape.size = candidate.hitbox_size - Vector2(2.0, 2.0)
+	shape.size = candidate.collision_size - Vector2(2.0, 2.0)
+
 	var query: PhysicsShapeQueryParameters2D = PhysicsShapeQueryParameters2D.new()
 	query.shape = shape
-	query.transform = Transform2D(0.0, global_position + Vector2(0.0, -candidate.hitbox_size.y / 2.0))
+	query.transform = Transform2D(
+		0.0,
+		global_position + _get_collision_position(candidate)
+	)
 	query.collision_mask = collision_mask
 	query.exclude = [get_rid()]
+
 	return get_world_2d().direct_space_state.intersect_shape(query, 1).is_empty()
 
 ## Copies everything a form defines into the player: stats, hitbox, sprite
@@ -142,9 +147,9 @@ func _apply_form(new_form: PlayerForm) -> void:
 
 	# A new shape per form: sub-resources of a scene are shared by all instances.
 	var shape: RectangleShape2D = RectangleShape2D.new()
-	shape.size = new_form.hitbox_size
+	shape.size = new_form.collision_size
 	_collision.shape = shape
-	_collision.position = Vector2(0.0, -new_form.hitbox_size.y / 2.0)
+	_collision.position = _get_collision_position(form)
 
 	var current_animation: StringName = _sprite.animation
 	_sprite.sprite_frames = new_form.sprite_frames
@@ -157,9 +162,25 @@ func _flash() -> void:
 	var tween: Tween = create_tween()
 	tween.tween_property(_visuals, "modulate", Color.WHITE, 0.3).from(Color(3.0, 3.0, 3.0))
 
+## Calculates the collision position for a given form and facing direction.
+func _get_collision_position(target_form: PlayerForm) -> Vector2:
+	var direction: float = signf(_visuals.scale.x)
+	if is_zero_approx(direction):
+		direction = 1.0
+
+	var offset: Vector2 = target_form.collision_offset
+	offset.x *= direction
+
+	return Vector2(
+		offset.x,
+		-target_form.collision_size.y / 2.0 + offset.y
+	)
+
 func set_attack_active(active: bool) -> void:
-	_attack_hitbox.set_deferred("monitoring", active)
-	_attack_hitbox.set_deferred("monitorable", active)
+	if active:
+		_hitbox.activate()
+	else:
+		_hitbox.deactivate()
 
 ## Attack data for a button slot (0 = primary, 1 = secondary). Null if none.
 func get_attack(slot: int) -> AttackData:
@@ -170,18 +191,19 @@ func get_attack(slot: int) -> AttackData:
 func start_attack(data: AttackData) -> void:
 	_active_attack = data
 	_projectile_launched = false
-	attack_damage = data.damage
 
 	# Projectile attacks do not use the player's fixed hitbox.
 	if data.projectile_scene:
 		set_attack_active(false)
 		return
+	
+	_hitbox.damage = data.damage
 
 	# Melee attacks keep the existing hitbox behavior.
 	var shape: RectangleShape2D = RectangleShape2D.new()
 	shape.size = data.hitbox_size
-	_attack_collision.shape = shape
-	_attack_collision.position = data.hitbox_offset
+	_hitbox_collision.shape = shape
+	_hitbox_collision.position = data.hitbox_offset
 	set_attack_active(true)
 
 
@@ -232,14 +254,13 @@ func finish_attack() -> void:
 	_active_attack = null
 	_projectile_launched = false
 
-func _on_attack_hitbox_body_entered(body: Node2D) -> void:
-	if body.has_method("take_hit"):
-		body.take_hit(global_position, attack_damage)
+func receive_hit(hit_data: HitData) -> void:
+	take_hit(hit_data.source_position, hit_data.damage)
 
-## Tries to hurt the player. Called by anything dangerous (hazards, enemies).
-## Ignored while dead or invulnerable. Otherwise it takes [param damage] from
-## health, stores a knockback away from [param source_position] and goes to
-## Hit, or to Death if health reaches zero. Emits player_hit when it lands.
+## Applies damage to the player.
+## Ignored while dead or invulnerable. Otherwise reduces health, stores
+## knockback away from [param source_position] and transitions to Hit,
+## or to Death if health reaches zero. Emits player_hit when damage is applied.
 func take_hit(source_position: Vector2, damage: int = 1) -> void:
 	if is_dead or _invulnerable_left > 0.0:
 		return
