@@ -5,6 +5,8 @@ const GRAVITY_SETTING: String = "physics/2d/default_gravity"
 const ANIM_IDLE: StringName = &"idle"
 const ANIM_WALK: StringName = &"walk"
 const ANIM_ATTACK: StringName = &"attack"
+const ANIM_HIT: StringName = &"hit"
+const ANIM_DEATH: StringName = &"death"
 
 ## Horizontal speed in px/s.
 @export var move_speed: float = 60.0
@@ -20,6 +22,7 @@ var _sprite: AnimatedSprite2D
 var _wall_ray: RayCast2D
 var _player_ray: RayCast2D
 var _floor_ray: RayCast2D
+var _attack_hitbox: Area2D
 
 func _enter_tree() -> void:
 	_visuals = $Visuals
@@ -27,6 +30,7 @@ func _enter_tree() -> void:
 	_wall_ray = $Visuals/WallRay
 	_floor_ray = $Visuals/FloorRay
 	_player_ray = $Visuals/PlayerRay
+	_attack_hitbox = $Visuals/AttackHitBox
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -67,3 +71,17 @@ func play_animation(anim_name: StringName) -> void:
 ## Returns true when anim_name is not the current animation or has stopped playing.
 func is_animation_finished(anim_name: StringName) -> bool:
 	return _sprite.animation != anim_name or not _sprite.is_playing()
+
+## Stop all collision with other object
+func disable_collision() -> void:
+	collision_layer = 0
+
+## Returns the frame index of the current animation.
+func get_animation_frame() -> int:
+	return _sprite.frame
+
+## Calls take_hit on every body inside the attack hitbox that implements it.
+func strike(damage: int) -> void:
+	for body: Node2D in _attack_hitbox.get_overlapping_bodies():
+		if body.has_method(&"take_hit"):
+			body.call(&"take_hit", global_position, damage)

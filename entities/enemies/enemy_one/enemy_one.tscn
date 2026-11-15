@@ -10,6 +10,8 @@
 [ext_resource type="Script" uid="uid://b8mnhnwyiwovf" path="res://entities/enemies/enemy_one/states/enemy_one_idle_state.gd" id="4_m4kiv"]
 [ext_resource type="Texture2D" uid="uid://bu6uxetqpc0w8" path="res://entities/enemies/enemy_one/sprites/Take Hit.png" id="4_wsa0x"]
 [ext_resource type="Script" uid="uid://dttuuyiyuxadu" path="res://entities/enemies/enemy_one/states/enemy_one_attack_state.gd" id="10_74k2a"]
+[ext_resource type="Script" uid="uid://cxr61pijao1a" path="res://entities/enemies/enemy_one/states/enemy_one_hit_state.gd" id="11_ka4fu"]
+[ext_resource type="Script" uid="uid://c33soq8m5822f" path="res://entities/enemies/enemy_one/states/enemy_one_death_state.gd" id="12_lefgs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tg2c1"]
 size = Vector2(20, 36)
@@ -308,6 +310,9 @@ animations = [{
 "speed": 10.0
 }]
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_c67wr"]
+size = Vector2(40, 30)
+
 [node name="EnemyOne" type="CharacterBody2D" unique_id=2022132563]
 collision_layer = 4
 script = ExtResource("1_45inq")
@@ -337,6 +342,14 @@ position = Vector2(0, -18)
 target_position = Vector2(45, 0)
 collision_mask = 3
 
+[node name="AttackHitBox" type="Area2D" parent="Visuals" unique_id=333599152]
+collision_layer = 0
+collision_mask = 2
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Visuals/AttackHitBox" unique_id=1166722844]
+position = Vector2(28, -18)
+shape = SubResource("RectangleShape2D_c67wr")
+
 [node name="StateMachine" type="Node" parent="." unique_id=1836694020 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_g37pi")
 initial_state = NodePath("Patrol")
@@ -349,3 +362,10 @@ script = ExtResource("4_m4kiv")
 
 [node name="Attack" type="Node" parent="StateMachine" unique_id=1123616948]
 script = ExtResource("10_74k2a")
+
+[node name="Hit" type="Node" parent="StateMachine" unique_id=1900976219]
+script = ExtResource("11_ka4fu")
+
+[node name="Death" type="Node" parent="StateMachine" unique_id=679722689]
+script = ExtResource("12_lefgs")
+metadata/_custom_type_script = "uid://c33soq8m5822f"
