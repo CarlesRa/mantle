@@ -2,7 +2,7 @@ class_name PlayerDeathState
 extends PlayerState
 
 ## Seconds before player_died is emitted, so the animation can play.
-@export var death_time: float = 1.0
+@export var death_time: float = 0.1
 
 var _time_left: float = 0.0
 

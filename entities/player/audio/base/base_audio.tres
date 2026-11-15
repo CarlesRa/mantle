@@ -1,8 +1,11 @@
 [gd_resource type="Resource" script_class="PlayerAudioSet" format=3 uid="uid://8vd27cscirr5"]
 
 [ext_resource type="Script" uid="uid://ctxxew5lnp20l" path="res://entities/player/audio/player_audio_set.gd" id="1"]
+[ext_resource type="Resource" uid="uid://5jjylx6tkrvd" path="res://entities/player/audio/base/damage_sound.tres" id="1_t0xiv"]
+[ext_resource type="Resource" uid="uid://dytxqr340ulai" path="res://entities/player/audio/base/death_sound.tres" id="2_51hx2"]
 [ext_resource type="Resource" uid="uid://5myp0rpqtn20" path="res://entities/player/audio/base/jump_sound.tres" id="2_jump"]
 [ext_resource type="Resource" uid="uid://dot2x4u7fa3rp" path="res://entities/player/audio/base/run_sound.tres" id="3_run"]
+[ext_resource type="Resource" uid="uid://b60kqbm03i87k" path="res://entities/player/audio/base/form_change_sound.tres" id="3_sob0c"]
 [ext_resource type="Script" uid="uid://dlasg12ts6s8u" path="res://_common/audio/frame_cue.gd" id="4_frame_cue"]
 [ext_resource type="Resource" uid="uid://dcc1v1ydadtyx" path="res://entities/player/audio/base/land_sound.tres" id="4_y4rna"]
 
@@ -22,4 +25,7 @@ sound = ExtResource("3_run")
 script = ExtResource("1")
 jump_sfx = ExtResource("2_jump")
 land_sfx = ExtResource("4_y4rna")
+damage_sfx = ExtResource("1_t0xiv")
+death_sfx = ExtResource("2_51hx2")
+form_change_sfx = ExtResource("3_sob0c")
 frame_cues = Array[ExtResource("4_frame_cue")]([SubResource("FrameCue_run_3"), SubResource("FrameCue_run_7")])
