@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://5jjylx6tkrvd"]
+
+[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_r53vx"]
+[ext_resource type="AudioStream" uid="uid://btotf1du3um8t" path="res://entities/player/audio/base/sfx/damage.wav" id="2_lcq7r"]
+
+[resource]
+script = ExtResource("1_r53vx")
+stream = ExtResource("2_lcq7r")
+volume_db = -6.0
+pitch_variation = true
+metadata/_custom_type_script = "uid://dqdvvnluf574x"
