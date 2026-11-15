@@ -1,7 +1,7 @@
 extends Node2D
 
 ## Sound used by keys 1 and 2.
-@export var sfx: AudioStream
+@export var sfx: SoundEffect
 ## First music track used by key 3.
 @export var music_a: AudioStream
 ## Second music track used by key 4.
@@ -23,11 +23,9 @@ func _unhandled_key_input(event: InputEvent) -> void:
 		return
 	match event.physical_keycode:
 		KEY_1:
-			if sfx != null:
-				AudioManager.play_sfx(sfx, true)
+			AudioManager.play_sfx(sfx)
 		KEY_2:
-			if sfx != null:
-				AudioManager.play_sfx(sfx, false)
+			AudioManager.play_sfx(sfx)
 		KEY_3:
 			if music_a != null:
 				AudioManager.play_music(music_a)
@@ -63,8 +61,7 @@ func _adjust_bus_volume(bus_name: StringName, amount: float) -> void:
 
 
 func _update_label() -> void:
-	_label.text = ("1: SFX with pitch variation\n
-		2: SFX without pitch variation\n
+	_label.text = ("1/2: Play configured SFX (pitch variation set in Inspector)\n
 		3: Play music A\n
 		4: Play music B\n
 		5: Stop music\n

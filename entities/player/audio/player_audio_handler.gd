@@ -56,11 +56,11 @@ func _on_sprite_frame_changed() -> void:
 		if cue == null:
 			continue
 		if cue.animation == animated_sprite.animation and cue.frame == animated_sprite.frame:
-			_play_sfx(cue.stream)
+			_play_sfx(cue.sound)
 			return
 
 
-func _play_sfx(stream: AudioStream) -> void:
-	if stream == null:
+func _play_sfx(sound: SoundEffect) -> void:
+	if sound == null:
 		return
-	AudioManager.play_sfx(stream)
+	AudioManager.play_sfx(sound)

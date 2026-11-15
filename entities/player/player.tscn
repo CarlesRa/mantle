@@ -25,7 +25,7 @@ size = Vector2(0, 0)
 collision_layer = 2
 script = ExtResource("1_bls4j")
 
-[node name="PlayerAudioHandler" type="Node" parent="." unique_id=652644188]
+[node name="PlayerAudioHandler" type="Node" parent="." unique_id=652644188 node_paths=PackedStringArray("animated_sprite")]
 script = ExtResource("11_audio_handler")
 animated_sprite = NodePath("../Visuals/AnimatedSprite2D")
 
