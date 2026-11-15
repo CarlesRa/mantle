@@ -1,8 +1,7 @@
 [gd_resource type="Resource" script_class="PlayerAudioSet" format=3 uid="uid://8vd27cscirr5"]
 
 [ext_resource type="Script" uid="uid://ctxxew5lnp20l" path="res://entities/player/audio/player_audio_set.gd" id="1"]
-[ext_resource type="AudioStream" uid="uid://cc8ffg05nq6ul" path="res://entities/player/audio/base/sfx/sword_stab.wav" id="1_3h3qq"]
+[ext_resource type="Script" uid="uid://dlasg12ts6s8u" path="res://entities/player/audio/frame_cue.gd" id="1_3h3qq"]
 
 [resource]
 script = ExtResource("1")
-attack_primary_sfx = ExtResource("1_3h3qq")

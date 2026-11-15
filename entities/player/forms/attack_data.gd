@@ -3,6 +3,7 @@ class_name AttackData
 extends Resource
 
 @export var animation: StringName = &"attack"
+@export var sfx: AudioStream
 ## Seconds the Attack state lasts. Should not exceed the animation length.
 @export var duration: float = 0.3
 @export var damage: int = 1

@@ -33,6 +33,9 @@ extends Resource
 ## Color of the portals that give this form.
 @export var portal_color: Color = Color.WHITE
 
+@export_group("Audio")
+@export var audio: PlayerAudioSet
+
 @export_group("Combat")
 ## Attack of the main button. Null = the form cannot attack.
 @export var primary_attack: AttackData
