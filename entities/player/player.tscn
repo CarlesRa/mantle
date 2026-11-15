@@ -13,9 +13,6 @@
 [ext_resource type="Script" uid="uid://y6a0iw3wlujj" path="res://entities/player/states/player_death_state.gd" id="9_bectd"]
 [ext_resource type="Script" uid="uid://bv74uq41814u" path="res://entities/player/states/player_attack_state.gd" id="10_wvtmh"]
 [ext_resource type="Script" uid="uid://etlp3qmiwi7v" path="res://entities/player/audio/player_audio_handler.gd" id="11_audio_handler"]
-[ext_resource type="Resource" uid="uid://8vd27cscirr5" path="res://entities/player/audio/base/base_audio.tres" id="12_base_audio"]
-[ext_resource type="Resource" path="res://entities/player/audio/male_wizard/male_wizard_audio.tres" id="13_male_wizard_audio"]
-[ext_resource type="Resource" path="res://entities/player/audio/female_wizard/female_wizard_audio.tres" id="14_female_wizard_audio"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mnca8"]
 size = Vector2(0, 0)
@@ -30,9 +27,7 @@ script = ExtResource("1_bls4j")
 
 [node name="PlayerAudioHandler" type="Node" parent="." unique_id=652644188]
 script = ExtResource("11_audio_handler")
-base_audio = ExtResource("12_base_audio")
-male_wizard_audio = ExtResource("13_male_wizard_audio")
-female_wizard_audio = ExtResource("14_female_wizard_audio")
+animated_sprite = NodePath("../Visuals/AnimatedSprite2D")
 
 [node name="Visuals" type="Node2D" parent="." unique_id=1170673224]
 

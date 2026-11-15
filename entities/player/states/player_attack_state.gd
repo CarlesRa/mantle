@@ -18,6 +18,7 @@ func enter() -> void:
 		return
 
 	_time_left = _data.duration
+	EventBus.player_attacked.emit(_data)
 	player.play_animation(_data.animation, true)
 	player.start_attack(_data)
 

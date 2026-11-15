@@ -1,65 +1,66 @@
-## Selects the audio data associated with the Player's current form.
+## Plays audio configured by the Player's current form.
 class_name PlayerAudioHandler
 extends Node
 
-const BASE_FORM: PlayerForm = preload("res://entities/player/forms/base/base.tres")
-const MALE_WIZARD_FORM: PlayerForm = preload(
-	"res://entities/player/forms/male_wizard/male_wizard.tres"
-)
-const FEMALE_WIZARD_FORM: PlayerForm = preload(
-	"res://entities/player/forms/female_wizard/female_wizard.tres"
-)
-
-@export var base_audio: PlayerAudioSet
-@export var male_wizard_audio: PlayerAudioSet
-@export var female_wizard_audio: PlayerAudioSet
+@export var animated_sprite: AnimatedSprite2D
 
 var current_audio_set: PlayerAudioSet
+var _has_received_initial_form: bool = false
 
 
 func _ready() -> void:
+	EventBus.player_jumped.connect(_on_player_jumped)
+	EventBus.player_landed.connect(_on_player_landed)
+	EventBus.player_hit.connect(_on_player_hit)
+	EventBus.player_died.connect(_on_player_died)
 	EventBus.player_form_changed.connect(_on_player_form_changed)
+	EventBus.player_attacked.connect(_on_player_attacked)
+	if animated_sprite != null:
+		animated_sprite.frame_changed.connect(_on_sprite_frame_changed)
+
+
+func _on_player_jumped() -> void:
+	_play_sfx(current_audio_set.jump_sfx if current_audio_set != null else null)
+
+
+func _on_player_landed() -> void:
+	_play_sfx(current_audio_set.land_sfx if current_audio_set != null else null)
+
+
+func _on_player_hit() -> void:
+	_play_sfx(current_audio_set.damage_sfx if current_audio_set != null else null)
+
+
+func _on_player_died() -> void:
+	_play_sfx(current_audio_set.death_sfx if current_audio_set != null else null)
 
 
 func _on_player_form_changed(form: PlayerForm) -> void:
-	if form == BASE_FORM:
-		current_audio_set = base_audio
-	elif form == MALE_WIZARD_FORM:
-		current_audio_set = male_wizard_audio
-	elif form == FEMALE_WIZARD_FORM:
-		current_audio_set = female_wizard_audio
-	else:
-		current_audio_set = null
+	current_audio_set = form.audio if form != null else null
+	if not _has_received_initial_form:
+		_has_received_initial_form = true
+		return
+	_play_sfx(current_audio_set.form_change_sfx if current_audio_set != null else null)
 
 
-## AnimationPlayer Call Method Track entry points.
-func play_jump_sfx() -> void:
-	pass
+func _on_player_attacked(attack: AttackData) -> void:
+	if attack == null:
+		return
+	_play_sfx(attack.sfx)
 
 
-func play_land_sfx() -> void:
-	pass
+func _on_sprite_frame_changed() -> void:
+	if animated_sprite == null or animated_sprite.frame == 0 or current_audio_set == null:
+		return
+	for cue: FrameCue in current_audio_set.frame_cues:
+		if cue == null:
+			continue
+		if cue.animation == animated_sprite.animation and cue.frame == animated_sprite.frame:
+			_play_sfx(cue.stream)
+			return
 
 
-func play_run_sfx() -> void:
-	pass
-
-
-func play_primary_attack_sfx() -> void:
-	pass
-
-
-func play_secondary_attack_sfx() -> void:
-	pass
-
-
-func play_damage_sfx() -> void:
-	pass
-
-
-func play_death_sfx() -> void:
-	pass
-
-
-func play_form_change_sfx() -> void:
-	pass
+func _play_sfx(stream: AudioStream) -> void:
+	if stream == null:
+		return
+	AudioManager.play_sfx(stream)
