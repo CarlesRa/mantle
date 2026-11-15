@@ -5,7 +5,6 @@ extends Node
 @export var animated_sprite: AnimatedSprite2D
 
 var current_audio_set: PlayerAudioSet
-var _has_received_initial_form: bool = false
 
 
 func _ready() -> void:
@@ -14,6 +13,7 @@ func _ready() -> void:
 	EventBus.player_hit.connect(_on_player_hit)
 	EventBus.player_died.connect(_on_player_died)
 	EventBus.player_form_changed.connect(_on_player_form_changed)
+	EventBus.player_transform_started.connect(_on_player_transform_started)
 	EventBus.player_attacked.connect(_on_player_attacked)
 	if animated_sprite != null:
 		animated_sprite.frame_changed.connect(_on_sprite_frame_changed)
@@ -37,10 +37,10 @@ func _on_player_died() -> void:
 
 func _on_player_form_changed(form: PlayerForm) -> void:
 	current_audio_set = form.audio if form != null else null
-	if not _has_received_initial_form:
-		_has_received_initial_form = true
-		return
-	_play_sfx(current_audio_set.form_change_sfx if current_audio_set != null else null)
+
+func _on_player_transform_started(form: PlayerForm, _duration: float) -> void:
+	var form_audio: PlayerAudioSet = form.audio if form != null else null
+	_play_sfx(form_audio.form_change_sfx if form_audio != null else null)
 
 
 func _on_player_attacked(attack: AttackData) -> void:

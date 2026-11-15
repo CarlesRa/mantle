@@ -16,5 +16,6 @@ metadata/_custom_type_script = "uid://drmmief64qgf"
 script = ExtResource("1_k4kwo")
 sprite_frames = ExtResource("2_tc5te")
 sprite_offset = Vector2(0, -20)
+transform_time = 2.36
 audio = ExtResource("4_base_audio")
 primary_attack = SubResource("Resource_wvtmh")
