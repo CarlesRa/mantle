@@ -10,6 +10,15 @@ var _data: AttackData
 var _time_left: float = 0.0
 
 func enter() -> void:
+	if player.is_transforming():
+		if not player.is_on_floor():
+			change_state.emit(PlayerStates.FALL)
+		elif is_zero_approx(Input.get_axis("move_left", "move_right")):
+			change_state.emit(PlayerStates.IDLE)
+		else:
+			change_state.emit(PlayerStates.MOVE)
+		return
+
 	_data = player.get_attack(slot)
 	
 	if not _data:

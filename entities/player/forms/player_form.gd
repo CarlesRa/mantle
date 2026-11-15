@@ -3,6 +3,11 @@
 class_name PlayerForm
 extends Resource
 
+const DEFAULT_TRANSFORM_DURATION: float = 0.5
+const MIN_TRANSFORM_DURATION: float = 0.05
+
+var _warned_about_transform_duration: bool = false
+
 @export var id: StringName
 @export var display_name: String = ""
 
@@ -33,6 +38,10 @@ extends Resource
 ## Color of the portals that give this form.
 @export var portal_color: Color = Color.WHITE
 
+@export_group("Transformation")
+## Seconds for this form's transformation. 0.0 uses the transformation SFX length; a positive value overrides it.
+@export var transform_time: float = 0.0
+
 @export_group("Audio")
 @export var audio: PlayerAudioSet
 
@@ -47,3 +56,29 @@ extends Resource
 @export var world_tint: Color = Color.WHITE
 @export_range(0.0, 2.0, 0.01) var world_saturation: float = 1.0
 @export_range(0.0, 2.0, 0.01) var world_contrast: float = 1.0
+
+## Resolves the transformation duration from an override or this form's SFX.
+func get_transform_duration() -> float:
+	if transform_time > 0.0:
+		return maxf(transform_time, MIN_TRANSFORM_DURATION)
+
+	var transform_sfx: SoundEffect = audio.form_change_sfx if audio else null
+	if transform_sfx and transform_sfx.stream:
+		var stream_length: float = transform_sfx.stream.get_length()
+		if stream_length > 0.0:
+			return maxf(stream_length, MIN_TRANSFORM_DURATION)
+
+	if not _warned_about_transform_duration:
+		var form_name: String = display_name
+		if form_name.is_empty():
+			form_name = String(id)
+		if form_name.is_empty():
+			form_name = resource_name
+		if form_name.is_empty():
+			form_name = "<unnamed>"
+		push_warning(
+			"PlayerForm '%s' has no measurable transformation SFX; using %.2f seconds."
+			% [form_name, DEFAULT_TRANSFORM_DURATION]
+		)
+		_warned_about_transform_duration = true
+	return DEFAULT_TRANSFORM_DURATION

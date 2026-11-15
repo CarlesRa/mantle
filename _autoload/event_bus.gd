@@ -15,6 +15,10 @@ signal player_landed
 @warning_ignore("unused_signal")
 signal player_form_changed(form: PlayerForm)
 
+## Emitted when a form transformation begins, with its resolved effect duration.
+@warning_ignore("unused_signal")
+signal player_transform_started(form: PlayerForm, duration: float)
+
 ## Emmited when the plyayer 
 @warning_ignore("unused_signal")
 signal player_hit

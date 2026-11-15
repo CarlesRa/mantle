@@ -2,6 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 const GRAVITY_SETTING: String = "physics/2d/default_gravity"
+const WHITE_FLASH_SHADER: Shader = preload("res://entities/player/shaders/white_flash.gdshader")
 
 ## Maximum player health.
 @export var max_health: int = 3
@@ -15,6 +16,8 @@ const GRAVITY_SETTING: String = "physics/2d/default_gravity"
 @export var coyote_time: float = 0.08
 ## Seconds the player cannot be hit again after taking a hit.
 @export var invulnerability_time: float = 1.0
+## Portion of the flash spent whitening the old form before the swap.
+@export_range(0.0, 1.0) var transform_peak_fraction: float = 0.35
 
 var health: int = 0
 var is_dead: bool = false
@@ -36,7 +39,14 @@ var air_jumps_left: int = 0
 var coyote_left: float = 0.0
 ## Set by take_hit(). The Hit state applies it as velocity on enter.
 var knockback: Vector2 = Vector2.ZERO
+var transform_tween: Tween
 var _invulnerable_left: float = 0.0
+var _transform_invulnerable: bool = false
+var _pending_form: PlayerForm
+var _transform_material: ShaderMaterial
+var _original_sprite_material: Material
+var _transform_swapped: bool = false
+const TRANSFORM_FIT_RETRY_TIME: float = 0.15
 
 ## Attack currently being executed. Null when no attack is active.
 var _active_attack: AttackData
@@ -91,14 +101,111 @@ func _physics_process(delta: float) -> void:
 ## Switches to another form. Returns false if it is already the current form
 ## or if the new collision shape does not fit where the player stands.
 func change_form(new_form: PlayerForm) -> bool:
-	if is_dead or not new_form or new_form == form:
+	if is_dead or is_transforming() or not new_form or new_form == form:
 		return false
 	if not _fits(new_form):
 		return false
-	_apply_form(new_form)
-	_flash()
-	EventBus.player_form_changed.emit(new_form)
+	finish_attack()
+	_pending_form = new_form
+	_transform_invulnerable = true
+	start_transform_tween()
 	return true
+
+func is_transforming() -> bool:
+	return transform_tween != null and transform_tween.is_running()
+
+func start_transform_tween() -> void:
+	_transform_swapped = false
+	_original_sprite_material = _sprite.material
+	_transform_material = ShaderMaterial.new()
+	_transform_material.shader = WHITE_FLASH_SHADER
+	_transform_material.set_shader_parameter("white_amount", 0.0)
+	_sprite.material = _transform_material
+	var duration: float = _pending_form.get_transform_duration()
+	var peak_fraction: float = clampf(transform_peak_fraction, 0.01, 0.99)
+	EventBus.player_transform_started.emit(_pending_form, duration)
+	transform_tween = create_tween()
+	transform_tween.tween_method(_set_transform_white_amount, 0.0, 1.0, duration * peak_fraction)
+	transform_tween.tween_callback(_try_swap_transform_form)
+	transform_tween.finished.connect(_on_transform_peak_finished.bind(duration, peak_fraction))
+
+func _set_transform_white_amount(amount: float) -> void:
+	if _transform_material:
+		_transform_material.set_shader_parameter("white_amount", amount)
+
+func _try_swap_transform_form() -> void:
+	if not _pending_form or _transform_swapped or not _fits(_pending_form):
+		return
+	var new_form: PlayerForm = _pending_form
+	if _active_attack:
+		finish_attack()
+	_apply_form(new_form)
+	_transform_swapped = true
+	EventBus.player_form_changed.emit(new_form)
+	_refresh_current_state_animation()
+
+func _retry_transform_swap(_elapsed: float) -> void:
+	if not _transform_swapped:
+		_try_swap_transform_form()
+
+func _on_transform_peak_finished(duration: float, peak_fraction: float) -> void:
+	if _transform_swapped:
+		_start_transform_fade(duration * (1.0 - peak_fraction))
+		return
+	transform_tween = create_tween()
+	transform_tween.tween_method(_retry_transform_swap, 0.0, TRANSFORM_FIT_RETRY_TIME, TRANSFORM_FIT_RETRY_TIME)
+	transform_tween.finished.connect(_on_transform_retry_finished.bind(duration, peak_fraction))
+
+func _on_transform_retry_finished(duration: float, peak_fraction: float) -> void:
+	_start_transform_fade(duration * (1.0 - peak_fraction))
+
+func _start_transform_fade(duration: float) -> void:
+	transform_tween = create_tween()
+	transform_tween.tween_method(_set_transform_white_amount, 1.0, 0.0, duration)
+	transform_tween.finished.connect(_on_transform_tween_finished)
+
+func _refresh_current_state_animation() -> void:
+	var current_state: State = ($StateMachine as StateMachine).current_state
+	if not current_state:
+		return
+	match current_state.name:
+		PlayerStates.IDLE:
+			play_animation(PlayerAnimations.IDLE, true)
+		PlayerStates.MOVE:
+			play_animation(PlayerAnimations.RUN, true)
+		PlayerStates.JUMP:
+			play_animation(PlayerAnimations.JUMP, true)
+		PlayerStates.FALL:
+			play_animation(PlayerAnimations.FALL, true)
+		PlayerStates.HIT:
+			play_animation(PlayerAnimations.HIT, true)
+		PlayerStates.ATTACK, PlayerStates.ATTACK_SECONDARY:
+			var attack_state := current_state as PlayerAttackState
+			var attack: AttackData = get_attack(attack_state.slot) if attack_state else null
+			if attack:
+				play_animation(attack.animation, true)
+			else:
+				play_animation(PlayerAnimations.IDLE, true)
+
+func _on_transform_tween_finished() -> void:
+	_cleanup_transform_effect()
+
+func cancel_transform() -> void:
+	if transform_tween and transform_tween.is_running():
+		transform_tween.kill()
+	_cleanup_transform_effect()
+
+func _cleanup_transform_effect() -> void:
+	_set_transform_white_amount(0.0)
+	_sprite.material = _original_sprite_material
+	if not _transform_swapped and not is_dead:
+		_sprite.play()
+	_transform_material = null
+	_original_sprite_material = null
+	_pending_form = null
+	_transform_swapped = false
+	_transform_invulnerable = false
+	transform_tween = null
 
 ## Plays an animation of the current form. Does nothing if it does not exist.
 func play_animation(animation: StringName, restart: bool = false) -> void:
@@ -170,10 +277,6 @@ func _apply_form(new_form: PlayerForm) -> void:
 		current_animation = PlayerAnimations.IDLE
 	_sprite.play(current_animation)
 
-func _flash() -> void:
-	var tween: Tween = create_tween()
-	tween.tween_property(_visuals, "modulate", Color.WHITE, 0.3).from(Color(3.0, 3.0, 3.0))
-
 ## Calculates the collision position for a given form and facing direction.
 func _get_collision_position(target_form: PlayerForm) -> Vector2:
 	var direction: float = signf(_visuals.scale.x)
@@ -199,6 +302,8 @@ func get_attack(slot: int) -> AttackData:
 
 ## Sets up a melee or projectile attack.
 func start_attack(data: AttackData) -> void:
+	if is_transforming():
+		return
 	_active_attack = data
 	_projectile_launched = false
 
@@ -272,7 +377,7 @@ func receive_hit(hit_data: HitData) -> void:
 ## knockback away from [param source_position] and transitions to Hit,
 ## or to Death if health reaches zero. Emits player_hit when damage is applied.
 func take_hit(source_position: Vector2, damage: int = 1) -> void:
-	if is_dead or _invulnerable_left > 0.0:
+	if is_dead or _invulnerable_left > 0.0 or _transform_invulnerable:
 		return
 	var side: float = signf(global_position.x - source_position.x)
 	knockback = Vector2(side * 150.0, -200.0)
@@ -287,4 +392,5 @@ func take_hit(source_position: Vector2, damage: int = 1) -> void:
 func _die() -> void:
 	is_dead = true
 	_invulnerable_left = 0.0
+	cancel_transform()
 	($StateMachine as StateMachine).change_to(PlayerStates.DEATH)
