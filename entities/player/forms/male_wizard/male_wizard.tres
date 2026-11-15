@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://do51y0xqtaore" path="res://entities/player/forms/player_form.gd" id="1_8f183"]
 [ext_resource type="Script" uid="uid://drmmief64qgf" path="res://entities/player/forms/attack_data.gd" id="1_sdkrp"]
 [ext_resource type="SpriteFrames" uid="uid://cbymtso388jnd" path="res://entities/player/forms/male_wizard/male_wizard_frames.tres" id="2_4nxa3"]
+[ext_resource type="Resource" path="res://entities/player/audio/male_wizard/male_wizard_audio.tres" id="3_audio"]
 
 [sub_resource type="Resource" id="Resource_wvtmh"]
 script = ExtResource("1_sdkrp")
@@ -35,6 +36,7 @@ hurtbox_size = Vector2(14, 50)
 hurtbox_offset = Vector2(5.5, 0)
 sprite_frames = ExtResource("2_4nxa3")
 sprite_offset = Vector2(6, -42)
+audio = ExtResource("3_audio")
 primary_attack = SubResource("Resource_wvtmh")
 secondary_attack = SubResource("Resource_3mm8w")
 metadata/_custom_type_script = "uid://do51y0xqtaore"

@@ -9,7 +9,7 @@ const SFX: StringName = &"SFX"
 
 const _SFX_POOL_SIZE: int = 8
 const _MIN_VOLUME_DB: float = -80.0
-const _PITCH_VARIATION: float = 0.05
+const SFX_PITCH_VARIATION: float = 0.05
 const _DEFAULT_MUSIC_FADE_TIME: float = 0.8
 
 var _sfx_players: Array[AudioStreamPlayer] = []
@@ -47,8 +47,12 @@ func _ready() -> void:
 
 
 ## Plays a one-shot sound effect on the SFX bus.
-func play_sfx(stream: AudioStream, pitch_variation: bool = false) -> void:
-	if stream == null or AudioServer.get_bus_index(SFX) == -1:
+func play_sfx(sound: SoundEffect) -> void:
+	if (
+		sound == null
+		or sound.stream == null
+		or AudioServer.get_bus_index(SFX) == -1
+	):
 		return
 
 	var player_index: int = _find_idle_sfx_player()
@@ -57,11 +61,12 @@ func play_sfx(stream: AudioStream, pitch_variation: bool = false) -> void:
 
 	var player: AudioStreamPlayer = _sfx_players[player_index]
 	player.stop()
-	player.stream = stream
+	player.stream = sound.stream
+	player.volume_db = sound.volume_db
 	player.pitch_scale = randf_range(
-		1.0 - _PITCH_VARIATION,
-		1.0 + _PITCH_VARIATION
-	) if pitch_variation else 1.0
+		1.0 - SFX_PITCH_VARIATION,
+		1.0 + SFX_PITCH_VARIATION
+	) if sound.pitch_variation else 1.0
 
 	_use_counter += 1
 	_sfx_use_order[player_index] = _use_counter

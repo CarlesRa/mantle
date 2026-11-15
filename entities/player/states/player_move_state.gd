@@ -4,11 +4,6 @@ extends PlayerControlledState
 func enter() -> void:
 	player.play_animation(PlayerAnimations.RUN)
 
-func exit() -> void:
-	# stop move animation
-	print('exit move_state')
-	pass
-
 func _controlled_update(_delta: float) -> void:
 	if not player.is_on_floor():
 		change_state.emit(PlayerStates.FALL)

@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="SoundEffect" load_steps=3 format=3]
+
+[ext_resource type="Script" path="res://_common/audio/sound_effect.gd" id="1"]
+[ext_resource type="AudioStream" uid="uid://cc8ffg05nq6ul" path="res://entities/player/audio/base/sfx/sword_stab.wav" id="2"]
+
+[resource]
+script = ExtResource("1")
+stream = ExtResource("2")

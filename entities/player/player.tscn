@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://p8jc54risynx" path="res://entities/player/states/player_hit_state.gd" id="8_26q78"]
 [ext_resource type="Script" uid="uid://y6a0iw3wlujj" path="res://entities/player/states/player_death_state.gd" id="9_bectd"]
 [ext_resource type="Script" uid="uid://bv74uq41814u" path="res://entities/player/states/player_attack_state.gd" id="10_wvtmh"]
+[ext_resource type="Script" uid="uid://etlp3qmiwi7v" path="res://entities/player/audio/player_audio_handler.gd" id="11_audio_handler"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mnca8"]
 size = Vector2(0, 0)
@@ -23,6 +24,10 @@ size = Vector2(0, 0)
 [node name="Player" type="CharacterBody2D" unique_id=871748280]
 collision_layer = 2
 script = ExtResource("1_bls4j")
+
+[node name="PlayerAudioHandler" type="Node" parent="." unique_id=652644188 node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("11_audio_handler")
+animated_sprite = NodePath("../Visuals/AnimatedSprite2D")
 
 [node name="Visuals" type="Node2D" parent="." unique_id=1170673224]
 

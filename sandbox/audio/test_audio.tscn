@@ -1,14 +1,19 @@
-[gd_scene format=3 uid="uid://bph4hee3qbwek"]
+[gd_scene load_steps=8 format=3 uid="uid://bph4hee3qbwek"]
 
 [ext_resource type="Script" uid="uid://dphqed8edahbd" path="res://sandbox/audio/test_audio.gd" id="1_script"]
 [ext_resource type="AudioStream" uid="uid://1jumi54kdgxq" path="res://sandbox/audio/poorartistt-cinematic-whoosh-sfx-type-03-566463.mp3" id="2_ab8a6"]
 [ext_resource type="AudioStream" uid="uid://dqlurn1wyxqec" path="res://sandbox/audio/monume-soundtrack-603963.mp3" id="3_16ind"]
 [ext_resource type="AudioStream" uid="uid://baqawr8wubfhy" path="res://sandbox/audio/alex-morgan-soundtrack-music-for-movies-583287.mp3" id="4_16ind"]
 [ext_resource type="AudioStream" uid="uid://b0qvlr355dge5" path="res://sandbox/audio/audiorelato-destino-ignoto-298543.mp3" id="5_2bqnw"]
+[ext_resource type="Script" path="res://_common/audio/sound_effect.gd" id="6_sound_effect"]
+
+[sub_resource type="Resource" id="SoundEffect_test"]
+script = ExtResource("6_sound_effect")
+stream = ExtResource("2_ab8a6")
 
 [node name="TestAudio" type="Node2D" unique_id=579112912]
 script = ExtResource("1_script")
-sfx = ExtResource("2_ab8a6")
+sfx = SubResource("SoundEffect_test")
 music_a = ExtResource("3_16ind")
 music_b = ExtResource("4_16ind")
 music_c = ExtResource("5_2bqnw")

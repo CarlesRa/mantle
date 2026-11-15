@@ -1,0 +1,25 @@
+[gd_resource type="Resource" script_class="PlayerAudioSet" format=3 uid="uid://8vd27cscirr5"]
+
+[ext_resource type="Script" uid="uid://ctxxew5lnp20l" path="res://entities/player/audio/player_audio_set.gd" id="1"]
+[ext_resource type="Resource" uid="uid://5myp0rpqtn20" path="res://entities/player/audio/base/jump_sound.tres" id="2_jump"]
+[ext_resource type="Resource" uid="uid://dot2x4u7fa3rp" path="res://entities/player/audio/base/run_sound.tres" id="3_run"]
+[ext_resource type="Script" uid="uid://dlasg12ts6s8u" path="res://_common/audio/frame_cue.gd" id="4_frame_cue"]
+[ext_resource type="Resource" uid="uid://dcc1v1ydadtyx" path="res://entities/player/audio/base/land_sound.tres" id="4_y4rna"]
+
+[sub_resource type="Resource" id="FrameCue_run_3"]
+script = ExtResource("4_frame_cue")
+animation = &"run"
+frame = 1
+sound = ExtResource("3_run")
+
+[sub_resource type="Resource" id="FrameCue_run_7"]
+script = ExtResource("4_frame_cue")
+animation = &"run"
+frame = 5
+sound = ExtResource("3_run")
+
+[resource]
+script = ExtResource("1")
+jump_sfx = ExtResource("2_jump")
+land_sfx = ExtResource("4_y4rna")
+frame_cues = Array[ExtResource("4_frame_cue")]([SubResource("FrameCue_run_3"), SubResource("FrameCue_run_7")])
