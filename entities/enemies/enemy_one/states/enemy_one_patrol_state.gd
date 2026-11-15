@@ -7,6 +7,10 @@ func enter() -> void:
 
 
 func physics_update(_delta: float) -> void:
+	if enemy.can_see_player():
+		change_state.emit(EnemyOneStates.ATTACK)
+		return
+		
 	if enemy.should_turn():
 		change_state.emit(EnemyOneStates.IDLE)
 		return

@@ -4,3 +4,4 @@ extends RefCounted
 
 const IDLE: StringName = &"Idle"
 const PATROL: StringName = &"Patrol"
+const ATTACK:StringName = &"Attack"

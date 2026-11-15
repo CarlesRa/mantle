@@ -4,6 +4,7 @@ extends CharacterBody2D
 const GRAVITY_SETTING: String = "physics/2d/default_gravity"
 const ANIM_IDLE: StringName = &"idle"
 const ANIM_WALK: StringName = &"walk"
+const ANIM_ATTACK: StringName = &"attack"
 
 ## Horizontal speed in px/s.
 @export var move_speed: float = 60.0
@@ -17,6 +18,7 @@ var gravity: float = float(ProjectSettings.get_setting(GRAVITY_SETTING))
 var _visuals: Node2D
 var _sprite: AnimatedSprite2D
 var _wall_ray: RayCast2D
+var _player_ray: RayCast2D
 var _floor_ray: RayCast2D
 
 func _enter_tree() -> void:
@@ -24,6 +26,7 @@ func _enter_tree() -> void:
 	_sprite = $Visuals/AnimatedSprite2D
 	_wall_ray = $Visuals/WallRay
 	_floor_ray = $Visuals/FloorRay
+	_player_ray = $Visuals/PlayerRay
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
@@ -40,6 +43,11 @@ func should_turn() -> bool:
 		return true
 	return is_on_floor() and not _floor_ray.is_colliding()
 
+## Returns true when the player is in front, within reach and not behind a wall.
+func can_see_player() -> bool:
+	_player_ray.force_raycast_update()
+	return _player_ray.get_collider() is Player
+
 ## Flips the facing direction.
 func turn_around() -> void:
 	face(-direction)
@@ -55,3 +63,7 @@ func face(new_direction: float) -> void:
 func play_animation(anim_name: StringName) -> void:
 	if _sprite.sprite_frames and _sprite.sprite_frames.has_animation(anim_name):
 		_sprite.play(anim_name)
+
+## Returns true when anim_name is not the current animation or has stopped playing.
+func is_animation_finished(anim_name: StringName) -> bool:
+	return _sprite.animation != anim_name or not _sprite.is_playing()
