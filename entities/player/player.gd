@@ -94,7 +94,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		coyote_left = maxf(coyote_left - delta, 0.0)
 		velocity.y += gravity * delta
-		velocity.y = minf(velocity.y, fall_speed_limit)
+		var current_fall_speed_limit: float = fall_speed_limit
+		if glide_fall_speed > 0.0 and Input.is_action_pressed("jump") and velocity.y > 0.0:
+			current_fall_speed_limit = minf(current_fall_speed_limit, glide_fall_speed)
+		velocity.y = minf(velocity.y, current_fall_speed_limit)
 
 	move_and_slide()
 
