@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://dou71bidsm8lj"]
+
+[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_7rw6x"]
+[ext_resource type="AudioStream" uid="uid://06obshjrcn8k" path="res://entities/player/audio/female_wizard/sfx/female_damage.wav" id="2_x7ksv"]
+
+[resource]
+script = ExtResource("1_7rw6x")
+stream = ExtResource("2_x7ksv")
+metadata/_custom_type_script = "uid://dqdvvnluf574x"
