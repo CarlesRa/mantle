@@ -18,6 +18,10 @@ signal died
 @export var attack_range: float = 110.0
 ## Multiplier applied to attack damage without changing AttackData.
 @export var damage_multiplier: float = 1.0
+## Optional hitbox timing for the primary attack animation.
+@export var attack1_track: BossAttackTrack
+## Optional hitbox timing for the secondary attack animation.
+@export var attack2_track: BossAttackTrack
 ## Multiplier applied to attack cooldown duration.
 @export var cooldown_multiplier: float = 1.0
 ## Seconds the boss ignores hits after taking damage.
@@ -30,6 +34,10 @@ var is_dead: bool = false
 var player_is_dead: bool = false
 var invulnerability_left: float = 0.0
 var active_attack: AttackData
+var _active_attack_track: BossAttackTrack
+var _applied_attack_keyframe: BossHitKeyframe
+var _tracked_hitbox_active: bool = false
+var _attack_has_hit_target: bool = false
 var previous_attack: AttackData
 var consecutive_attack_count: int = 0
 var _visuals: Node2D
@@ -61,6 +69,8 @@ func _ready() -> void:
 	_original_self_modulate = _sprite.self_modulate
 	target = get_tree().get_first_node_in_group("player") as Player
 	_audio_handler.form = form
+	# This listener runs after Hitbox delivers damage and disables it for the rest of the attack.
+	_hitbox.area_entered.connect(_on_attack_hitbox_area_entered)
 
 
 func _physics_process(delta: float) -> void:
@@ -107,16 +117,84 @@ func play_animation(animation: StringName, restart: bool = false) -> void:
 	_sprite.play(animation)
 
 
-## Duplicated from Player.start_attack(); if you change one, review the other.
+## Duplicated from Player.start_attack(); this activates the hitbox by keyframes instead.
 func start_attack(data: AttackData) -> void:
-	active_attack = data
-	_hitbox.damage = maxi(0, roundi(float(data.damage) * damage_multiplier))
-	var shape := RectangleShape2D.new()
-	shape.size = data.hitbox_size
-	_hitbox_collision.shape = shape
-	_hitbox_collision.position = data.hitbox_offset
+	_prepare_attack(data)
+	_active_attack_track = null
+	_applied_attack_keyframe = null
+	_set_hitbox_shape(data.hitbox_size, data.hitbox_offset)
 	_hitbox.activate()
+	_tracked_hitbox_active = true
+
+
+func start_tracked_attack(data: AttackData, track: BossAttackTrack) -> void:
+	_prepare_attack(data)
+	_active_attack_track = track
+	_applied_attack_keyframe = null
+	_hitbox.deactivate()
+	_tracked_hitbox_active = false
+	var frame_callable: Callable = Callable(self, "_on_attack_frame_changed")
+	if not _sprite.frame_changed.is_connected(frame_callable):
+		_sprite.frame_changed.connect(frame_callable)
+
+
+func _prepare_attack(data: AttackData) -> void:
+	active_attack = data
+	_attack_has_hit_target = false
+	_hitbox.damage = maxi(0, roundi(float(data.damage) * damage_multiplier))
 	_audio_handler.play_attack(data)
+
+
+func get_attack_track(data: AttackData) -> BossAttackTrack:
+	if data == form.primary_attack:
+		return attack1_track
+	if data == form.secondary_attack:
+		return attack2_track
+	return null
+
+
+func _on_attack_frame_changed() -> void:
+	if not active_attack or not _active_attack_track:
+		return
+	if _sprite.animation != active_attack.animation:
+		return
+	var selected_keyframe: BossHitKeyframe = null
+	for keyframe: BossHitKeyframe in _active_attack_track.keyframes:
+		if keyframe and keyframe.frame <= _sprite.frame:
+			if not selected_keyframe or keyframe.frame > selected_keyframe.frame:
+				selected_keyframe = keyframe
+	if not selected_keyframe or selected_keyframe == _applied_attack_keyframe:
+		return
+	_applied_attack_keyframe = selected_keyframe
+	_set_hitbox_shape(selected_keyframe.size, selected_keyframe.offset)
+	if selected_keyframe.active and not _tracked_hitbox_active and not _attack_has_hit_target:
+		_hitbox.activate()
+		_tracked_hitbox_active = true
+	elif not selected_keyframe.active and _tracked_hitbox_active:
+		_hitbox.deactivate()
+		_tracked_hitbox_active = false
+
+
+func _on_attack_hitbox_area_entered(area: Area2D) -> void:
+	if not active_attack or not _tracked_hitbox_active or _attack_has_hit_target:
+		return
+	if not area is Hurtbox:
+		return
+	var target_entity: Node2D = (area as Hurtbox).owner_entity
+	if not is_instance_valid(target_entity) or target_entity == self:
+		return
+	_attack_has_hit_target = true
+	# Area2D monitoring is locked while its in/out signals are being dispatched.
+	_hitbox.call_deferred("deactivate")
+	_tracked_hitbox_active = false
+
+
+func _set_hitbox_shape(size: Vector2, offset: Vector2) -> void:
+	var shape := RectangleShape2D.new()
+	shape.size = size
+	_hitbox_collision.shape = shape
+	# Visuals.scale.x mirrors local offsets for AttackData and keyframe tracks alike.
+	_hitbox_collision.position = offset
 
 
 func choose_attack() -> AttackData:
@@ -139,7 +217,14 @@ func choose_attack() -> AttackData:
 
 
 func finish_attack() -> void:
-	_hitbox.deactivate()
+	var frame_callable: Callable = Callable(self, "_on_attack_frame_changed")
+	if _sprite.frame_changed.is_connected(frame_callable):
+		_sprite.frame_changed.disconnect(frame_callable)
+	_hitbox.call_deferred("deactivate")
+	_tracked_hitbox_active = false
+	_active_attack_track = null
+	_applied_attack_keyframe = null
+	_attack_has_hit_target = false
 	active_attack = null
 
 

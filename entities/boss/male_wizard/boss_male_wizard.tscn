@@ -14,6 +14,8 @@
 [ext_resource type="Script" uid="uid://c302aoqae8c32" path="res://entities/boss/states/boss_death_state.gd" id="12_death"]
 [ext_resource type="Resource" uid="uid://y6jrarxuu1sy" path="res://entities/forms/male_wizard/male_wizard.tres" id="13_form"]
 [ext_resource type="SpriteFrames" uid="uid://cbymtso388jnd" path="res://entities/forms/male_wizard/male_wizard_frames.tres" id="14_frames"]
+[ext_resource type="Resource" uid="uid://d0vwcix40pd7e" path="res://entities/boss/male_wizard/attack1_track.tres" id="15_track"]
+[ext_resource type="Resource" path="res://entities/boss/male_wizard/attack2_track.tres" id="16_track"]
 
 [sub_resource type="RectangleShape2D" id="HitShape"]
 
@@ -28,6 +30,8 @@ position = Vector2(582, 293)
 collision_layer = 4
 script = ExtResource("1_boss")
 form = ExtResource("13_form")
+attack1_track = ExtResource("15_track")
+attack2_track = ExtResource("16_track")
 
 [node name="BossAudioHandler" type="Node" parent="." unique_id=977028462 node_paths=PackedStringArray("animated_sprite")]
 script = ExtResource("5_audio")

@@ -14,8 +14,13 @@ func enter() -> void:
 		change_state.emit(BossStates.COOLDOWN)
 		return
 	_time_left = maxf(_data.duration, 0.0)
-	boss.play_animation(_data.animation, true)
-	boss.start_attack(_data)
+	var track: BossAttackTrack = boss.get_attack_track(_data)
+	if track:
+		boss.start_tracked_attack(_data, track)
+		boss.play_animation(_data.animation, true)
+	else:
+		boss.play_animation(_data.animation, true)
+		boss.start_attack(_data)
 
 func physics_update(delta: float) -> void:
 	if boss.player_is_dead:
