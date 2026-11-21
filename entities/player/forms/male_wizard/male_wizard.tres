@@ -3,11 +3,14 @@
 [ext_resource type="Script" uid="uid://do51y0xqtaore" path="res://entities/player/forms/player_form.gd" id="1_8f183"]
 [ext_resource type="Script" uid="uid://drmmief64qgf" path="res://entities/player/forms/attack_data.gd" id="1_sdkrp"]
 [ext_resource type="SpriteFrames" uid="uid://cbymtso388jnd" path="res://entities/player/forms/male_wizard/male_wizard_frames.tres" id="2_4nxa3"]
-[ext_resource type="Resource" path="res://entities/player/audio/male_wizard/male_wizard_audio.tres" id="3_audio"]
+[ext_resource type="Resource" uid="uid://cxwmynuqxwrp1" path="res://entities/player/audio/male_wizard/attack_sound.tres" id="3_3fmtx"]
+[ext_resource type="Resource" uid="uid://co8y8d6fh0wpi" path="res://entities/player/audio/male_wizard/male_wizard_audio.tres" id="3_audio"]
+[ext_resource type="Resource" path="res://entities/player/audio/male_wizard/fire_loop_sound.tres" id="4_fire_loop"]
 
 [sub_resource type="Resource" id="Resource_wvtmh"]
 script = ExtResource("1_sdkrp")
 animation = &"attack1"
+sfx = ExtResource("3_3fmtx")
 duration = 0.4
 damage = 2
 hitbox_size = Vector2(160, 120)
@@ -17,6 +20,7 @@ metadata/_custom_type_script = "uid://drmmief64qgf"
 [sub_resource type="Resource" id="Resource_3mm8w"]
 script = ExtResource("1_sdkrp")
 animation = &"attack2"
+sfx = ExtResource("3_3fmtx")
 duration = 0.4
 damage = 2
 hitbox_size = Vector2(150, 180)
@@ -37,6 +41,7 @@ hurtbox_offset = Vector2(5.5, 0)
 sprite_frames = ExtResource("2_4nxa3")
 sprite_offset = Vector2(6, -42)
 audio = ExtResource("3_audio")
+form_loop_sfx = ExtResource("4_fire_loop")
 primary_attack = SubResource("Resource_wvtmh")
 secondary_attack = SubResource("Resource_3mm8w")
 metadata/_custom_type_script = "uid://do51y0xqtaore"
