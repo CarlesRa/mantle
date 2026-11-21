@@ -28,3 +28,23 @@ signal player_died
 
 @warning_ignore("unused_signal")
 signal player_attacked(attack: AttackData)
+
+# Game flow
+
+@warning_ignore("unused_signal")
+signal game_started
+
+@warning_ignore("unused_signal")
+signal game_paused
+
+@warning_ignore("unused_signal")
+signal game_resumed
+
+@warning_ignore("unused_signal")
+signal game_over
+
+@warning_ignore("unused_signal")
+signal checkpoint_saved
+
+@warning_ignore("unused_signal")
+signal checkpoint_loaded
