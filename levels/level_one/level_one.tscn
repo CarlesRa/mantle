@@ -1,0 +1,129 @@
+[gd_scene format=4 uid="uid://6wctei5hcaw4"]
+
+[ext_resource type="TileSet" uid="uid://dsp35jb1r8vt0" path="res://levels/level_one/tiles/level_one_tileset.tres" id="1_1jvvt"]
+[ext_resource type="PackedScene" uid="uid://c8uxatqpck3i1" path="res://entities/player/player.tscn" id="1_gayei"]
+[ext_resource type="Texture2D" uid="uid://by3834bxpvwj3" path="res://levels/level_one/background/sky.png" id="1_ng4lq"]
+[ext_resource type="Resource" uid="uid://d04dcpmilyh2l" path="res://entities/player/forms/base/base.tres" id="2_mkq66"]
+[ext_resource type="Texture2D" uid="uid://cqg2limjfh4jh" path="res://levels/level_one/background/mountains.png" id="2_w7gy2"]
+[ext_resource type="Texture2D" uid="uid://jabr3j218wm6" path="res://levels/level_one/background/castle.png" id="3_am4ah"]
+[ext_resource type="Texture2D" uid="uid://bxkrtxmp8jfas" path="res://levels/level_one/background/clouds/cloud1.png" id="4_b4nwn"]
+[ext_resource type="Texture2D" uid="uid://bgk0fpi8j8vwe" path="res://levels/level_one/background/forest_far.png" id="4_hfmuw"]
+[ext_resource type="Texture2D" uid="uid://b37hswmkq35lt" path="res://levels/level_one/background/forest_mid.png" id="5_b4nwn"]
+[ext_resource type="Texture2D" uid="uid://b2fmoj6lw1qoa" path="res://levels/level_one/background/clouds/cloud2.png" id="5_uw6d2"]
+[ext_resource type="Texture2D" uid="uid://bvfcip65ivy8d" path="res://levels/level_one/background/clouds/cloud6.png" id="6_2c8uo"]
+[ext_resource type="Texture2D" uid="uid://brpfufdnnh3wq" path="res://levels/level_one/background/forest_near.png" id="6_uw6d2"]
+[ext_resource type="Texture2D" uid="uid://dvi7n060ki5bl" path="res://levels/level_one/background/clouds/cloud5.png" id="7_ky1ec"]
+[ext_resource type="Texture2D" uid="uid://dbr3bf06l2ysy" path="res://levels/level_one/background/birds/birds1.png" id="8_2c8uo"]
+[ext_resource type="Texture2D" uid="uid://co4bfmi1rdv0e" path="res://levels/level_one/background/birds/birds2.png" id="9_ky1ec"]
+
+[node name="LevelOne" type="Node2D" unique_id=1453399965]
+
+[node name="Background" type="Node2D" parent="." unique_id=1899873082]
+position = Vector2(0, 120)
+
+[node name="Sky" type="Parallax2D" parent="Background" unique_id=944750020]
+scroll_scale = Vector2(0, 0)
+repeat_size = Vector2(1024, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Sky" unique_id=353041416]
+texture = ExtResource("1_ng4lq")
+centered = false
+
+[node name="Mountains" type="Parallax2D" parent="Background" unique_id=1400333623]
+scroll_scale = Vector2(0.1, 0)
+repeat_size = Vector2(1024, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Mountains" unique_id=557128051]
+texture = ExtResource("2_w7gy2")
+centered = false
+
+[node name="Castle" type="Parallax2D" parent="Background" unique_id=1214809176]
+scroll_scale = Vector2(0.15, 0)
+repeat_size = Vector2(1024, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/Castle" unique_id=1343480252]
+position = Vector2(0, 20)
+texture = ExtResource("3_am4ah")
+centered = false
+
+[node name="Clouds" type="Parallax2D" parent="Background" unique_id=20904306]
+scroll_scale = Vector2(0.2, 0)
+scroll_offset = Vector2(0, 70)
+repeat_size = Vector2(1024, 0)
+autoscroll = Vector2(-8, 0)
+
+[node name="cloud1" type="Sprite2D" parent="Background/Clouds" unique_id=1767685499]
+position = Vector2(185, 8)
+texture = ExtResource("4_b4nwn")
+
+[node name="cloud2" type="Sprite2D" parent="Background/Clouds" unique_id=1218194509]
+position = Vector2(305, 0)
+texture = ExtResource("5_uw6d2")
+
+[node name="cloud3" type="Sprite2D" parent="Background/Clouds" unique_id=1330825600]
+position = Vector2(399, -18)
+texture = ExtResource("6_2c8uo")
+
+[node name="cloud4" type="Sprite2D" parent="Background/Clouds" unique_id=716781447]
+position = Vector2(91, 2)
+texture = ExtResource("7_ky1ec")
+
+[node name="cloud5" type="Sprite2D" parent="Background/Clouds" unique_id=920959925]
+position = Vector2(789, 0)
+texture = ExtResource("6_2c8uo")
+
+[node name="Birds" type="Parallax2D" parent="Background" unique_id=2103583146]
+scroll_scale = Vector2(0.3, 0)
+repeat_size = Vector2(1500, 0)
+autoscroll = Vector2(40, 0)
+
+[node name="birds" type="Sprite2D" parent="Background/Birds" unique_id=1719985492]
+texture = ExtResource("8_2c8uo")
+
+[node name="birds2" type="Sprite2D" parent="Background/Birds" unique_id=1372123398]
+position = Vector2(400, 60)
+texture = ExtResource("9_ky1ec")
+
+[node name="ForestFar" type="Parallax2D" parent="Background" unique_id=1208633019]
+scroll_scale = Vector2(0.3, 0)
+repeat_size = Vector2(1024, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/ForestFar" unique_id=1070045392]
+texture = ExtResource("4_hfmuw")
+centered = false
+
+[node name="ForestMid" type="Parallax2D" parent="Background" unique_id=1463832954]
+scroll_scale = Vector2(0.5, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/ForestMid" unique_id=839965936]
+texture = ExtResource("5_b4nwn")
+centered = false
+
+[node name="ForestNear" type="Parallax2D" parent="Background" unique_id=75518863]
+scroll_scale = Vector2(0.7, 0)
+repeat_size = Vector2(1024, 0)
+
+[node name="Sprite2D" type="Sprite2D" parent="Background/ForestNear" unique_id=937409353]
+texture = ExtResource("6_uw6d2")
+centered = false
+
+[node name="ColorRect" type="ColorRect" parent="Background/ForestNear" unique_id=405102057]
+offset_top = 346.0
+offset_right = 1024.0
+offset_bottom = 746.0
+color = Color(0.21176471, 0.25882354, 0.16470589, 1)
+
+[node name="Ground" type="TileMapLayer" parent="." unique_id=427676593]
+tile_map_data = PackedByteArray("AAAAAAwAAAAGAAAAAAABAAwAAAAHAAAAAAACAAwAAAAIAAAAAAADAAwAAAAJAAAAAAAEAAwAAAAKAAAAAAAFAAwAAAAKAAAAAAAGAAwAAAAKAAAAAAAHAAwAAAAKAAAAAAAIAAwAAAAKAAAAAAAJAAwAAAAKAAAAAAAKAAwAAAAKAAAAAAALAAwAAAAKAAAAAAAMAAwAAAAKAAAAAAANAAwAAAAKAAAAAAAOAAwAAAAKAAAAAAAPAAwAAAAKAAAAAAAQAAwAAAAKAAAAAAARAAwAAAAKAAAAAAASAAwAAAAKAAAAAAATAAwAAAALAAAAAAAAAA0AAAAAAAEAAAAAAA4AAAAAAAIAAAAAAA8AAAAAAAMAAAABAA0AAAABAAEAAAABAA4AAAABAAIAAAABAA8AAAABAAMAAAACAA0AAAACAAEAAAACAA4AAAACAAIAAAACAA8AAAACAAMAAAADAA0AAAADAAEAAAADAA4AAAADAAIAAAADAA8AAAADAAMAAAAEAA0AAAAEAAEAAAAEAA4AAAAEAAIAAAAEAA8AAAAEAAMAAAAFAA0AAAAEAAEAAAAFAA4AAAAEAAEAAAAFAA8AAAAEAAEAAAAGAA0AAAAEAAEAAAAHAA0AAAAEAAEAAAAIAA0AAAAEAAEAAAAJAA0AAAAEAAEAAAAKAA0AAAAEAAEAAAALAA0AAAAEAAEAAAAMAA0AAAAEAAEAAAANAA0AAAAEAAEAAAAOAA0AAAAEAAEAAAAPAA0AAAAEAAEAAAAQAA0AAAAEAAEAAAARAA0AAAAEAAEAAAASAA0AAAAEAAEAAAAGAA4AAAAEAAEAAAAHAA4AAAAEAAEAAAAIAA4AAAAEAAEAAAAJAA4AAAAEAAEAAAAKAA4AAAAEAAEAAAALAA4AAAAEAAEAAAAMAA4AAAAEAAEAAAANAA4AAAAEAAEAAAAOAA4AAAAEAAEAAAAPAA4AAAAEAAEAAAAQAA4AAAAEAAEAAAARAA4AAAAEAAEAAAASAA4AAAAEAAEAAAASAA8AAAAEAAEAAAARAA8AAAAEAAEAAAAQAA8AAAAEAAEAAAAPAA8AAAAEAAEAAAAOAA8AAAAEAAEAAAANAA8AAAAEAAEAAAAMAA8AAAAEAAEAAAALAA8AAAAEAAEAAAAKAA8AAAAEAAEAAAAJAA8AAAAEAAEAAAAIAA8AAAAEAAEAAAAHAA8AAAAEAAEAAAAGAA8AAAAEAAEAAAATAA0AAAAFAAEAAAATAA4AAAAFAAEAAAATAA8AAAAFAAEAAAAWAA4AAAAAAAAAAAAXAA4AAAABAAAAAAAYAA4AAAACAAAAAAAZAA4AAAADAAAAAAAaAA4AAAAEAAAAAAAdABAAAAAAAAAAAAAeABAAAAABAAAAAAAfABAAAAACAAAAAAAgABAAAAADAAAAAAAhABAAAAAEAAAAAAAjABIAAAAAAAAAAAAkABIAAAABAAAAAAAlABIAAAACAAAAAAAmABIAAAADAAAAAAAnABIAAAAEAAAAAAAbAA4AAAAFAAAAAAAiABAAAAAFAAAAAAAoABIAAAAFAAAAAAAWAA8AAAAAAAUAAAAXAA8AAAABAAUAAAAYAA8AAAACAAUAAAAZAA8AAAADAAUAAAAaAA8AAAAEAAUAAAAbAA8AAAAFAAUAAAAdABEAAAAAAAUAAAAeABEAAAABAAUAAAAfABEAAAACAAUAAAAgABEAAAADAAUAAAAhABEAAAAEAAUAAAAiABEAAAAFAAUAAAAjABMAAAAAAAUAAAAkABMAAAABAAUAAAAlABMAAAACAAUAAAAmABMAAAADAAUAAAAnABMAAAAEAAUAAAAoABMAAAAFAAUAAAAAABAAAAAAAAUAAAABABAAAAABAAUAAAACABAAAAACAAUAAAADABAAAAADAAUAAAAEABAAAAAEAAUAAAAFABAAAAABAAUAAAAGABAAAAACAAUAAAAHABAAAAADAAUAAAAIABAAAAAEAAUAAAAJABAAAAABAAUAAAAKABAAAAACAAUAAAALABAAAAADAAUAAAAMABAAAAAEAAUAAAANABAAAAABAAUAAAAOABAAAAACAAUAAAAPABAAAAABAAUAAAAQABAAAAACAAUAAAARABAAAAADAAUAAAASABAAAAAEAAUAAAATABAAAAAFAAUAAAA=")
+tile_set = ExtResource("1_1jvvt")
+
+[node name="Portals" type="Node2D" parent="." unique_id=78103007]
+
+[node name="Enemies" type="Node2D" parent="." unique_id=1581549636]
+
+[node name="Player" parent="." unique_id=871748280 instance=ExtResource("1_gayei")]
+position = Vector2(23, 168)
+initial_form = ExtResource("2_mkq66")
+
+[node name="Camera2D" type="Camera2D" parent="Player" unique_id=912929120]
+zoom = Vector2(2, 2)
