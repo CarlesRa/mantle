@@ -21,11 +21,11 @@ buses/default_bus_layout="uid://cbuboqsrt084v"
 [autoload]
 
 EventBus="*uid://crp7i4qboinhv"
-StoreManager="*res://_autoload/store_manager.gd"
+StoreManager="*uid://b08gxy0mbjm3n"
 AudioManager="*uid://dsyja668bd54p"
 SceneManager="*uid://dhk6tg1woo8mt"
-SaveManager="*res://_autoload/save_manager.gd"
-GameManager="*res://_autoload/game_manager.gd"
+SaveManager="*uid://4i6y7oumj1yj"
+GameManager="*uid://cddtme3j7kyj8"
 
 [debug]
 
