@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="PlayerForm" format=3 uid="uid://d04dcpmilyh2l"]
 
-[ext_resource type="Script" uid="uid://drmmief64qgf" path="res://entities/player/forms/attack_data.gd" id="1_geyog"]
-[ext_resource type="Script" uid="uid://do51y0xqtaore" path="res://entities/player/forms/player_form.gd" id="1_k4kwo"]
+[ext_resource type="Script" uid="uid://drmmief64qgf" path="res://entities/forms/attack_data.gd" id="1_geyog"]
+[ext_resource type="Script" uid="uid://do51y0xqtaore" path="res://entities/forms/player_form.gd" id="1_k4kwo"]
 [ext_resource type="SpriteFrames" uid="uid://cg3pgmg6isw5p" path="res://entities/forms/base/base_frames.tres" id="2_tc5te"]
 [ext_resource type="Resource" path="res://entities/forms/base/audio/sword_stab_sound.tres" id="3_sword_stab"]
 [ext_resource type="Resource" uid="uid://8vd27cscirr5" path="res://entities/forms/base/audio/base_audio.tres" id="4_base_audio"]

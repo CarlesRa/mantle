@@ -1,6 +1,6 @@
 [gd_resource type="Resource" script_class="PlayerAudioSet" format=3 uid="uid://8vd27cscirr5"]
 
-[ext_resource type="Script" uid="uid://ctxxew5lnp20l" path="res://entities/player/audio/player_audio_set.gd" id="1"]
+[ext_resource type="Script" uid="uid://ctxxew5lnp20l" path="res://entities/forms/player_audio_set.gd" id="1"]
 [ext_resource type="Resource" uid="uid://5jjylx6tkrvd" path="res://entities/forms/base/audio/damage_sound.tres" id="1_t0xiv"]
 [ext_resource type="Resource" uid="uid://dytxqr340ulai" path="res://entities/forms/base/audio/death_sound.tres" id="2_51hx2"]
 [ext_resource type="Resource" uid="uid://5myp0rpqtn20" path="res://entities/forms/base/audio/jump_sound.tres" id="2_jump"]
