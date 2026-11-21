@@ -1,11 +1,73 @@
 extends Node
 
 
-# Called when the node enters the scene tree for the first time.
+const DEFAULT_FADE_DURATION: float = 0.25
+
+var _overlay: ColorRect
+var _is_transitioning: bool = false
+
+
 func _ready() -> void:
-	pass # Replace with function body.
+	process_mode = Node.PROCESS_MODE_ALWAYS
+
+	var canvas_layer: CanvasLayer = CanvasLayer.new()
+	canvas_layer.name = "SceneTransitionLayer"
+	canvas_layer.layer = 100
+	canvas_layer.process_mode = Node.PROCESS_MODE_ALWAYS
+	add_child(canvas_layer)
+
+	_overlay = ColorRect.new()
+	_overlay.name = "FadeOverlay"
+	_overlay.color = Color.TRANSPARENT
+	_overlay.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	_overlay.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	canvas_layer.add_child(_overlay)
 
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-	pass
+## Fades out, changes to the scene at [param scene_path], then fades in.
+func change_scene(
+	scene_path: String, fade_duration: float = DEFAULT_FADE_DURATION
+) -> Error:
+	if scene_path.is_empty():
+		push_error("SceneManager: scene path cannot be empty.")
+		return ERR_INVALID_PARAMETER
+
+	if _is_transitioning:
+		push_error("SceneManager: a scene transition is already in progress.")
+		return ERR_BUSY
+
+	_is_transitioning = true
+	var duration: float = maxf(fade_duration, 0.0)
+	await _fade_to(Color.BLACK, duration)
+
+	var error: Error = get_tree().change_scene_to_file(scene_path)
+	if error != OK:
+		push_error("SceneManager: could not change scene to '%s' (error %d)." % [scene_path, error])
+		await _fade_to(Color.TRANSPARENT, duration)
+		_is_transitioning = false
+		return error
+
+	await get_tree().scene_changed
+	await _fade_to(Color.TRANSPARENT, duration)
+	_is_transitioning = false
+	return OK
+
+
+## Reloads the current scene.
+func reload_current_scene() -> Error:
+	var current_scene: Node = get_tree().current_scene
+	if current_scene == null or current_scene.scene_file_path.is_empty():
+		push_error("SceneManager: there is no current scene to reload.")
+		return ERR_UNCONFIGURED
+
+	return await change_scene(current_scene.scene_file_path)
+
+
+func _fade_to(target_color: Color, duration: float) -> void:
+	if duration == 0.0:
+		_overlay.color = target_color
+		return
+
+	var tween: Tween = create_tween()
+	tween.tween_property(_overlay, "color", target_color, duration)
+	await tween.finished
