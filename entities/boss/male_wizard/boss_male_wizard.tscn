@@ -1,0 +1,91 @@
+[gd_scene format=3 uid="uid://1gwq0k1kyvyj"]
+
+[ext_resource type="Script" uid="uid://cyr45pdewtrd5" path="res://entities/boss/boss.gd" id="1_boss"]
+[ext_resource type="Script" uid="uid://ck8xgcqtq0oe7" path="res://_common/state_machine/state_machine.gd" id="2_sm"]
+[ext_resource type="Script" uid="uid://bxngq5a8rgq82" path="res://_common/combat/hitbox.gd" id="3_hit"]
+[ext_resource type="Script" uid="uid://cqekdvpfe3qod" path="res://_common/combat/hurtbox.gd" id="4_hurt"]
+[ext_resource type="Script" uid="uid://dmv7fpqy4c88r" path="res://entities/boss/male_wizard/boss_audio_handler.gd" id="5_audio"]
+[ext_resource type="Script" uid="uid://dpogxaqho8dyu" path="res://entities/boss/states/boss_idle_state.gd" id="6_idle"]
+[ext_resource type="Script" uid="uid://co8qddpjcj538" path="res://entities/boss/states/boss_chase_state.gd" id="7_chase"]
+[ext_resource type="Script" uid="uid://c3nbsdrlh03p" path="res://entities/boss/states/boss_telegraph_state.gd" id="8_telegraph"]
+[ext_resource type="Script" uid="uid://3hai1lk0cfts" path="res://entities/boss/states/boss_attack_state.gd" id="9_attack"]
+[ext_resource type="Script" uid="uid://cdbp2lh1ka8gx" path="res://entities/boss/states/boss_cooldown_state.gd" id="10_cooldown"]
+[ext_resource type="Script" uid="uid://ct47x1f5xofj4" path="res://entities/boss/states/boss_hit_state.gd" id="11_hit_state"]
+[ext_resource type="Script" uid="uid://c302aoqae8c32" path="res://entities/boss/states/boss_death_state.gd" id="12_death"]
+[ext_resource type="Resource" uid="uid://y6jrarxuu1sy" path="res://entities/forms/male_wizard/male_wizard.tres" id="13_form"]
+[ext_resource type="SpriteFrames" uid="uid://cbymtso388jnd" path="res://entities/forms/male_wizard/male_wizard_frames.tres" id="14_frames"]
+[ext_resource type="Resource" uid="uid://d0vwcix40pd7e" path="res://entities/boss/male_wizard/attack1_track.tres" id="15_track"]
+[ext_resource type="Resource" path="res://entities/boss/male_wizard/attack2_track.tres" id="16_track"]
+
+[sub_resource type="RectangleShape2D" id="HitShape"]
+
+[sub_resource type="RectangleShape2D" id="HurtShape"]
+size = Vector2(14, 50)
+
+[sub_resource type="RectangleShape2D" id="BodyShape"]
+size = Vector2(14, 50)
+
+[node name="BossMaleWizard" type="CharacterBody2D" unique_id=1267270173]
+collision_layer = 4
+script = ExtResource("1_boss")
+form = ExtResource("13_form")
+attack1_track = ExtResource("15_track")
+attack2_track = ExtResource("16_track")
+
+[node name="BossAudioHandler" type="Node" parent="." unique_id=977028462 node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("5_audio")
+animated_sprite = NodePath("../Visuals/AnimatedSprite2D")
+form = ExtResource("13_form")
+
+[node name="Visuals" type="Node2D" parent="." unique_id=1988504554]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visuals" unique_id=1652371567]
+position = Vector2(6, -42)
+sprite_frames = ExtResource("14_frames")
+animation = &"attack1"
+autoplay = "idle"
+frame = 7
+frame_progress = 1.0
+
+[node name="Hitbox" type="Area2D" parent="Visuals" unique_id=560191185]
+monitoring = false
+script = ExtResource("3_hit")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Visuals/Hitbox" unique_id=537110637]
+shape = SubResource("HitShape")
+
+[node name="Hurtbox" type="Area2D" parent="Visuals" unique_id=107977932]
+position = Vector2(5.5, -25)
+script = ExtResource("4_hurt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Visuals/Hurtbox" unique_id=1329101426]
+shape = SubResource("HurtShape")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1990680052]
+position = Vector2(5.5, -25)
+shape = SubResource("BodyShape")
+
+[node name="StateMachine" type="Node" parent="." unique_id=605197407 node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_sm")
+initial_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="StateMachine" unique_id=1423862418]
+script = ExtResource("6_idle")
+
+[node name="chase" type="Node" parent="StateMachine" unique_id=903075264]
+script = ExtResource("7_chase")
+
+[node name="telegraph" type="Node" parent="StateMachine" unique_id=770660021]
+script = ExtResource("8_telegraph")
+
+[node name="attack" type="Node" parent="StateMachine" unique_id=1288179621]
+script = ExtResource("9_attack")
+
+[node name="cooldown" type="Node" parent="StateMachine" unique_id=485709239]
+script = ExtResource("10_cooldown")
+
+[node name="hit" type="Node" parent="StateMachine" unique_id=326422868]
+script = ExtResource("11_hit_state")
+
+[node name="death" type="Node" parent="StateMachine" unique_id=956604504]
+script = ExtResource("12_death")

@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://7cmaplr7k4vg"]
+
+[ext_resource type="PackedScene" uid="uid://c8uxatqpck3i1" path="res://entities/player/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" uid="uid://1gwq0k1kyvyj" path="res://entities/boss/male_wizard/boss_male_wizard.tscn" id="2_boss"]
+[ext_resource type="Resource" uid="uid://d04dcpmilyh2l" path="res://entities/forms/base/base.tres" id="3_form"]
+
+[sub_resource type="RectangleShape2D" id="FloorShape"]
+size = Vector2(1000, 40)
+
+[node name="BossTest" type="Node2D" unique_id=124498090]
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=774298450]
+position = Vector2(0, 400)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=1938873623]
+shape = SubResource("FloorShape")
+
+[node name="Player" parent="." unique_id=861680021 instance=ExtResource("1_player")]
+position = Vector2(-160, 380)
+max_health = 5
+initial_form = ExtResource("3_form")
+
+[node name="BossMaleWizard" parent="." unique_id=978455406 instance=ExtResource("2_boss")]
+position = Vector2(160, 380)
+damage_multiplier = 0.0
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=1703353571]
+position = Vector2(0, 200)
+zoom = Vector2(1.5, 1.5)

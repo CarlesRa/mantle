@@ -1,0 +1,57 @@
+[gd_resource type="Resource" script_class="BossAttackTrack" format=3 uid="uid://d0vwcix40pd7e"]
+
+[ext_resource type="Script" uid="uid://c4o6sygv7m8q1" path="res://entities/boss/boss_attack_track.gd" id="1_track"]
+[ext_resource type="Script" uid="uid://bnwu6ha3r7gml" path="res://entities/boss/boss_hit_keyframe.gd" id="2_keyframe"]
+
+[sub_resource type="Resource" id="KeyframeOffStart"]
+script = ExtResource("2_keyframe")
+frame = 0
+active = false
+offset = Vector2(35, -80)
+size = Vector2(160, 40)
+
+[sub_resource type="Resource" id="KeyframeTop"]
+script = ExtResource("2_keyframe")
+frame = 1
+active = true
+offset = Vector2(35, -80)
+size = Vector2(160, 40)
+
+[sub_resource type="Resource" id="KeyframeOffAfterTop"]
+script = ExtResource("2_keyframe")
+frame = 2
+active = false
+offset = Vector2(35, -80)
+size = Vector2(160, 40)
+
+[sub_resource type="Resource" id="KeyframeCenter"]
+script = ExtResource("2_keyframe")
+frame = 3
+active = true
+offset = Vector2(35, -40)
+size = Vector2(160, 40)
+
+[sub_resource type="Resource" id="KeyframeOffAfterCenter"]
+script = ExtResource("2_keyframe")
+frame = 4
+active = false
+offset = Vector2(35, -40)
+size = Vector2(160, 40)
+
+[sub_resource type="Resource" id="KeyframeBottom"]
+script = ExtResource("2_keyframe")
+frame = 5
+active = true
+offset = Vector2(35, 0)
+size = Vector2(160, 40)
+
+[sub_resource type="Resource" id="KeyframeOffEnd"]
+script = ExtResource("2_keyframe")
+frame = 6
+active = false
+offset = Vector2(35, 0)
+size = Vector2(160, 40)
+
+[resource]
+script = ExtResource("1_track")
+keyframes = Array[ExtResource("2_keyframe")]([SubResource("KeyframeOffStart"), SubResource("KeyframeTop"), SubResource("KeyframeOffAfterTop"), SubResource("KeyframeCenter"), SubResource("KeyframeOffAfterCenter"), SubResource("KeyframeBottom"), SubResource("KeyframeOffEnd")])
