@@ -18,9 +18,11 @@ func enter() -> void:
 
 func physics_update(_delta: float) -> void:
 	if enemy.is_animation_finished(EnemyOne.ANIM_ATTACK):
-		change_state.emit(EnemyOneStates.PATROL)
+		change_state.emit(EnemyOneStates.CHASE)
 		return
 		
 	if not _has_struck and enemy.get_animation_frame() >= strike_frame:
 		_has_struck = true
 		enemy.strike(damage)
+		
+		

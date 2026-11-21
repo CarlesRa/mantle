@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://dttuuyiyuxadu" path="res://entities/enemies/enemy_one/states/enemy_one_attack_state.gd" id="10_74k2a"]
 [ext_resource type="Script" uid="uid://cxr61pijao1a" path="res://entities/enemies/enemy_one/states/enemy_one_hit_state.gd" id="11_ka4fu"]
 [ext_resource type="Script" uid="uid://c33soq8m5822f" path="res://entities/enemies/enemy_one/states/enemy_one_death_state.gd" id="12_lefgs"]
+[ext_resource type="Script" uid="uid://2rur1rir8ble" path="res://entities/enemies/enemy_one/states/enemy_one_chase_state.gd" id="13_lefgs"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tg2c1"]
 size = Vector2(20, 36)
@@ -352,7 +353,8 @@ shape = SubResource("RectangleShape2D_c67wr")
 
 [node name="StateMachine" type="Node" parent="." unique_id=1836694020 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_g37pi")
-initial_state = NodePath("Patrol")
+initial_state = NodePath("Chase")
+debug = true
 
 [node name="Patrol" type="Node" parent="StateMachine" unique_id=213178140]
 script = ExtResource("3_e4mde")
@@ -369,3 +371,6 @@ script = ExtResource("11_ka4fu")
 [node name="Death" type="Node" parent="StateMachine" unique_id=679722689]
 script = ExtResource("12_lefgs")
 metadata/_custom_type_script = "uid://c33soq8m5822f"
+
+[node name="Chase" type="Node" parent="StateMachine" unique_id=159608275]
+script = ExtResource("13_lefgs")

@@ -23,6 +23,8 @@ var _wall_ray: RayCast2D
 var _player_ray: RayCast2D
 var _floor_ray: RayCast2D
 var _attack_hitbox: Area2D
+##Player enemy Spotted
+var target: Node2D
 
 func _enter_tree() -> void:
 	_visuals = $Visuals
@@ -50,7 +52,11 @@ func should_turn() -> bool:
 ## Returns true when the player is in front, within reach and not behind a wall.
 func can_see_player() -> bool:
 	_player_ray.force_raycast_update()
-	return _player_ray.get_collider() is Player
+	var collider := _player_ray.get_collider()
+	if collider is Player:
+		target = collider
+		return true
+	return false
 
 ## Flips the facing direction.
 func turn_around() -> void:
