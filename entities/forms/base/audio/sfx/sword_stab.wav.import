@@ -7,7 +7,7 @@ path="res://.godot/imported/sword_stab.wav-26eedf68b0724efbb14c16b76184f183.samp
 
 [deps]
 
-source_file="res://entities/player/audio/base/sfx/sword_stab.wav"
+source_file="res://entities/forms/base/audio/sfx/sword_stab.wav"
 dest_files=["res://.godot/imported/sword_stab.wav-26eedf68b0724efbb14c16b76184f183.sample"]
 
 [params]

@@ -7,7 +7,7 @@ path="res://.godot/imported/footstep.wav-4d887b43dad53183c88d6e5a04758593.sample
 
 [deps]
 
-source_file="res://entities/player/audio/base/sfx/footstep.wav"
+source_file="res://entities/forms/base/audio/sfx/footstep.wav"
 dest_files=["res://.godot/imported/footstep.wav-4d887b43dad53183c88d6e5a04758593.sample"]
 
 [params]

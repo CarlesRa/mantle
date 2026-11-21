@@ -2,7 +2,7 @@
 
 [ext_resource type="Script" uid="uid://c3coh5i4elwrq" path="res://entities/player/player.gd" id="1_bls4j"]
 [ext_resource type="Script" uid="uid://ck8xgcqtq0oe7" path="res://_common/state_machine/state_machine.gd" id="2_fkugw"]
-[ext_resource type="SpriteFrames" uid="uid://cg3pgmg6isw5p" path="res://entities/player/forms/base/base_frames.tres" id="2_qiwj3"]
+[ext_resource type="SpriteFrames" uid="uid://cg3pgmg6isw5p" path="res://entities/forms/base/base_frames.tres" id="2_qiwj3"]
 [ext_resource type="Script" uid="uid://bxngq5a8rgq82" path="res://_common/combat/hitbox.gd" id="3_7thud"]
 [ext_resource type="Script" uid="uid://cqekdvpfe3qod" path="res://_common/combat/hurtbox.gd" id="4_a1qjk"]
 [ext_resource type="Script" uid="uid://cxiktttybe14c" path="res://entities/player/states/player_idle_state.gd" id="4_fkugw"]

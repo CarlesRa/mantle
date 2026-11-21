@@ -10,7 +10,7 @@ metadata={
 
 [deps]
 
-source_file="res://entities/player/forms/base/sprites/fall.png"
+source_file="res://entities/forms/base/sprites/fall.png"
 dest_files=["res://.godot/imported/fall.png-d0e6b1be1bcdeedadbc3a3a1f6f6467f.ctex"]
 
 [params]

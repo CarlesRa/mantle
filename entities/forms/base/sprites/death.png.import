@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://bo6vkn3g3wu7x"
-path="res://.godot/imported/jump.png-ff10e7e6b7f3049af94670e8d0dc5eaf.ctex"
+uid="uid://7hr6q7dn1duh"
+path="res://.godot/imported/death.png-38e9b37a63687b74658470cf076724ec.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/forms/base/sprites/jump.png"
-dest_files=["res://.godot/imported/jump.png-ff10e7e6b7f3049af94670e8d0dc5eaf.ctex"]
+source_file="res://entities/forms/base/sprites/death.png"
+dest_files=["res://.godot/imported/death.png-38e9b37a63687b74658470cf076724ec.ctex"]
 
 [params]
 

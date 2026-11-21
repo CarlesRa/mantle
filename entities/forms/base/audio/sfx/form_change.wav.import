@@ -7,7 +7,7 @@ path="res://.godot/imported/form_change.wav-152b8f8bf59d16f1c5d39ef006e580cc.sam
 
 [deps]
 
-source_file="res://entities/player/audio/base/sfx/form_change.wav"
+source_file="res://entities/forms/base/audio/sfx/form_change.wav"
 dest_files=["res://.godot/imported/form_change.wav-152b8f8bf59d16f1c5d39ef006e580cc.sample"]
 
 [params]
