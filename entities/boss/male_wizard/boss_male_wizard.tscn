@@ -26,7 +26,6 @@ size = Vector2(14, 50)
 size = Vector2(14, 50)
 
 [node name="BossMaleWizard" type="CharacterBody2D" unique_id=1267270173]
-position = Vector2(582, 293)
 collision_layer = 4
 script = ExtResource("1_boss")
 form = ExtResource("13_form")
@@ -45,6 +44,8 @@ position = Vector2(6, -42)
 sprite_frames = ExtResource("14_frames")
 animation = &"attack1"
 autoplay = "idle"
+frame = 7
+frame_progress = 1.0
 
 [node name="Hitbox" type="Area2D" parent="Visuals" unique_id=560191185]
 monitoring = false
