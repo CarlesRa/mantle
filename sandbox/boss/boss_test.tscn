@@ -1,0 +1,29 @@
+[gd_scene format=3]
+
+[ext_resource type="PackedScene" path="res://entities/player/player.tscn" id="1_player"]
+[ext_resource type="PackedScene" path="res://entities/boss/male_wizard/boss_male_wizard.tscn" id="2_boss"]
+[ext_resource type="Resource" path="res://entities/forms/base/base.tres" id="3_form"]
+
+[sub_resource type="RectangleShape2D" id="FloorShape"]
+size = Vector2(1000, 40)
+
+[node name="BossTest" type="Node2D"]
+
+[node name="Floor" type="StaticBody2D" parent="."]
+position = Vector2(0, 400)
+collision_layer = 1
+collision_mask = 0
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor"]
+shape = SubResource("FloorShape")
+
+[node name="Player" parent="." instance=ExtResource("1_player")]
+position = Vector2(-160, 380)
+initial_form = ExtResource("3_form")
+
+[node name="BossMaleWizard" parent="." instance=ExtResource("2_boss")]
+position = Vector2(160, 380)
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2(0, 200)
+zoom = Vector2(1.5, 1.5)
+current = true
