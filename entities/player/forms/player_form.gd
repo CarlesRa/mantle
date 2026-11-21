@@ -44,6 +44,8 @@ var _warned_about_transform_duration: bool = false
 
 @export_group("Audio")
 @export var audio: PlayerAudioSet
+## Optional loop tied to this form, such as a weapon or aura sound.
+@export var form_loop_sfx: SoundEffect
 
 @export_group("Combat")
 ## Attack of the main button. Null = the form cannot attack.

@@ -5,9 +5,14 @@ extends Node
 @export var animated_sprite: AnimatedSprite2D
 
 var current_audio_set: PlayerAudioSet
+var _form_loop_player: AudioStreamPlayer
 
 
 func _ready() -> void:
+	_form_loop_player = AudioStreamPlayer.new()
+	_form_loop_player.name = "FormLoopPlayer"
+	_form_loop_player.bus = AudioManager.SFX
+	add_child(_form_loop_player)
 	EventBus.player_jumped.connect(_on_player_jumped)
 	EventBus.player_landed.connect(_on_player_landed)
 	EventBus.player_hit.connect(_on_player_hit)
@@ -17,6 +22,9 @@ func _ready() -> void:
 	EventBus.player_attacked.connect(_on_player_attacked)
 	if animated_sprite != null:
 		animated_sprite.frame_changed.connect(_on_sprite_frame_changed)
+	var player: Player = get_parent() as Player
+	if player != null and player.form != null:
+		_on_player_form_changed(player.form)
 
 
 func _on_player_jumped() -> void:
@@ -32,11 +40,21 @@ func _on_player_hit() -> void:
 
 
 func _on_player_died() -> void:
+	_form_loop_player.stop()
 	_play_sfx(current_audio_set.death_sfx if current_audio_set != null else null)
 
 
 func _on_player_form_changed(form: PlayerForm) -> void:
 	current_audio_set = form.audio if form != null else null
+	var loop_sfx: SoundEffect = form.form_loop_sfx if form != null else null
+	var loop_stream: AudioStream = loop_sfx.stream if loop_sfx != null else null
+	if _form_loop_player.stream == loop_stream and _form_loop_player.playing:
+		return
+	_form_loop_player.stop()
+	_form_loop_player.stream = loop_stream
+	if loop_sfx != null and loop_stream != null:
+		_form_loop_player.volume_db = loop_sfx.volume_db
+		_form_loop_player.play()
 
 func _on_player_transform_started(form: PlayerForm, _duration: float) -> void:
 	var form_audio: PlayerAudioSet = form.audio if form != null else null
