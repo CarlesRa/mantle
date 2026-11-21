@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cg84ik3f6bv78"
-path="res://.godot/imported/death.wav-ba2d47aba7d29527937569bf92dd9454.sample"
+path="res://.godot/imported/death.wav-73d3b0a69678b48e29556e72acfda5c4.sample"
 
 [deps]
 
 source_file="res://entities/forms/female_wizard/audio/sfx/death.wav"
-dest_files=["res://.godot/imported/death.wav-ba2d47aba7d29527937569bf92dd9454.sample"]
+dest_files=["res://.godot/imported/death.wav-73d3b0a69678b48e29556e72acfda5c4.sample"]
 
 [params]
 

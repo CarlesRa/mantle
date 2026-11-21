@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://b6a0tx7nap83d"
-path="res://.godot/imported/idle.png-77f9be626b199823721a35b374435fc6.ctex"
+path="res://.godot/imported/idle.png-89bc28955e34296f0609eaaeacb620cd.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://entities/forms/female_wizard/sprites/idle.png"
-dest_files=["res://.godot/imported/idle.png-77f9be626b199823721a35b374435fc6.ctex"]
+dest_files=["res://.godot/imported/idle.png-89bc28955e34296f0609eaaeacb620cd.ctex"]
 
 [params]
 

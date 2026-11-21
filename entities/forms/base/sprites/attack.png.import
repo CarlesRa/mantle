@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c813mbcsk3gh6"
-path="res://.godot/imported/attack.png-a88a51ad007635001f6804d2ebbff44a.ctex"
+path="res://.godot/imported/attack.png-d6717aed19aabad75f7d29b6888e3af5.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://entities/forms/base/sprites/attack.png"
-dest_files=["res://.godot/imported/attack.png-a88a51ad007635001f6804d2ebbff44a.ctex"]
+dest_files=["res://.godot/imported/attack.png-d6717aed19aabad75f7d29b6888e3af5.ctex"]
 
 [params]
 

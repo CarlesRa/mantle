@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cc8ffg05nq6ul"
-path="res://.godot/imported/sword_stab.wav-26eedf68b0724efbb14c16b76184f183.sample"
+path="res://.godot/imported/sword_stab.wav-058b233dec34bc05d01cc5f43594023a.sample"
 
 [deps]
 
 source_file="res://entities/forms/base/audio/sfx/sword_stab.wav"
-dest_files=["res://.godot/imported/sword_stab.wav-26eedf68b0724efbb14c16b76184f183.sample"]
+dest_files=["res://.godot/imported/sword_stab.wav-058b233dec34bc05d01cc5f43594023a.sample"]
 
 [params]
 

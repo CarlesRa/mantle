@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://8lrhi3qpx5r6"
-path="res://.godot/imported/death.png-2f04e532637ad220b54681d8a3a652d7.ctex"
+path="res://.godot/imported/death.png-1ec78f142114201e082a992ec4509613.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://entities/forms/male_wizard/sprites/death.png"
-dest_files=["res://.godot/imported/death.png-2f04e532637ad220b54681d8a3a652d7.ctex"]
+dest_files=["res://.godot/imported/death.png-1ec78f142114201e082a992ec4509613.ctex"]
 
 [params]
 

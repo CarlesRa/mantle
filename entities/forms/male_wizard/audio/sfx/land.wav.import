@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://cl8fbcctm8d7e"
-path="res://.godot/imported/land.wav-0ef706acc7268cc5f631a1f5fe0309c5.sample"
+path="res://.godot/imported/land.wav-61f0b67716181d4c1fbc68eb937b26f5.sample"
 
 [deps]
 
 source_file="res://entities/forms/male_wizard/audio/sfx/land.wav"
-dest_files=["res://.godot/imported/land.wav-0ef706acc7268cc5f631a1f5fe0309c5.sample"]
+dest_files=["res://.godot/imported/land.wav-61f0b67716181d4c1fbc68eb937b26f5.sample"]
 
 [params]
 

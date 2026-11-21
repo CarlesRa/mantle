@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bx3cwibub5tih"
-path="res://.godot/imported/hit.png-43b54b11df873feb666ba91db777aa9c.ctex"
+path="res://.godot/imported/hit.png-719f9700373890cfb1a5b067dc2feaf2.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://entities/forms/male_wizard/sprites/hit.png"
-dest_files=["res://.godot/imported/hit.png-43b54b11df873feb666ba91db777aa9c.ctex"]
+dest_files=["res://.godot/imported/hit.png-719f9700373890cfb1a5b067dc2feaf2.ctex"]
 
 [params]
 

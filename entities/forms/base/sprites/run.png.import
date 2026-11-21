@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dmhqi0xajs3sd"
-path="res://.godot/imported/run.png-b18849a550c0e7564817e8074b717bcc.ctex"
+path="res://.godot/imported/run.png-3add2dac8bf5a9a19465c93395807c39.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://entities/forms/base/sprites/run.png"
-dest_files=["res://.godot/imported/run.png-b18849a550c0e7564817e8074b717bcc.ctex"]
+dest_files=["res://.godot/imported/run.png-3add2dac8bf5a9a19465c93395807c39.ctex"]
 
 [params]
 

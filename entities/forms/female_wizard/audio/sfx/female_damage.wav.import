@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://06obshjrcn8k"
-path="res://.godot/imported/female_damage.wav-00f80d23245d0702284909f96ca3251e.sample"
+path="res://.godot/imported/female_damage.wav-51d8fbfd5b2aef82c149131f0f0e41a9.sample"
 
 [deps]
 
 source_file="res://entities/forms/female_wizard/audio/sfx/female_damage.wav"
-dest_files=["res://.godot/imported/female_damage.wav-00f80d23245d0702284909f96ca3251e.sample"]
+dest_files=["res://.godot/imported/female_damage.wav-51d8fbfd5b2aef82c149131f0f0e41a9.sample"]
 
 [params]
 

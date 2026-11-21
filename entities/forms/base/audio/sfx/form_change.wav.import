@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://d1l3yukohajj2"
-path="res://.godot/imported/form_change.wav-152b8f8bf59d16f1c5d39ef006e580cc.sample"
+path="res://.godot/imported/form_change.wav-601bd2ad87e2de955cd5211b749565c1.sample"
 
 [deps]
 
 source_file="res://entities/forms/base/audio/sfx/form_change.wav"
-dest_files=["res://.godot/imported/form_change.wav-152b8f8bf59d16f1c5d39ef006e580cc.sample"]
+dest_files=["res://.godot/imported/form_change.wav-601bd2ad87e2de955cd5211b749565c1.sample"]
 
 [params]
 

@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://u1trwfypr1n8"
-path="res://.godot/imported/projectile_fly.wav-2fe156a7ade98328c7e97a0e831131f0.sample"
+path="res://.godot/imported/projectile_fly.wav-d5d2a480a90a283f4d238529586c1c5a.sample"
 
 [deps]
 
 source_file="res://entities/forms/female_wizard/audio/sfx/projectile_fly.wav"
-dest_files=["res://.godot/imported/projectile_fly.wav-2fe156a7ade98328c7e97a0e831131f0.sample"]
+dest_files=["res://.godot/imported/projectile_fly.wav-d5d2a480a90a283f4d238529586c1c5a.sample"]
 
 [params]
 

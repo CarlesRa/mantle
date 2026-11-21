@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://cue6tkg6lds84"
-path="res://.godot/imported/run.png-a3e438f827b1b9ea258b51956165ffb9.ctex"
+path="res://.godot/imported/run.png-8f3070914b5325767170488191b796b1.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://entities/forms/male_wizard/sprites/run.png"
-dest_files=["res://.godot/imported/run.png-a3e438f827b1b9ea258b51956165ffb9.ctex"]
+dest_files=["res://.godot/imported/run.png-8f3070914b5325767170488191b796b1.ctex"]
 
 [params]
 

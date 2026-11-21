@@ -3,12 +3,12 @@
 importer="wav"
 type="AudioStreamWAV"
 uid="uid://dsnpsdu6re1yu"
-path="res://.godot/imported/change_form.wav-956d624a192590141cc910b40a6a064e.sample"
+path="res://.godot/imported/change_form.wav-a173e99dbe3bb6176cca8cd17ae27ef7.sample"
 
 [deps]
 
 source_file="res://entities/forms/male_wizard/audio/sfx/change_form.wav"
-dest_files=["res://.godot/imported/change_form.wav-956d624a192590141cc910b40a6a064e.sample"]
+dest_files=["res://.godot/imported/change_form.wav-a173e99dbe3bb6176cca8cd17ae27ef7.sample"]
 
 [params]
 

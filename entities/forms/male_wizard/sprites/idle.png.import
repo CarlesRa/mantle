@@ -3,7 +3,7 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dat86u0tk48sh"
-path="res://.godot/imported/idle.png-820278b447392d1736acaa82e1fef0bf.ctex"
+path="res://.godot/imported/idle.png-426b0b7d3622382673b52b1c5f6233ef.ctex"
 metadata={
 "vram_texture": false
 }
@@ -11,7 +11,7 @@ metadata={
 [deps]
 
 source_file="res://entities/forms/male_wizard/sprites/idle.png"
-dest_files=["res://.godot/imported/idle.png-820278b447392d1736acaa82e1fef0bf.ctex"]
+dest_files=["res://.godot/imported/idle.png-426b0b7d3622382673b52b1c5f6233ef.ctex"]
 
 [params]
 
