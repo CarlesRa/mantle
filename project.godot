@@ -22,6 +22,7 @@ buses/default_bus_layout="uid://cbuboqsrt084v"
 
 EventBus="*uid://crp7i4qboinhv"
 AudioManager="*uid://dsyja668bd54p"
+SceneManager="*uid://dhk6tg1woo8mt"
 
 [debug]
 
