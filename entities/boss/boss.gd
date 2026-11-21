@@ -274,4 +274,10 @@ func die() -> void:
 	_body_collision.set_deferred("disabled", true)
 
 func _on_player_died() -> void:
+	if is_dead:
+		return
 	player_is_dead = true
+	finish_attack()
+	velocity.x = 0.0
+	play_animation(&"idle", true)
+	($StateMachine as StateMachine).change_to(BossStates.IDLE)
