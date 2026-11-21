@@ -28,6 +28,7 @@ collision_size = Vector2(14, 50)
 hurtbox_size = Vector2(14, 50)
 sprite_frames = ExtResource("3_fejxq")
 sprite_offset = Vector2(2, -27)
+portal_color = Color(0.08, 0.38, 0.88, 1)
 audio = ExtResource("4_audio")
 primary_attack = SubResource("Resource_ef8vx")
 metadata/_custom_type_script = "uid://do51y0xqtaore"

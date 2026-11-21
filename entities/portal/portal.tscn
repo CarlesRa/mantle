@@ -1,15 +1,68 @@
 [gd_scene format=3 uid="uid://bkd47bkfpuky"]
 
 [ext_resource type="Script" uid="uid://b1h88x6fmy7xn" path="res://entities/portal/portal.gd" id="1_0d7no"]
+[ext_resource type="Texture2D" uid="uid://bdhkcflruom8b" path="res://entities/portal/sprites/portal.png" id="2_uqfsl"]
+[ext_resource type="AudioStream" uid="uid://bc1bkrioa0ciu" path="res://entities/portal/audio/idle.wav" id="3_idle"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_tqc7l"]
+atlas = ExtResource("2_uqfsl")
+region = Rect2(0, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lirgq"]
+atlas = ExtResource("2_uqfsl")
+region = Rect2(64, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_rycen"]
+atlas = ExtResource("2_uqfsl")
+region = Rect2(128, 0, 64, 64)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_0i3kw"]
+atlas = ExtResource("2_uqfsl")
+region = Rect2(192, 0, 64, 64)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_hqw7p"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_tqc7l")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lirgq")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_rycen")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_0i3kw")
+}],
+"loop": 1,
+"name": &"default",
+"speed": 10.0
+}]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mnca8"]
-size = Vector2(28, 60)
+size = Vector2(28, 66)
 
 [node name="Portal" type="Area2D" unique_id=1039796977]
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_0d7no")
 
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2027019201]
+sprite_frames = SubResource("SpriteFrames_hqw7p")
+autoplay = "default"
+frame = 2
+frame_progress = 0.21601792
+scale = Vector2(1, 1.25)
+offset = Vector2(0, -24.5)
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=164976674]
-position = Vector2(0, -30)
+position = Vector2(0, -33)
 shape = SubResource("RectangleShape2D_mnca8")
+
+[node name="IdleAudio" type="AudioStreamPlayer2D" parent="." unique_id=911852470]
+stream = ExtResource("3_idle")
+volume_db = -6.0
+autoplay = true
+max_distance = 1200.0
+bus = &"SFX"
