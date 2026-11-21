@@ -65,6 +65,7 @@ var _hurtbox_collision: CollisionShape2D
 # Nodes are cached on enter_tree because the StateMachine (a child) runs its
 # first state before this node's _ready.
 func _enter_tree() -> void:
+	add_to_group("player")
 	_visuals = $Visuals as Node2D
 	_sprite = $Visuals/AnimatedSprite2D as AnimatedSprite2D
 	_collision = $CollisionShape2D as CollisionShape2D
