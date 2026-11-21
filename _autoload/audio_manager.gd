@@ -11,6 +11,12 @@ const _SFX_POOL_SIZE: int = 8
 const _MIN_VOLUME_DB: float = -80.0
 const SFX_PITCH_VARIATION: float = 0.05
 const _DEFAULT_MUSIC_FADE_TIME: float = 0.8
+const _SETTINGS_SECTION: String = "audio"
+const _VOLUME_KEYS: Dictionary = {
+	MASTER: "master_volume",
+	MUSIC: "music_volume",
+	SFX: "sfx_volume",
+}
 
 var _sfx_players: Array[AudioStreamPlayer] = []
 var _sfx_use_order: Array[int] = []
@@ -27,6 +33,8 @@ func _ready() -> void:
 	for bus_name: StringName in [MASTER, MUSIC, SFX]:
 		if AudioServer.get_bus_index(bus_name) == -1:
 			push_error("AudioManager: audio bus '%s' does not exist." % bus_name)
+		else:
+			_restore_bus_volume(bus_name)
 
 	for index: int in 2:
 		var player: AudioStreamPlayer = AudioStreamPlayer.new()
@@ -191,6 +199,7 @@ func set_bus_volume(bus: StringName, linear: float) -> void:
 		bus_index,
 		volume_db
 	)
+	_persist_bus_volume(bus, clamped_linear)
 
 
 ## Returns a bus volume as a linear value between zero and one.
@@ -203,6 +212,38 @@ func get_bus_volume(bus: StringName) -> float:
 	var volume_db: float = AudioServer.get_bus_volume_db(bus_index)
 
 	return 0.0 if volume_db <= _MIN_VOLUME_DB else db_to_linear(volume_db)
+
+
+func _restore_bus_volume(bus: StringName) -> void:
+	if not _VOLUME_KEYS.has(bus):
+		return
+
+	var store: Node = get_node_or_null("/root/StoreManager")
+	if store == null:
+		return
+
+	var key: String = _VOLUME_KEYS[bus]
+	var stored_volume: Variant = store.call(
+		"get_value", _SETTINGS_SECTION, key, null
+	)
+	if stored_volume is float or stored_volume is int:
+		set_bus_volume(bus, float(stored_volume))
+
+
+func _persist_bus_volume(bus: StringName, linear: float) -> void:
+	if not _VOLUME_KEYS.has(bus):
+		return
+
+	var store: Node = get_node_or_null("/root/StoreManager")
+	if store == null:
+		return
+
+	var key: String = _VOLUME_KEYS[bus]
+	var error: Error = store.call(
+		"set_value", _SETTINGS_SECTION, key, linear
+	)
+	if error != OK:
+		push_error("AudioManager: could not persist volume for bus '%s'." % bus)
 
 
 func _find_idle_sfx_player() -> int:
