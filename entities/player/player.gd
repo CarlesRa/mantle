@@ -80,6 +80,7 @@ func _enter_tree() -> void:
 
 func _ready() -> void:
 	health = max_health
+	$AudioListener2D.make_current()
 	_sprite.frame_changed.connect(_on_sprite_frame_changed)
 	if form:
 		# Deferred so every listener in the scene is ready.

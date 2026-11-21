@@ -38,6 +38,11 @@ scale = Vector2(0.1, 0.1)
 sprite_frames = SubResource("SpriteFrames_7rp2a")
 frame_progress = 0.13169709
 
+[node name="FlightAudio" type="AudioStreamPlayer2D" parent="."]
+bus = &"SFX"
+max_distance = 600.0
+attenuation = 1.0
+
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=2006733874]
 shape = SubResource("CircleShape2D_mnca8")
 
