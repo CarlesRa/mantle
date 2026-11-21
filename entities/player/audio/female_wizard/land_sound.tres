@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://bry8wnu5l5ufi"]
-
-[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_segyh"]
-[ext_resource type="AudioStream" uid="uid://b2jr80mmi1kcp" path="res://entities/player/audio/female_wizard/sfx/land.wav" id="2_46keb"]
-
-[resource]
-script = ExtResource("1_segyh")
-stream = ExtResource("2_46keb")
-metadata/_custom_type_script = "uid://dqdvvnluf574x"
