@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://bro2rfwly07my"]
+
+[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_mtwnp"]
+[ext_resource type="AudioStream" uid="uid://ua4dqrkeiyqm" path="res://entities/player/audio/female_wizard/sfx/projectile.wav" id="2_8qgfl"]
+
+[resource]
+script = ExtResource("1_mtwnp")
+stream = ExtResource("2_8qgfl")
+metadata/_custom_type_script = "uid://dqdvvnluf574x"

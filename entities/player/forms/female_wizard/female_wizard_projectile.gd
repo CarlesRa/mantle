@@ -1,6 +1,9 @@
 class_name FemaleWizardProjectile
 extends Area2D
 
+const FLY_SFX: SoundEffect = preload("res://entities/player/audio/female_wizard/projectile_fly_sound.tres")
+const IMPACT_SFX: SoundEffect = preload("res://entities/player/audio/female_wizard/projectile_impact_sound.tres")
+
 @export var speed: float = 500.0
 ## Seconds the projectile lives if it does not hit anything.
 @export var lifetime: float = 3.0
@@ -10,14 +13,17 @@ extends Area2D
 var _direction: float = 0.0
 var _source: Node2D
 var _launched: bool = false
+var _impacted: bool = false
 var _time_left: float = 0.0
 var _hitbox: Hitbox
+var _flight_audio: AudioStreamPlayer2D
 
 func _ready() -> void:
 	_time_left = lifetime
 	body_entered.connect(_on_body_entered)
 	_hitbox = $Hitbox as Hitbox
 	_hitbox.area_entered.connect(_on_hurtbox_entered)
+	_flight_audio = $FlightAudio as AudioStreamPlayer2D
 
 func launch(direction: float, attack_data: AttackData, source: Node2D) -> void:
 	_direction = signf(direction)
@@ -27,6 +33,9 @@ func launch(direction: float, attack_data: AttackData, source: Node2D) -> void:
 	_hitbox.activate()
 	_launched = true
 	$AnimatedSprite2D.flip_h = _direction < 0.0
+	_flight_audio.stream = FLY_SFX.stream
+	_flight_audio.volume_db = FLY_SFX.volume_db
+	_flight_audio.play()
 
 func _physics_process(delta: float) -> void:
 	if not _launched:
@@ -36,6 +45,7 @@ func _physics_process(delta: float) -> void:
 
 	_time_left -= delta
 	if _time_left <= 0.0:
+		_flight_audio.stop()
 		queue_free()
 	# Fade out during the last fade_time seconds.
 	if fade_time > 0.0:
@@ -47,8 +57,7 @@ func _physics_process(delta: float) -> void:
 func _on_body_entered(body: Node2D) -> void:
 	if body == _source:
 		return
-
-	queue_free()
+	_play_impact_and_destroy()
 
 ## A valid hurtbox collision is handled by Hitbox and consumes this projectile.
 func _on_hurtbox_entered(area: Area2D) -> void:
@@ -56,4 +65,12 @@ func _on_hurtbox_entered(area: Area2D) -> void:
 		var hurtbox: Hurtbox = area
 		if hurtbox.owner_entity == _source:
 			return
-		queue_free()
+		_play_impact_and_destroy()
+
+func _play_impact_and_destroy() -> void:
+	if _impacted:
+		return
+	_impacted = true
+	_flight_audio.stop()
+	AudioManager.play_sfx(IMPACT_SFX)
+	queue_free()
