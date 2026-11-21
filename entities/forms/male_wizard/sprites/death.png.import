@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dat86u0tk48sh"
-path="res://.godot/imported/idle.png-820278b447392d1736acaa82e1fef0bf.ctex"
+uid="uid://8lrhi3qpx5r6"
+path="res://.godot/imported/death.png-2f04e532637ad220b54681d8a3a652d7.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://entities/player/forms/male_wizard/sprites/idle.png"
-dest_files=["res://.godot/imported/idle.png-820278b447392d1736acaa82e1fef0bf.ctex"]
+source_file="res://entities/forms/male_wizard/sprites/death.png"
+dest_files=["res://.godot/imported/death.png-2f04e532637ad220b54681d8a3a652d7.ctex"]
 
 [params]
 

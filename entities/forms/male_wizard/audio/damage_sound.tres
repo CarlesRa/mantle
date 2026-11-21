@@ -1,7 +1,7 @@
 [gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://buy0xwhok3kea"]
 
 [ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_qcswu"]
-[ext_resource type="AudioStream" uid="uid://dlfg6khwkxi5j" path="res://entities/player/audio/male_wizard/sfx/damage.wav" id="2_s5eir"]
+[ext_resource type="AudioStream" uid="uid://dlfg6khwkxi5j" path="res://entities/forms/male_wizard/audio/sfx/damage.wav" id="2_s5eir"]
 
 [resource]
 script = ExtResource("1_qcswu")

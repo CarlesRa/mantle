@@ -7,7 +7,7 @@ path="res://.godot/imported/fire.wav-269664f856ba42784ece212b7c0e3b4e.sample"
 
 [deps]
 
-source_file="res://entities/player/audio/male_wizard/sfx/fire.wav"
+source_file="res://entities/forms/male_wizard/audio/sfx/fire.wav"
 dest_files=["res://.godot/imported/fire.wav-269664f856ba42784ece212b7c0e3b4e.sample"]
 
 [params]

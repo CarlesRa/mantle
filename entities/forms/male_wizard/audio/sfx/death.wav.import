@@ -7,7 +7,7 @@ path="res://.godot/imported/death.wav-735e1f6559bbd9a53bab54879c26d43f.sample"
 
 [deps]
 
-source_file="res://entities/player/audio/male_wizard/sfx/death.wav"
+source_file="res://entities/forms/male_wizard/audio/sfx/death.wav"
 dest_files=["res://.godot/imported/death.wav-735e1f6559bbd9a53bab54879c26d43f.sample"]
 
 [params]

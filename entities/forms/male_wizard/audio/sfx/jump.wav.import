@@ -7,7 +7,7 @@ path="res://.godot/imported/jump.wav-e0abc47983c04e9db0ae63f6f3ad412e.sample"
 
 [deps]
 
-source_file="res://entities/player/audio/male_wizard/sfx/jump.wav"
+source_file="res://entities/forms/male_wizard/audio/sfx/jump.wav"
 dest_files=["res://.godot/imported/jump.wav-e0abc47983c04e9db0ae63f6f3ad412e.sample"]
 
 [params]

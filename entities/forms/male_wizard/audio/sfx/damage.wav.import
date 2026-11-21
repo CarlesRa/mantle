@@ -7,7 +7,7 @@ path="res://.godot/imported/damage.wav-ad2afcd3a830d9de4d6c414b81c6f8ac.sample"
 
 [deps]
 
-source_file="res://entities/player/audio/male_wizard/sfx/damage.wav"
+source_file="res://entities/forms/male_wizard/audio/sfx/damage.wav"
 dest_files=["res://.godot/imported/damage.wav-ad2afcd3a830d9de4d6c414b81c6f8ac.sample"]
 
 [params]
