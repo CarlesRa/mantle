@@ -41,7 +41,7 @@ animations = [{
 }]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_mnca8"]
-size = Vector2(28, 54)
+size = Vector2(28, 66)
 
 [node name="Portal" type="Area2D" unique_id=1039796977]
 collision_layer = 0
@@ -53,10 +53,11 @@ sprite_frames = SubResource("SpriteFrames_hqw7p")
 autoplay = "default"
 frame = 2
 frame_progress = 0.21601792
-offset = Vector2(0, -25)
+scale = Vector2(1, 1.25)
+offset = Vector2(0, -24.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=164976674]
-position = Vector2(0, -27)
+position = Vector2(0, -33)
 shape = SubResource("RectangleShape2D_mnca8")
 
 [node name="IdleAudio" type="AudioStreamPlayer2D" parent="." unique_id=911852470]
