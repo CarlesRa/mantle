@@ -26,7 +26,7 @@ func set_value(section: String, key: String, value: Variant) -> Error:
 
 
 ## Returns the stored value, or [param default_value] when it is missing.
-func get_value(section: String, key: String, default_value: Variant = null) -> Variant:
+func get_value(section: String, key: String, default_value: Variant = 0.0) -> Variant:
 	return _config.get_value(section, key, default_value)
 
 
