@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://11vbl5vj8qgt"]
+
+[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1"]
+[ext_resource type="AudioStream" uid="uid://u1trwfypr1n8" path="res://entities/forms/female_wizard/audio/sfx/projectile_fly.wav" id="2"]
+
+[resource]
+script = ExtResource("1")
+stream = ExtResource("2")
+volume_db = -12.0

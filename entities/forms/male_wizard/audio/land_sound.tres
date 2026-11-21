@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://0qx35ivm0m48"]
+
+[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_j1crl"]
+[ext_resource type="AudioStream" uid="uid://cl8fbcctm8d7e" path="res://entities/forms/male_wizard/audio/sfx/land.wav" id="2_wudgd"]
+
+[resource]
+script = ExtResource("1_j1crl")
+stream = ExtResource("2_wudgd")
+metadata/_custom_type_script = "uid://dqdvvnluf574x"

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://dytxqr340ulai"]
+
+[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_x8ilh"]
+[ext_resource type="AudioStream" uid="uid://ctsi4tu311mx0" path="res://entities/forms/base/audio/sfx/death.wav" id="2_xol2g"]
+
+[resource]
+script = ExtResource("1_x8ilh")
+stream = ExtResource("2_xol2g")
+volume_db = -6.0
+metadata/_custom_type_script = "uid://dqdvvnluf574x"

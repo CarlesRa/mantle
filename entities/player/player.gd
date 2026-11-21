@@ -2,7 +2,7 @@ class_name Player
 extends CharacterBody2D
 
 const GRAVITY_SETTING: String = "physics/2d/default_gravity"
-const WHITE_FLASH_SHADER: Shader = preload("res://entities/player/shaders/white_flash.gdshader")
+const WHITE_FLASH_SHADER: Shader = preload("res://_common/shaders/white_flash.gdshader")
 
 ## Maximum player health.
 @export var max_health: int = 3

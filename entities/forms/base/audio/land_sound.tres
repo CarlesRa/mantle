@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://dcc1v1ydadtyx"]
+
+[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_lqarf"]
+[ext_resource type="AudioStream" uid="uid://botabth05sc4h" path="res://entities/forms/base/audio/sfx/land.wav" id="2_jlql1"]
+
+[resource]
+script = ExtResource("1_lqarf")
+stream = ExtResource("2_jlql1")
+volume_db = -12.0
+pitch_variation = true
+metadata/_custom_type_script = "uid://dqdvvnluf574x"

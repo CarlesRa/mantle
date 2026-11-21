@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://bgufuvfdfsdmh"]
+
+[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_d1ycf"]
+[ext_resource type="AudioStream" uid="uid://dxd0pi8a6m5nv" path="res://entities/forms/female_wizard/audio/sfx/jump.wav" id="2_4413n"]
+
+[resource]
+script = ExtResource("1_d1ycf")
+stream = ExtResource("2_4413n")
+metadata/_custom_type_script = "uid://dqdvvnluf574x"

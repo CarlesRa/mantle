@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://duu40a3jy5tmy"]
+
+[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_srbs7"]
+[ext_resource type="AudioStream" uid="uid://cvigbi0egsjue" path="res://entities/forms/female_wizard/audio/sfx/run.wav" id="2_run"]
+
+[resource]
+script = ExtResource("1_srbs7")
+stream = ExtResource("2_run")
+volume_db = -12.0
+pitch_variation = true
+metadata/_custom_type_script = "uid://dqdvvnluf574x"

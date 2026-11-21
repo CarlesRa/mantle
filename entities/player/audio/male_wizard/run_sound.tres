@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://dprtchio4vyue"]
-
-[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_6j4kp"]
-[ext_resource type="AudioStream" uid="uid://yqnt0hocugqq" path="res://entities/player/audio/male_wizard/sfx/run.wav" id="2_run"]
-
-[resource]
-script = ExtResource("1_6j4kp")
-stream = ExtResource("2_run")
-metadata/_custom_type_script = "uid://dqdvvnluf574x"

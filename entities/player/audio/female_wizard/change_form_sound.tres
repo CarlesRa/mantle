@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://bwjmdqh65wqus"]
-
-[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_phd04"]
-[ext_resource type="AudioStream" uid="uid://bprdcvsk44dt5" path="res://entities/player/audio/female_wizard/sfx/female_change_form.wav" id="2_1u0b3"]
-
-[resource]
-script = ExtResource("1_phd04")
-stream = ExtResource("2_1u0b3")
-metadata/_custom_type_script = "uid://dqdvvnluf574x"

@@ -1,12 +1,12 @@
 [gd_scene format=3 uid="uid://cc3ffl1nxhr64"]
 
 [ext_resource type="PackedScene" uid="uid://c8uxatqpck3i1" path="res://entities/player/player.tscn" id="1_1j5om"]
-[ext_resource type="Resource" uid="uid://d04dcpmilyh2l" path="res://entities/player/forms/base/base.tres" id="2_dynb8"]
+[ext_resource type="Resource" uid="uid://d04dcpmilyh2l" path="res://entities/forms/base/base.tres" id="2_dynb8"]
 [ext_resource type="Script" uid="uid://qsjlyngnulls" path="res://sandbox/event_bus_logger.gd" id="3_dynb8"]
 [ext_resource type="Script" uid="uid://d1qg377fqgc23" path="res://sandbox/player/test_dummy.gd" id="5_dynb8"]
 [ext_resource type="PackedScene" uid="uid://bkd47bkfpuky" path="res://entities/portal/portal.tscn" id="6_jbxrc"]
-[ext_resource type="Resource" uid="uid://olej6kc6om2r" path="res://entities/player/forms/female_wizard/female_wizard.tres" id="7_xvwap"]
-[ext_resource type="Resource" uid="uid://y6jrarxuu1sy" path="res://entities/player/forms/male_wizard/male_wizard.tres" id="8_a8p66"]
+[ext_resource type="Resource" uid="uid://olej6kc6om2r" path="res://entities/forms/female_wizard/female_wizard.tres" id="7_xvwap"]
+[ext_resource type="Resource" uid="uid://y6jrarxuu1sy" path="res://entities/forms/male_wizard/male_wizard.tres" id="8_a8p66"]
 [ext_resource type="Script" uid="uid://cqekdvpfe3qod" path="res://_common/combat/hurtbox.gd" id="8_xvwap"]
 [ext_resource type="Script" uid="uid://bxngq5a8rgq82" path="res://_common/combat/hitbox.gd" id="10_er2pq"]
 

@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://cy64cx48aqa1m"]
+
+[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_27pti"]
+[ext_resource type="AudioStream" uid="uid://cg4efdjc2wps0" path="res://entities/forms/male_wizard/audio/sfx/death.wav" id="2_qml3m"]
+
+[resource]
+script = ExtResource("1_27pti")
+stream = ExtResource("2_qml3m")
+metadata/_custom_type_script = "uid://dqdvvnluf574x"

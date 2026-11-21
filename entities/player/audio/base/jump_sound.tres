@@ -1,9 +1,0 @@
-[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://5myp0rpqtn20"]
-
-[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1"]
-[ext_resource type="AudioStream" uid="uid://ueenx7w4c2ty" path="res://entities/player/audio/base/sfx/jump.wav" id="2"]
-
-[resource]
-script = ExtResource("1")
-stream = ExtResource("2")
-volume_db = -3.0
