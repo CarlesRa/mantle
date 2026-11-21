@@ -9,6 +9,7 @@ const SFX: StringName = &"SFX"
 
 const _SFX_POOL_SIZE: int = 8
 const _MIN_VOLUME_DB: float = -80.0
+const _DEFAULT_BUS_VOLUME: float = 1.0
 const SFX_PITCH_VARIATION: float = 0.05
 const _DEFAULT_MUSIC_FADE_TIME: float = 0.8
 const _SETTINGS_SECTION: String = "audio"
@@ -224,7 +225,7 @@ func _restore_bus_volume(bus: StringName) -> void:
 
 	var key: String = _VOLUME_KEYS[bus]
 	var stored_volume: Variant = store.call(
-		"get_value", _SETTINGS_SECTION, key, null
+		"get_value", _SETTINGS_SECTION, key, _DEFAULT_BUS_VOLUME
 	)
 	if stored_volume is float or stored_volume is int:
 		set_bus_volume(bus, float(stored_volume))
