@@ -25,6 +25,7 @@ StoreManager="*res://_autoload/store_manager.gd"
 AudioManager="*uid://dsyja668bd54p"
 SceneManager="*uid://dhk6tg1woo8mt"
 SaveManager="*res://_autoload/save_manager.gd"
+GameManager="*res://_autoload/game_manager.gd"
 
 [debug]
 
