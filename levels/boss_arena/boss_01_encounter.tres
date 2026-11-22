@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="BossEncounter" load_steps=6 format=3]
+
+[ext_resource type="Script" path="res://levels/boss_arena/boss_encounter.gd" id="1_script"]
+[ext_resource type="PackedScene" path="res://entities/boss/male_wizard/boss_male_wizard.tscn" id="2_boss"]
+[ext_resource type="Resource" path="res://entities/forms/base/base.tres" id="3_player_form"]
+[ext_resource type="Texture2D" path="res://levels/boss_arena/backgrounds/boss_01_background.png" id="4_background"]
+[ext_resource type="AudioStream" path="res://levels/boss_arena/audio/boss_01_music.wav" id="5_music"]
+
+[resource]
+script = ExtResource("1_script")
+boss_scene = ExtResource("2_boss")
+player_form = ExtResource("3_player_form")
+background = ExtResource("4_background")
+music = ExtResource("5_music")
