@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://bcrq2x7ooejmg"]
+
+[ext_resource type="Texture2D" uid="uid://byhdpd2iyaqfo" path="res://levels/boss_arena/backgrounds/boss_01_background.png" id="1_um8cj"]
+[ext_resource type="PackedScene" uid="uid://bkd47bkfpuky" path="res://entities/portal/portal.tscn" id="1_yrqpm"]
+[ext_resource type="Resource" uid="uid://y6jrarxuu1sy" path="res://entities/forms/male_wizard/male_wizard.tres" id="2_um8cj"]
+[ext_resource type="Script" uid="uid://cf13jnahttud2" path="res://levels/boss_arena/boss_arena.gd" id="3_arena"]
+[ext_resource type="PackedScene" uid="uid://c8uxatqpck3i1" path="res://entities/player/player.tscn" id="4_player"]
+[ext_resource type="Resource" uid="uid://d04dcpmilyh2l" path="res://entities/forms/base/base.tres" id="4_v1miw"]
+[ext_resource type="PackedScene" uid="uid://1gwq0k1kyvyj" path="res://entities/boss/male_wizard/boss_male_wizard.tscn" id="5_boss"]
+[ext_resource type="AudioStream" uid="uid://b1f2uehrmdirh" path="res://levels/boss_arena/audio/boss_01_music.wav" id="5_lytdw"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_hqw7p"]
+size = Vector2(1152, 40)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_5gq24"]
+size = Vector2(40, 648)
+
+[node name="BossArena" type="Node2D" unique_id=2115166904 node_paths=PackedStringArray("portal")]
+script = ExtResource("3_arena")
+player_scene = ExtResource("4_player")
+boss_scene = ExtResource("5_boss")
+player_form = ExtResource("4_v1miw")
+portal = NodePath("Portal")
+music = ExtResource("5_lytdw")
+
+[node name="Backgound" type="Sprite2D" parent="." unique_id=1491523058]
+position = Vector2(592, 324)
+scale = Vector2(0.61, 0.61)
+texture = ExtResource("1_um8cj")
+
+[node name="Floor" type="StaticBody2D" parent="." unique_id=1922161940]
+position = Vector2(576, 580)
+collision_mask = 0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Floor" unique_id=283134862]
+shape = SubResource("RectangleShape2D_hqw7p")
+
+[node name="Walls" type="StaticBody2D" parent="." unique_id=333832359]
+collision_mask = 0
+
+[node name="LeftWall" type="CollisionShape2D" parent="Walls" unique_id=1571355673]
+position = Vector2(-20, 324)
+shape = SubResource("RectangleShape2D_5gq24")
+
+[node name="RightWall" type="CollisionShape2D" parent="Walls" unique_id=2076225661]
+position = Vector2(1172, 324)
+shape = SubResource("RectangleShape2D_5gq24")
+
+[node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1390075162]
+position = Vector2(290, 560)
+
+[node name="BossSpawn" type="Marker2D" parent="." unique_id=1314840095]
+position = Vector2(860, 560)
+
+[node name="Portal" parent="." unique_id=1039796977 instance=ExtResource("1_yrqpm")]
+position = Vector2(576, 560)
+starts_active = false
+form = ExtResource("2_um8cj")
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=116552879]
+position = Vector2(576, 324)
