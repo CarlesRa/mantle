@@ -26,11 +26,14 @@ signal died
 @export var cooldown_multiplier: float = 1.0
 ## Seconds the boss ignores hits after taking damage.
 @export var invulnerability_time: float = 1.0
+@export_range(0.0, 1.0) var jump_chance: float = 0.33
+@export var ground_ray: RayCast2D
 
 var health: int = 0
 var gravity: float = float(ProjectSettings.get_setting(GRAVITY_SETTING))
 var target: Player
 var is_dead: bool = false
+var _death_finished: bool = false
 var player_is_dead: bool = false
 var invulnerability_left: float = 0.0
 var active_attack: AttackData
@@ -91,6 +94,9 @@ func face_target() -> void:
 
 
 func finish_death() -> void:
+	if _death_finished:
+		return
+	_death_finished = true
 	_audio_handler.play_death()
 	died.emit()
 	set_physics_process(false)
@@ -116,6 +122,23 @@ func play_animation(animation: StringName, restart: bool = false) -> void:
 		_sprite.stop()
 	_sprite.play(animation)
 
+func is_ground_within(distance: float) -> bool:
+	if not is_instance_valid(ground_ray):
+		return false
+
+	ground_ray.force_raycast_update()
+
+	if not ground_ray.is_colliding():
+		return false
+
+	var ground_distance: float = (
+			ground_ray.global_position.distance_to(
+			ground_ray.get_collision_point()
+		)
+	)
+
+	return ground_distance <= distance
+
 
 ## Duplicated from Player.start_attack(); this activates the hitbox by keyframes instead.
 func start_attack(data: AttackData) -> void:
@@ -125,6 +148,22 @@ func start_attack(data: AttackData) -> void:
 	_set_hitbox_shape(data.hitbox_size, data.hitbox_offset)
 	_hitbox.activate()
 	_tracked_hitbox_active = true
+
+
+func start_secondary_attack() -> void:
+	var data: AttackData = form.secondary_attack
+	if not data:
+		return
+
+	active_attack = data
+	var track: BossAttackTrack = get_attack_track(data)
+
+	if track:
+		start_tracked_attack(data, track)
+	else:
+		start_attack(data)
+
+	play_animation(data.animation, true)
 
 
 func start_tracked_attack(data: AttackData, track: BossAttackTrack) -> void:
@@ -272,6 +311,7 @@ func die() -> void:
 	collision_layer = 0
 	collision_mask = 0
 	_body_collision.set_deferred("disabled", true)
+	set_physics_process(false)
 
 func _on_player_died() -> void:
 	if is_dead:

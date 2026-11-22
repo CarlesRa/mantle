@@ -15,7 +15,8 @@
 [ext_resource type="Resource" uid="uid://y6jrarxuu1sy" path="res://entities/forms/male_wizard/male_wizard.tres" id="13_form"]
 [ext_resource type="SpriteFrames" uid="uid://cbymtso388jnd" path="res://entities/forms/male_wizard/male_wizard_frames.tres" id="14_frames"]
 [ext_resource type="Resource" uid="uid://d0vwcix40pd7e" path="res://entities/boss/male_wizard/attack1_track.tres" id="15_track"]
-[ext_resource type="Resource" path="res://entities/boss/male_wizard/attack2_track.tres" id="16_track"]
+[ext_resource type="Resource" uid="uid://b01lw2eawyi7m" path="res://entities/boss/male_wizard/attack2_track.tres" id="16_track"]
+[ext_resource type="Script" uid="uid://ffyrre6wd6ov" path="res://entities/boss/states/boss_jump_state.gd" id="17_jreja"]
 
 [sub_resource type="RectangleShape2D" id="HitShape"]
 
@@ -25,12 +26,16 @@ size = Vector2(14, 50)
 [sub_resource type="RectangleShape2D" id="BodyShape"]
 size = Vector2(14, 50)
 
-[node name="BossMaleWizard" type="CharacterBody2D" unique_id=1267270173]
+[node name="BossMaleWizard" type="CharacterBody2D" unique_id=1267270173 node_paths=PackedStringArray("ground_ray")]
 collision_layer = 4
 script = ExtResource("1_boss")
 form = ExtResource("13_form")
+detection_range = 400.0
+attack_range = 80.0
 attack1_track = ExtResource("15_track")
 attack2_track = ExtResource("16_track")
+cooldown_multiplier = 1.5
+ground_ray = NodePath("GroundRayCast")
 
 [node name="BossAudioHandler" type="Node" parent="." unique_id=977028462 node_paths=PackedStringArray("animated_sprite")]
 script = ExtResource("5_audio")
@@ -42,10 +47,8 @@ form = ExtResource("13_form")
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visuals" unique_id=1652371567]
 position = Vector2(6, -42)
 sprite_frames = ExtResource("14_frames")
-animation = &"attack1"
+animation = &"fall"
 autoplay = "idle"
-frame = 7
-frame_progress = 1.0
 
 [node name="Hitbox" type="Area2D" parent="Visuals" unique_id=560191185]
 monitoring = false
@@ -64,6 +67,9 @@ shape = SubResource("HurtShape")
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1990680052]
 position = Vector2(5.5, -25)
 shape = SubResource("BodyShape")
+
+[node name="GroundRayCast" type="RayCast2D" parent="." unique_id=1190984602]
+target_position = Vector2(0, 150)
 
 [node name="StateMachine" type="Node" parent="." unique_id=605197407 node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_sm")
@@ -89,3 +95,6 @@ script = ExtResource("11_hit_state")
 
 [node name="death" type="Node" parent="StateMachine" unique_id=956604504]
 script = ExtResource("12_death")
+
+[node name="jump" type="Node" parent="StateMachine" unique_id=1383869927]
+script = ExtResource("17_jreja")
