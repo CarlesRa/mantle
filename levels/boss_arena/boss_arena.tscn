@@ -22,6 +22,7 @@ boss_scene = ExtResource("5_boss")
 player_form = ExtResource("4_v1miw")
 portal = NodePath("Portal")
 music = ExtResource("5_lytdw")
+background = ExtResource("1_um8cj")
 
 [node name="Backgound" type="Sprite2D" parent="." unique_id=1491523058]
 position = Vector2(592, 324)

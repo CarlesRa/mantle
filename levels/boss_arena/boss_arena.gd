@@ -7,8 +7,25 @@ extends Node2D
 @export var portal: FormPortal
 @export var portal_delay: float = 1.5
 @export var music: AudioStream
+@export var background: Texture2D
+
+
+## Applies encounter-specific resources before the arena enters the scene tree.
+func configure(configuration: Resource) -> void:
+	if not configuration is BossEncounter:
+		push_error("BossArena: expected a BossEncounter configuration.")
+		return
+
+	var encounter: BossEncounter = configuration as BossEncounter
+	boss_scene = encounter.boss_scene
+	player_form = encounter.player_form
+	background = encounter.background
+	music = encounter.music
 
 func _ready() -> void:
+	if background != null:
+		($Backgound as Sprite2D).texture = background
+
 	var player: Player = player_scene.instantiate() as Player
 	if player_form:
 		player.initial_form = player_form

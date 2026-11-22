@@ -9,19 +9,23 @@ var run_state: RunState = RunState.MENU
 
 func _ready() -> void:
 	process_mode = Node.PROCESS_MODE_ALWAYS
-	if not EventBus.player_died.is_connected(_on_player_died):
-		EventBus.player_died.connect(_on_player_died)
 
 
 ## Loads a gameplay scene and starts a new run.
-func start_run(scene_path: String) -> Error:
+func start_run(
+	scene_path: String,
+	scene_configuration: Resource = null,
+	fade_duration: float = SceneManager.DEFAULT_FADE_DURATION
+) -> Error:
 	if run_state == RunState.PLAYING or run_state == RunState.PAUSED:
 		return ERR_BUSY
 
 	var previous_state: RunState = run_state
 	var was_paused: bool = get_tree().paused
 	get_tree().paused = false
-	var error: Error = await SceneManager.change_scene(scene_path)
+	var error: Error = await SceneManager.change_scene(
+		scene_path, fade_duration, scene_configuration
+	)
 	if error != OK:
 		run_state = previous_state
 		get_tree().paused = was_paused
@@ -30,6 +34,25 @@ func start_run(scene_path: String) -> Error:
 	run_state = RunState.PLAYING
 	EventBus.game_started.emit()
 	return OK
+
+
+## Changes to another gameplay scene without ending the active run.
+func change_level(
+	scene_path: String,
+	scene_configuration: Resource = null,
+	fade_duration: float = SceneManager.DEFAULT_FADE_DURATION
+) -> Error:
+	if run_state != RunState.PLAYING and run_state != RunState.PAUSED:
+		return ERR_UNCONFIGURED
+
+	var was_paused: bool = get_tree().paused
+	get_tree().paused = false
+	var error: Error = await SceneManager.change_scene(
+		scene_path, fade_duration, scene_configuration
+	)
+	if error != OK:
+		get_tree().paused = was_paused
+	return error
 
 
 ## Pauses the active run.
@@ -127,5 +150,3 @@ func continue_from_checkpoint() -> Error:
 	return OK
 
 
-func _on_player_died() -> void:
-	finish_run()

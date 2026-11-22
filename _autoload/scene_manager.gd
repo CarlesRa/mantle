@@ -26,7 +26,9 @@ func _ready() -> void:
 
 ## Fades out, changes to the scene at [param scene_path], then fades in.
 func change_scene(
-	scene_path: String, fade_duration: float = DEFAULT_FADE_DURATION
+	scene_path: String,
+	fade_duration: float = DEFAULT_FADE_DURATION,
+	scene_configuration: Resource = null
 ) -> Error:
 	if scene_path.is_empty():
 		push_error("SceneManager: scene path cannot be empty.")
@@ -40,14 +42,30 @@ func change_scene(
 	var duration: float = maxf(fade_duration, 0.0)
 	await _fade_to(Color.BLACK, duration)
 
-	var error: Error = get_tree().change_scene_to_file(scene_path)
-	if error != OK:
-		push_error("SceneManager: could not change scene to '%s' (error %d)." % [scene_path, error])
+	var packed_scene: PackedScene = load(scene_path) as PackedScene
+	if packed_scene == null:
+		push_error("SceneManager: could not load scene '%s'." % scene_path)
 		await _fade_to(Color.TRANSPARENT, duration)
 		_is_transitioning = false
-		return error
+		return ERR_CANT_OPEN
 
-	await get_tree().scene_changed
+	var next_scene: Node = packed_scene.instantiate()
+	if scene_configuration != null:
+		if not next_scene.has_method("configure"):
+			push_error("SceneManager: scene '%s' does not accept configuration." % scene_path)
+			next_scene.free()
+			await _fade_to(Color.TRANSPARENT, duration)
+			_is_transitioning = false
+			return ERR_INVALID_PARAMETER
+		next_scene.call("configure", scene_configuration)
+
+	var tree: SceneTree = get_tree()
+	var previous_scene: Node = tree.current_scene
+	tree.root.add_child(next_scene)
+	tree.current_scene = next_scene
+	if is_instance_valid(previous_scene):
+		previous_scene.queue_free()
+
 	await _fade_to(Color.TRANSPARENT, duration)
 	_is_transitioning = false
 	return OK
