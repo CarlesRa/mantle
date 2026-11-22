@@ -1,0 +1,17 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://sandbox/boss/arena_transition_test.gd" id="1_script"]
+[ext_resource type="Resource" path="res://levels/boss_arena/boss_01_encounter.tres" id="2_encounter"]
+
+[node name="ArenaTransitionTest" type="Node2D"]
+script = ExtResource("1_script")
+encounter = ExtResource("2_encounter")
+
+[node name="Instructions" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="Instructions"]
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 520.0
+offset_bottom = 64.0
+text = "Pulsa B para cargar BossArena con BossEncounter"
