@@ -20,6 +20,7 @@ extends Node2D
 @export var trap_trigger: Area2D
 @export var trapped_guard: EnemyOne
 @export var fallen_rock: Node2D
+@export var trap_setup: Node2D
 @export var fade_rect: ColorRect
 
 var _trap_done: bool = false
@@ -32,7 +33,7 @@ func _ready() -> void:
 	trap_trigger.body_entered.connect(_on_trap_trigger_body_entered)
 
 func _has_references() -> bool:
-	if player and camera and trap_trigger and trapped_guard and fallen_rock and fade_rect:
+	if player and camera and trap_trigger and trapped_guard and fallen_rock and trap_setup:
 		return true
 	var msg := "LevelOne: some rock trap references are not assigned in the Inspector."
 	push_error(msg)
@@ -47,10 +48,11 @@ func _on_trap_trigger_body_entered(body: Node2D) -> void:
 
 func _play_rock_trap() -> void:
 	player.process_mode = Node.PROCESS_MODE_DISABLED
+	AudioManager.play_sfx(rock_impact_sfx)
 	await _fade_to(1.0)
 
 	fallen_rock.visible = true
-	AudioManager.play_sfx(rock_impact_sfx)
+	trap_setup.visible = false	
 	trapped_guard.die()
 	await get_tree().create_timer(black_time).timeout
 
