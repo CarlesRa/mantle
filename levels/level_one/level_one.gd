@@ -7,11 +7,13 @@ extends Node2D
 ## Seconds the screen stays black while the rock falls.
 @export var black_time: float = 1.0
 ## Maximum camera offset in px during the shake.
-@export var shake_strength: float = 6.0
+@export var shake_strength: float = 10.0
 ## Seconds the camera shake lasts.
-@export var shake_time: float = 0.4
+@export var shake_time: float = 0.5
 ## Number of jumps the camera makes while shaking.
 @export var shake_steps: int = 8
+## Sound played when the rock lands on the guard.
+@export var rock_impact_sfx: SoundEffect
 
 @export var player: Player
 @export var camera: Camera2D
@@ -48,6 +50,7 @@ func _play_rock_trap() -> void:
 	await _fade_to(1.0)
 
 	fallen_rock.visible = true
+	AudioManager.play_sfx(rock_impact_sfx)
 	trapped_guard.die()
 	await get_tree().create_timer(black_time).timeout
 
