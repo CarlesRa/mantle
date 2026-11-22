@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://bua1pisotgycx"]
+
+[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_vwvmy"]
+[ext_resource type="AudioStream" uid="uid://d2bkyelvmg3k5" path="res://levels/level_one/audio/falling_rock.wav" id="2_m4e48"]
+
+[resource]
+script = ExtResource("1_vwvmy")
+stream = ExtResource("2_m4e48")
+metadata/_custom_type_script = "uid://dqdvvnluf574x"

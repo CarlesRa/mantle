@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="mantle"
-run/main_scene="uid://cc3ffl1nxhr64"
+run/main_scene="uid://6wctei5hcaw4"
 config/features=PackedStringArray("4.7", "GL Compatibility")
 config/icon="res://icon.svg"
 

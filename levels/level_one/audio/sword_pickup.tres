@@ -1,0 +1,9 @@
+[gd_resource type="Resource" script_class="SoundEffect" format=3 uid="uid://bywo5hbekx4nv"]
+
+[ext_resource type="Script" uid="uid://dqdvvnluf574x" path="res://_common/audio/sound_effect.gd" id="1_efqyt"]
+[ext_resource type="AudioStream" uid="uid://dqm0sdsd80x4w" path="res://levels/level_one/audio/sword_pickup.ogg" id="2_24iuf"]
+
+[resource]
+script = ExtResource("1_efqyt")
+stream = ExtResource("2_24iuf")
+metadata/_custom_type_script = "uid://dqdvvnluf574x"
