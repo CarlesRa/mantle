@@ -25,7 +25,7 @@ func physics_update(_delta: float) -> void:
 		change_state.emit(EnemyOneStates.ATTACK)
 		return
 
-	if enemy.should_turn():
+	if enemy.stationary or enemy.should_turn():
 		enemy.velocity.x = 0.0
 		enemy.play_animation(EnemyOne.ANIM_IDLE)
 		return
