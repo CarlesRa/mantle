@@ -16,8 +16,11 @@ func physics_update(_delta: float) -> void:
 	boss.face_target()
 	var distance: float = boss.distance_to_target()
 	if distance <= boss.attack_range:
-		boss.velocity.x = 0.0
-		change_state.emit(BossStates.TELEGRAPH)
+		if randf() < boss.jump_chance:
+			change_state.emit(BossStates.JUMP)
+		else:
+			boss.velocity.x = 0.0
+			change_state.emit(BossStates.TELEGRAPH)
 	elif distance > boss.detection_range:
 		boss.velocity.x = 0.0
 		change_state.emit(BossStates.IDLE)

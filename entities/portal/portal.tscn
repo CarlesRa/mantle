@@ -1,8 +1,8 @@
 [gd_scene format=3 uid="uid://bkd47bkfpuky"]
 
 [ext_resource type="Script" uid="uid://b1h88x6fmy7xn" path="res://entities/portal/portal.gd" id="1_0d7no"]
+[ext_resource type="Resource" uid="uid://cex5vlamtqtqs" path="res://entities/portal/audio/portal_sound.tres" id="2_tqc7l"]
 [ext_resource type="Texture2D" uid="uid://bdhkcflruom8b" path="res://entities/portal/sprites/portal.png" id="2_uqfsl"]
-[ext_resource type="AudioStream" uid="uid://bc1bkrioa0ciu" path="res://entities/portal/audio/idle.wav" id="3_idle"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_tqc7l"]
 atlas = ExtResource("2_uqfsl")
@@ -47,22 +47,16 @@ size = Vector2(28, 66)
 collision_layer = 0
 collision_mask = 2
 script = ExtResource("1_0d7no")
+sfx = ExtResource("2_tqc7l")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="." unique_id=2027019201]
+scale = Vector2(1, 1.25)
 sprite_frames = SubResource("SpriteFrames_hqw7p")
 autoplay = "default"
 frame = 2
 frame_progress = 0.21601792
-scale = Vector2(1, 1.25)
 offset = Vector2(0, -24.5)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=164976674]
 position = Vector2(0, -33)
 shape = SubResource("RectangleShape2D_mnca8")
-
-[node name="IdleAudio" type="AudioStreamPlayer2D" parent="." unique_id=911852470]
-stream = ExtResource("3_idle")
-volume_db = -6.0
-autoplay = true
-max_distance = 1200.0
-bus = &"SFX"

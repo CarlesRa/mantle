@@ -56,7 +56,7 @@ func _ready() -> void:
 
 
 ## Plays a one-shot sound effect on the SFX bus.
-func play_sfx(sound: SoundEffect) -> void:
+func play_sfx(sound: SoundEffect, fade_time: float = 0.0) -> void:
 	if (
 		sound == null
 		or sound.stream == null
@@ -71,7 +71,6 @@ func play_sfx(sound: SoundEffect) -> void:
 	var player: AudioStreamPlayer = _sfx_players[player_index]
 	player.stop()
 	player.stream = sound.stream
-	player.volume_db = sound.volume_db
 	player.pitch_scale = randf_range(
 		1.0 - SFX_PITCH_VARIATION,
 		1.0 + SFX_PITCH_VARIATION
@@ -79,7 +78,20 @@ func play_sfx(sound: SoundEffect) -> void:
 
 	_use_counter += 1
 	_sfx_use_order[player_index] = _use_counter
+
+	if fade_time <= 0.0:
+		player.volume_db = sound.volume_db
+		player.play()
+	
+	player.volume_db = -80.0
 	player.play()
+	var tween: Tween = player.create_tween()
+	tween.tween_property(
+		player,
+		"volume_db",
+		sound.volume_db,
+		fade_time
+	)
 
 
 ## Fades to a new music track on the Music bus.
