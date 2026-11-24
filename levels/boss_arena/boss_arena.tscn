@@ -15,12 +15,13 @@ size = Vector2(1152, 40)
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5gq24"]
 size = Vector2(40, 648)
 
-[node name="BossArena" type="Node2D" unique_id=2115166904 node_paths=PackedStringArray("portal")]
+[node name="BossArena" type="Node2D" unique_id=2115166904 node_paths=PackedStringArray("portal", "return_prompt")]
 script = ExtResource("3_arena")
 player_scene = ExtResource("4_player")
 boss_scene = ExtResource("5_boss")
 player_form = ExtResource("4_v1miw")
 portal = NodePath("Portal")
+return_prompt = NodePath("ReturnPrompt/Label")
 music = ExtResource("5_lytdw")
 background = ExtResource("1_um8cj")
 
@@ -60,3 +61,13 @@ form = ExtResource("2_um8cj")
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=116552879]
 position = Vector2(576, 324)
+
+[node name="ReturnPrompt" type="CanvasLayer" parent="."]
+
+[node name="Label" type="Label" parent="ReturnPrompt"]
+visible = false
+offset_left = 32.0
+offset_top = 32.0
+offset_right = 600.0
+offset_bottom = 64.0
+text = "PRESS E TO RETURN"

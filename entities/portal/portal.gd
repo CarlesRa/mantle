@@ -3,11 +3,14 @@
 class_name FormPortal
 extends Area2D
 
+signal reward_taken(form: PlayerForm)
+
 const PORTAL_TINT_SHADER: Shader = preload("res://entities/portal/portal_tint.gdshader")
 
 @onready var _sprite: AnimatedSprite2D = $AnimatedSprite2D
 var _tint_material: ShaderMaterial
 var _is_active: bool = true
+var _reward_emitted: bool = false
 
 @export var starts_active: bool = true
 @export var form: PlayerForm:
@@ -27,6 +30,7 @@ func set_active(value: bool) -> void:
 	_is_active = value
 	visible = value
 	set_physics_process(value)
+	_reward_emitted = false
 	if value:
 		AudioManager.play_sfx(sfx, 0.6)
 
@@ -43,5 +47,8 @@ func _physics_process(_delta: float) -> void:
 		return
 	for body: Node2D in get_overlapping_bodies():
 		var player: Player = body as Player
-		if player:
-			player.change_form(form)
+		if not player or _reward_emitted:
+			continue
+		if player.change_form(form):
+			_reward_emitted = true
+			reward_taken.emit(form)
