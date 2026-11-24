@@ -57,9 +57,21 @@ var _background_tween: Tween
 
 #Conditionals
 var _trap_done: bool = false
+var _sword_collected: bool = false
 var _is_restarting: bool = false
 var _player_near_npc: bool = false
 var _is_entering_arena: bool = false
+var _return_config: ArenaReturnConfig
+
+
+func configure(configuration: Resource) -> void:
+	if not configuration is ArenaReturnConfig:
+		push_error("LevelOne: expected an ArenaReturnConfig configuration.")
+		return
+	_return_config = configuration as ArenaReturnConfig
+	if _return_config.reward_form and player:
+		player.initial_form = _return_config.reward_form
+
 
 func _ready() -> void:
 	if not _has_references():
@@ -75,12 +87,16 @@ func _ready() -> void:
 	_start_sword_floating()
 
 	npc_prompt.visible = false
-	npc_talk_zone.body_entered.connect(_on_npc_talk_zone_body_entered)
-	npc_talk_zone.body_exited.connect(_on_npc_talk_zone_body_exited)
-	
+	if _return_config:
+		_restore_from_arena()
+	else:
+		npc_talk_zone.body_entered.connect(_on_npc_talk_zone_body_entered)
+		npc_talk_zone.body_exited.connect(_on_npc_talk_zone_body_exited)
+
 	cave_background.modulate = Color(1.0, 1.0, 1.0, 0.0)
 	cave_zone.body_entered.connect(_on_cave_zone_body_entered)
 	cave_zone.body_exited.connect(_on_cave_zone_body_exited)
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if _player_near_npc and event.is_action_pressed("interact", false):
@@ -100,6 +116,25 @@ func _has_references() -> bool:
 	push_error(msg)
 	assert(false, msg)
 	return false
+
+
+func _restore_from_arena() -> void:
+	_trap_done = _return_config.trap_done
+	_sword_collected = _return_config.sword_collected
+	$NpcWizard.visible = false
+	npc_talk_zone.set_deferred(&"monitoring", false)
+	npc_prompt.visible = false
+	player.global_position = _return_config.player_position
+	player.velocity = Vector2.ZERO
+	if not _trap_done:
+		return
+	fallen_rock.visible = true
+	trap_setup.visible = false
+	trapped_guard.die()
+	if not _sword_collected:
+		sword_pickup.visible = true
+		sword_pickup.set_deferred(&"monitoring", true)
+
 
 func _on_trap_trigger_body_entered(body: Node2D) -> void:
 	if _trap_done or body != player:
@@ -160,6 +195,7 @@ func _on_sword_pickup_body_entered(body: Node2D) -> void:
 	if body != player:
 		return
 	sword_pickup.set_deferred(&"monitoring", false)
+	_sword_collected = true
 	AudioManager.play_sfx(sword_pickup_sfx)
 	sword_pickup.queue_free()
 	_unlock_player_attack()
@@ -185,6 +221,14 @@ func _enter_boss_arena() -> void:
 	_is_entering_arena = true
 	npc_prompt.visible = false
 	player.process_mode = Node.PROCESS_MODE_DISABLED
+
+	var return_config := ArenaReturnConfig.new()
+	return_config.scene_path = scene_file_path
+	return_config.player_position = player.global_position
+	return_config.reward_form = boss_encounter.reward_form
+	return_config.trap_done = _trap_done
+	return_config.sword_collected = _sword_collected
+	GameManager.arena_return = return_config
 
 	var error: Error
 	if GameManager.run_state == GameManager.RunState.MENU:
