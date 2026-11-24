@@ -1,0 +1,99 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://entities/boss/boss.gd" id="1_boss"]
+[ext_resource type="Script" path="res://_common/state_machine/state_machine.gd" id="2_sm"]
+[ext_resource type="Script" path="res://_common/combat/hitbox.gd" id="3_hit"]
+[ext_resource type="Script" path="res://_common/combat/hurtbox.gd" id="4_hurt"]
+[ext_resource type="Script" path="res://entities/boss/male_wizard/boss_audio_handler.gd" id="5_audio"]
+[ext_resource type="Script" path="res://entities/boss/states/boss_idle_state.gd" id="6_idle"]
+[ext_resource type="Script" path="res://entities/boss/states/boss_chase_state.gd" id="7_chase"]
+[ext_resource type="Script" path="res://entities/boss/states/boss_telegraph_state.gd" id="8_telegraph"]
+[ext_resource type="Script" path="res://entities/boss/states/boss_attack_state.gd" id="9_attack"]
+[ext_resource type="Script" path="res://entities/boss/states/boss_cooldown_state.gd" id="10_cooldown"]
+[ext_resource type="Script" path="res://entities/boss/states/boss_hit_state.gd" id="11_hit_state"]
+[ext_resource type="Script" path="res://entities/boss/states/boss_death_state.gd" id="12_death"]
+[ext_resource type="Resource" path="res://entities/forms/female_wizard/female_wizard.tres" id="13_form"]
+[ext_resource type="SpriteFrames" path="res://entities/forms/female_wizard/female_wizard_frames.tres" id="14_frames"]
+[ext_resource type="Script" path="res://entities/boss/states/boss_jump_state.gd" id="15_jump"]
+
+[sub_resource type="RectangleShape2D" id="HitShape"]
+
+[sub_resource type="RectangleShape2D" id="HurtShape"]
+size = Vector2(14, 50)
+
+[sub_resource type="RectangleShape2D" id="BodyShape"]
+size = Vector2(14, 50)
+
+[node name="BossFemaleWizard" type="CharacterBody2D" node_paths=PackedStringArray("ground_ray")]
+collision_layer = 4
+script = ExtResource("1_boss")
+form = ExtResource("13_form")
+max_health = 8
+move_speed = 130.0
+detection_range = 520.0
+attack_range = 300.0
+cooldown_multiplier = 1.2
+jump_chance = 0.0
+ground_ray = NodePath("GroundRayCast")
+
+[node name="BossAudioHandler" type="Node" parent="." node_paths=PackedStringArray("animated_sprite")]
+script = ExtResource("5_audio")
+animated_sprite = NodePath("../Visuals/AnimatedSprite2D")
+form = ExtResource("13_form")
+
+[node name="Visuals" type="Node2D" parent="."]
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visuals"]
+position = Vector2(2, -27)
+sprite_frames = ExtResource("14_frames")
+animation = &"fall"
+autoplay = "idle"
+
+[node name="Hitbox" type="Area2D" parent="Visuals"]
+monitoring = false
+script = ExtResource("3_hit")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Visuals/Hitbox"]
+shape = SubResource("HitShape")
+
+[node name="Hurtbox" type="Area2D" parent="Visuals"]
+position = Vector2(0, -25)
+script = ExtResource("4_hurt")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Visuals/Hurtbox"]
+shape = SubResource("HurtShape")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, -25)
+shape = SubResource("BodyShape")
+
+[node name="GroundRayCast" type="RayCast2D" parent="."]
+target_position = Vector2(0, 150)
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_sm")
+initial_state = NodePath("idle")
+
+[node name="idle" type="Node" parent="StateMachine"]
+script = ExtResource("6_idle")
+
+[node name="chase" type="Node" parent="StateMachine"]
+script = ExtResource("7_chase")
+
+[node name="telegraph" type="Node" parent="StateMachine"]
+script = ExtResource("8_telegraph")
+
+[node name="attack" type="Node" parent="StateMachine"]
+script = ExtResource("9_attack")
+
+[node name="cooldown" type="Node" parent="StateMachine"]
+script = ExtResource("10_cooldown")
+
+[node name="hit" type="Node" parent="StateMachine"]
+script = ExtResource("11_hit_state")
+
+[node name="death" type="Node" parent="StateMachine"]
+script = ExtResource("12_death")
+
+[node name="jump" type="Node" parent="StateMachine"]
+script = ExtResource("15_jump")

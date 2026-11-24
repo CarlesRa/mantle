@@ -19,6 +19,7 @@ func configure(configuration: Resource) -> void:
 	var encounter: BossEncounter = configuration as BossEncounter
 	boss_scene = encounter.boss_scene
 	player_form = encounter.player_form
+	portal.form = encounter.reward_form
 	background = encounter.background
 	music = encounter.music
 
