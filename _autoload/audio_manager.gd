@@ -94,6 +94,14 @@ func play_sfx(sound: SoundEffect, fade_time: float = 0.0) -> void:
 	)
 
 
+func stop_sfx(sound: SoundEffect) -> void:
+	if sound == null or sound.stream == null:
+		return
+	for player: AudioStreamPlayer in _sfx_players:
+		if player.stream == sound.stream:
+			player.stop()
+
+
 ## Fades to a new music track on the Music bus.
 func play_music(stream: AudioStream, fade_time: float = _DEFAULT_MUSIC_FADE_TIME) -> void:
 	if stream == null or AudioServer.get_bus_index(MUSIC) == -1:
