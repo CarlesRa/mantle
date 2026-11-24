@@ -32,9 +32,17 @@ extends Node2D
 @export var sword_float_time: float = 1.2
 ## Sound played when the player picks up the sword.
 @export var sword_pickup_sfx: SoundEffect
-
 @export var sword_pickup: Area2D
 @export var sword_sprite: Sprite2D
+
+#Cave
+## Seconds the background takes to blend between forest and cave.
+@export var background_fade_time: float = 0.6
+@export var cave_zone: Area2D
+@export var forest_background: Node2D
+@export var cave_background: Node2D
+
+var _background_tween: Tween
 
 #NPC
 ## Scene the NPC sends the player to.
@@ -43,6 +51,9 @@ extends Node2D
 @export var boss_encounter: BossEncounter
 @export var npc_talk_zone: Area2D
 @export var npc_prompt: Label
+
+
+
 
 #Conditionals
 var _trap_done: bool = false
@@ -66,9 +77,13 @@ func _ready() -> void:
 	npc_prompt.visible = false
 	npc_talk_zone.body_entered.connect(_on_npc_talk_zone_body_entered)
 	npc_talk_zone.body_exited.connect(_on_npc_talk_zone_body_exited)
+	
+	cave_background.modulate = Color(1.0, 1.0, 1.0, 0.0)
+	cave_zone.body_entered.connect(_on_cave_zone_body_entered)
+	cave_zone.body_exited.connect(_on_cave_zone_body_exited)
 
 func _unhandled_input(event: InputEvent) -> void:
-	if _player_near_npc and event.is_action_pressed("attack_secondary", false):
+	if _player_near_npc and event.is_action_pressed("interact", false):
 		_enter_boss_arena()
 
 func _has_references() -> bool:
@@ -78,6 +93,7 @@ func _has_references() -> bool:
 		and sword_pickup and sword_sprite
 		and npc_talk_zone and npc_prompt and boss_encounter
 		and not boss_arena_scene.is_empty()
+		and cave_zone and forest_background and cave_background
 	):
 		return true
 	var msg := "LevelOne: some references are not assigned in the Inspector."
@@ -183,3 +199,22 @@ func _enter_boss_arena() -> void:
 		player.process_mode = Node.PROCESS_MODE_INHERIT
 		npc_prompt.visible = _player_near_npc
 		_is_entering_arena = false
+
+
+func _on_cave_zone_body_entered(body: Node2D) -> void:
+	if body == player:
+		_blend_background(cave_background, forest_background)
+
+func _on_cave_zone_body_exited(body: Node2D) -> void:
+	if body == player:
+		_blend_background(forest_background, cave_background)
+
+## Fades in one background while fading out the other.
+func _blend_background(shown: Node2D, hidden: Node2D) -> void:
+	if not is_inside_tree():
+		return
+	if _background_tween:
+		_background_tween.kill()
+	_background_tween = create_tween().set_parallel()
+	_background_tween.tween_property(shown, "modulate:a", 1.0, background_fade_time)
+	_background_tween.tween_property(hidden, "modulate:a", 0.0, background_fade_time)
