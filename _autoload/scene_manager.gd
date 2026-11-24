@@ -61,10 +61,11 @@ func change_scene(
 
 	var tree: SceneTree = get_tree()
 	var previous_scene: Node = tree.current_scene
+	if is_instance_valid(previous_scene):
+		tree.root.remove_child(previous_scene)
+		previous_scene.queue_free()
 	tree.root.add_child(next_scene)
 	tree.current_scene = next_scene
-	if is_instance_valid(previous_scene):
-		previous_scene.queue_free()
 
 	await _fade_to(Color.TRANSPARENT, duration)
 	_is_transitioning = false
