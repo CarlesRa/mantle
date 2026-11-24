@@ -5,6 +5,7 @@ enum RunState { MENU, PLAYING, PAUSED, GAME_OVER }
 const PLAYER_GROUP: StringName = &"player"
 
 var run_state: RunState = RunState.MENU
+var arena_return: ArenaReturnConfig
 
 
 func _ready() -> void:
@@ -97,6 +98,7 @@ func return_to_menu(scene_path: String) -> Error:
 		return error
 
 	run_state = RunState.MENU
+	arena_return = null
 	return OK
 
 
