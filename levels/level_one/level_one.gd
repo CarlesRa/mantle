@@ -1,5 +1,6 @@
 ## Level 1 flow. Owns the rock trap cutscene: touching the log pile fades the screen
 ## to black, drops the rock on the guard and shakes the camera when the view returns.
+## Also handles the kill zone, the sword pickup and the NPC that leads to the boss arena.
 extends Node2D
 
 ## Seconds the screen takes to fade to black and back.
@@ -15,8 +16,6 @@ extends Node2D
 ## Sound played when the rock lands on the guard.
 @export var rock_impact_sfx: SoundEffect
 
-
-
 @export var kill_zone: Area2D
 @export var player: Player
 @export var camera: Camera2D
@@ -25,7 +24,6 @@ extends Node2D
 @export var fallen_rock: Node2D
 @export var trap_setup: Node2D
 @export var fade_rect: ColorRect
-
 
 #SwordPickUp
 ## Height in px of the sword floating motion.
@@ -38,9 +36,19 @@ extends Node2D
 @export var sword_pickup: Area2D
 @export var sword_sprite: Sprite2D
 
+#NPC
+## Scene the NPC sends the player to.
+@export_file("*.tscn") var boss_arena_scene: String
+## Encounter configuration passed to the boss arena.
+@export var boss_encounter: BossEncounter
+@export var npc_talk_zone: Area2D
+@export var npc_prompt: Label
+
 #Conditionals
 var _trap_done: bool = false
 var _is_restarting: bool = false
+var _player_near_npc: bool = false
+var _is_entering_arena: bool = false
 
 func _ready() -> void:
 	if not _has_references():
@@ -49,25 +57,34 @@ func _ready() -> void:
 	fade_rect.modulate = Color(1.0, 1.0, 1.0, 0.0)
 	trap_trigger.body_entered.connect(_on_trap_trigger_body_entered)
 	kill_zone.body_entered.connect(_on_kill_zone_body_entered)
-	
+
 	sword_pickup.visible = false
 	sword_pickup.set_deferred(&"monitoring", false)
 	sword_pickup.body_entered.connect(_on_sword_pickup_body_entered)
 	_start_sword_floating()
 
+	npc_prompt.visible = false
+	npc_talk_zone.body_entered.connect(_on_npc_talk_zone_body_entered)
+	npc_talk_zone.body_exited.connect(_on_npc_talk_zone_body_exited)
+
+func _unhandled_input(event: InputEvent) -> void:
+	if _player_near_npc and event.is_action_pressed("attack_secondary", false):
+		_enter_boss_arena()
 
 func _has_references() -> bool:
 	if (
 		player and camera and kill_zone and fade_rect
 		and trap_trigger and trapped_guard and fallen_rock and trap_setup
 		and sword_pickup and sword_sprite
+		and npc_talk_zone and npc_prompt and boss_encounter
+		and not boss_arena_scene.is_empty()
 	):
 		return true
 	var msg := "LevelOne: some references are not assigned in the Inspector."
 	push_error(msg)
 	assert(false, msg)
 	return false
-		
+
 func _on_trap_trigger_body_entered(body: Node2D) -> void:
 	if _trap_done or body != player:
 		return
@@ -80,7 +97,7 @@ func _play_rock_trap() -> void:
 	await _fade_to(1.0)
 
 	fallen_rock.visible = true
-	trap_setup.visible = false	
+	trap_setup.visible = false
 	trapped_guard.die()
 	sword_pickup.visible = true
 	sword_pickup.set_deferred(&"monitoring", true)
@@ -89,8 +106,8 @@ func _play_rock_trap() -> void:
 	# Re-enabled before the shake: the camera is a child of the player
 	# and does not move while the player is disabled.
 	player.process_mode = Node.PROCESS_MODE_INHERIT
-	_shake_camera()
 	await _fade_to(0.0)
+	_shake_camera()
 
 func _fade_to(alpha: float) -> void:
 	var tween := create_tween()
@@ -107,7 +124,7 @@ func _shake_camera() -> void:
 	tween.tween_property(camera, "offset", Vector2.ZERO, step_time)
 
 func _on_kill_zone_body_entered(body: Node2D) -> void:
-	if _is_restarting or body != player:
+	if _is_restarting or _is_entering_arena or body != player:
 		return
 	_is_restarting = true
 	_play_player_death_sfx()
@@ -116,7 +133,6 @@ func _on_kill_zone_body_entered(body: Node2D) -> void:
 func _play_player_death_sfx() -> void:
 	if player.form and player.form.audio:
 		AudioManager.play_sfx(player.form.audio.death_sfx)
-
 
 func _start_sword_floating() -> void:
 	var tween := create_tween().set_loops()
@@ -134,3 +150,36 @@ func _on_sword_pickup_body_entered(body: Node2D) -> void:
 
 func _unlock_player_attack() -> void:
 	print("Sword collected")
+
+func _on_npc_talk_zone_body_entered(body: Node2D) -> void:
+	if body != player:
+		return
+	_player_near_npc = true
+	npc_prompt.visible = true
+
+func _on_npc_talk_zone_body_exited(body: Node2D) -> void:
+	if body != player:
+		return
+	_player_near_npc = false
+	npc_prompt.visible = false
+
+func _enter_boss_arena() -> void:
+	if _is_entering_arena or _is_restarting:
+		return
+	_is_entering_arena = true
+	npc_prompt.visible = false
+	player.process_mode = Node.PROCESS_MODE_DISABLED
+
+	var error: Error
+	if GameManager.run_state == GameManager.RunState.MENU:
+		error = await GameManager.start_run(boss_arena_scene, boss_encounter)
+	else:
+		error = await GameManager.change_level(boss_arena_scene, boss_encounter)
+
+	if error != OK:
+		var msg := "LevelOne: could not enter the boss arena (%d)." % error
+		push_error(msg)
+		assert(false, msg)
+		player.process_mode = Node.PROCESS_MODE_INHERIT
+		npc_prompt.visible = _player_near_npc
+		_is_entering_arena = false
