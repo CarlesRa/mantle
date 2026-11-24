@@ -41,6 +41,7 @@ var _active_attack_track: BossAttackTrack
 var _applied_attack_keyframe: BossHitKeyframe
 var _tracked_hitbox_active: bool = false
 var _attack_has_hit_target: bool = false
+var _projectile_launched: bool = false
 var previous_attack: AttackData
 var consecutive_attack_count: int = 0
 var _visuals: Node2D
@@ -145,6 +146,11 @@ func start_attack(data: AttackData) -> void:
 	_prepare_attack(data)
 	_active_attack_track = null
 	_applied_attack_keyframe = null
+	if data.projectile_scene:
+		_hitbox.deactivate()
+		_tracked_hitbox_active = false
+		_connect_attack_frame_listener()
+		return
 	_set_hitbox_shape(data.hitbox_size, data.hitbox_offset)
 	_hitbox.activate()
 	_tracked_hitbox_active = true
@@ -172,6 +178,10 @@ func start_tracked_attack(data: AttackData, track: BossAttackTrack) -> void:
 	_applied_attack_keyframe = null
 	_hitbox.deactivate()
 	_tracked_hitbox_active = false
+	_connect_attack_frame_listener()
+
+
+func _connect_attack_frame_listener() -> void:
 	var frame_callable: Callable = Callable(self, "_on_attack_frame_changed")
 	if not _sprite.frame_changed.is_connected(frame_callable):
 		_sprite.frame_changed.connect(frame_callable)
@@ -180,6 +190,7 @@ func start_tracked_attack(data: AttackData, track: BossAttackTrack) -> void:
 func _prepare_attack(data: AttackData) -> void:
 	active_attack = data
 	_attack_has_hit_target = false
+	_projectile_launched = false
 	_hitbox.damage = maxi(0, roundi(float(data.damage) * damage_multiplier))
 	_audio_handler.play_attack(data)
 
@@ -193,9 +204,15 @@ func get_attack_track(data: AttackData) -> BossAttackTrack:
 
 
 func _on_attack_frame_changed() -> void:
-	if not active_attack or not _active_attack_track:
+	if not active_attack or _sprite.animation != active_attack.animation:
 		return
-	if _sprite.animation != active_attack.animation:
+	if active_attack.projectile_scene:
+		if _projectile_launched or _sprite.frame < active_attack.launch_frame:
+			return
+		_projectile_launched = true
+		_spawn_projectile(active_attack)
+		return
+	if not _active_attack_track:
 		return
 	var selected_keyframe: BossHitKeyframe = null
 	for keyframe: BossHitKeyframe in _active_attack_track.keyframes:
@@ -226,6 +243,26 @@ func _on_attack_hitbox_area_entered(area: Area2D) -> void:
 	# Area2D monitoring is locked while its in/out signals are being dispatched.
 	_hitbox.call_deferred("deactivate")
 	_tracked_hitbox_active = false
+
+
+func _spawn_projectile(data: AttackData) -> void:
+	var projectile: Node2D = data.projectile_scene.instantiate() as Node2D
+	if not projectile:
+		push_error("Boss: projectile scene root must inherit from Node2D.")
+		return
+
+	get_tree().current_scene.add_child(projectile)
+
+	var direction: float = signf(_visuals.scale.x)
+	if is_zero_approx(direction):
+		direction = 1.0
+
+	var offset: Vector2 = data.projectile_offset
+	offset.x *= direction
+	projectile.global_position = global_position + offset
+
+	if projectile.has_method("launch"):
+		projectile.launch(direction, data, self)
 
 
 func _set_hitbox_shape(size: Vector2, offset: Vector2) -> void:
@@ -264,6 +301,7 @@ func finish_attack() -> void:
 	_active_attack_track = null
 	_applied_attack_keyframe = null
 	_attack_has_hit_target = false
+	_projectile_launched = false
 	active_attack = null
 
 
