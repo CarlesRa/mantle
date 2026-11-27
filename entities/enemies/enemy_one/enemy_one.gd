@@ -14,6 +14,8 @@ const ANIM_DEATH: StringName = &"death"
 @export var move_speed: float = 60.0
 ## Maximum downward speed in px/s.
 @export var max_fall_speed: float = 800.0
+## Side the enemy faces when the level starts.
+@export_enum("Right:1", "Left:-1") var initial_direction: int = 1
 
 ## When true, the enemy guards its spot instead of patrolling or chasing.
 @export var stationary: bool = false
@@ -40,6 +42,9 @@ func _enter_tree() -> void:
 	_player_ray = $Visuals/PlayerRay
 	_attack_hitbox = $Visuals/AttackHitBox
 	_state_machine = $StateMachine
+	
+func _ready() -> void:
+	face(float(initial_direction))
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
