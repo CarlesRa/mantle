@@ -11,6 +11,7 @@ const PORTAL_TINT_SHADER: Shader = preload("res://entities/portal/portal_tint.gd
 @onready var _audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 var _tint_material: ShaderMaterial
 var _audio_tween: Tween
+var _fade_tween: Tween
 var _is_active: bool = true
 var _reward_emitted: bool = false
 
@@ -28,14 +29,25 @@ func _ready() -> void:
 	_update_sprite_color()
 	set_active(starts_active)
 
-func set_active(value: bool) -> void:
+func set_active(value: bool, fade_duration: float = 0.0) -> void:
 	_is_active = value
 	visible = value
-	set_physics_process(value)
 	_reward_emitted = false
+	if _fade_tween and _fade_tween.is_valid():
+		_fade_tween.kill()
 	if value:
 		_play_portal_sound()
+		if fade_duration > 0.0:
+			modulate.a = 0.0
+			set_physics_process(false)
+			_fade_tween = create_tween()
+			_fade_tween.tween_property(self, "modulate:a", 1.0, fade_duration)
+			_fade_tween.finished.connect(func() -> void: set_physics_process(true))
+		else:
+			modulate.a = 1.0
+			set_physics_process(true)
 	else:
+		set_physics_process(false)
 		_stop_portal_sound()
 
 func _play_portal_sound() -> void:
@@ -47,7 +59,7 @@ func _play_portal_sound() -> void:
 		return
 	if _audio_tween and _audio_tween.is_valid():
 		_audio_tween.kill()
-	var target_db: float = sfx.volume_db if sfx else 0.0
+	var target_db: float = (sfx.volume_db if sfx else 0.0) + 6.0
 	_audio_player.volume_db = -80.0
 	_audio_player.play()
 	_audio_tween = create_tween()
