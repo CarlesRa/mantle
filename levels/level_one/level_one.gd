@@ -41,6 +41,8 @@ extends Node2D
 @export var cave_zone: Area2D
 @export var forest_background: Node2D
 @export var cave_background: Node2D
+## Camera bottom limit in px while the player is inside the cave.
+@export var cave_camera_limit_bottom: int = 1720
 
 var _background_tween: Tween
 
@@ -62,6 +64,7 @@ var _is_restarting: bool = false
 var _player_near_npc: bool = false
 var _is_entering_arena: bool = false
 var _return_config: ArenaReturnConfig
+var _forest_camera_limit_bottom: int = 0
 
 
 func configure(configuration: Resource) -> void:
@@ -78,6 +81,7 @@ func _ready() -> void:
 		return
 	fallen_rock.visible = false
 	fade_rect.modulate = Color(1.0, 1.0, 1.0, 0.0)
+	_forest_camera_limit_bottom = camera.limit_bottom
 	trap_trigger.body_entered.connect(_on_trap_trigger_body_entered)
 	kill_zone.body_entered.connect(_on_kill_zone_body_entered)
 
@@ -248,10 +252,12 @@ func _enter_boss_arena() -> void:
 func _on_cave_zone_body_entered(body: Node2D) -> void:
 	if body == player:
 		_blend_background(cave_background, forest_background)
+		camera.limit_bottom = cave_camera_limit_bottom
 
 func _on_cave_zone_body_exited(body: Node2D) -> void:
 	if body == player:
 		_blend_background(forest_background, cave_background)
+		camera.limit_bottom = _forest_camera_limit_bottom
 
 ## Fades in one background while fading out the other.
 func _blend_background(shown: Node2D, hidden: Node2D) -> void:
