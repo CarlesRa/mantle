@@ -1,0 +1,6 @@
+[gd_resource type="Theme" format=3]
+
+[ext_resource type="FontFile" uid="uid://de63dhqsvhl6v" path="res://ui/theme/fonts/Gothic_pixel_font(0S).ttf" id="1_font"]
+
+[resource]
+default_font = ExtResource("1_font")

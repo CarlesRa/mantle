@@ -86,6 +86,7 @@ func _ready() -> void:
 	if form:
 		# Deferred so every listener in the scene is ready.
 		EventBus.player_form_changed.emit.call_deferred(form)
+	EventBus.player_health_changed.emit.call_deferred(health, max_health)
 
 func _physics_process(delta: float) -> void:
 	_invulnerable_left = maxf(_invulnerable_left - delta, 0.0)
@@ -388,6 +389,7 @@ func take_hit(source_position: Vector2, damage: int = 1) -> void:
 	knockback = Vector2(side * 150.0, -200.0)
 	health -= damage
 	EventBus.player_hit.emit()
+	EventBus.player_health_changed.emit(maxi(health, 0), max_health)
 	if health <= 0:
 		_die()
 		return
