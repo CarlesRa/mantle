@@ -22,9 +22,10 @@ player_scene = ExtResource("4_player")
 boss_scene = ExtResource("5_boss")
 player_form = ExtResource("4_v1miw")
 portal = NodePath("Portal")
-return_prompt = NodePath("ReturnPrompt/Label")
 music = ExtResource("5_lytdw")
 background = ExtResource("1_um8cj")
+return_prompt = NodePath("ReturnPrompt/Label")
+camera_zoom = Vector2(1.5, 1.5)
 
 [node name="Backgound" type="Sprite2D" parent="." unique_id=1491523058]
 position = Vector2(592, 324)
@@ -50,7 +51,8 @@ position = Vector2(1172, 324)
 shape = SubResource("RectangleShape2D_5gq24")
 
 [node name="PlayerSpawn" type="Marker2D" parent="." unique_id=1390075162]
-position = Vector2(290, 560)
+position = Vector2(299, 560)
+scale = Vector2(1.5, 1.5)
 
 [node name="BossSpawn" type="Marker2D" parent="." unique_id=1314840095]
 position = Vector2(860, 560)
@@ -60,12 +62,9 @@ position = Vector2(576, 560)
 starts_active = false
 form = ExtResource("2_um8cj")
 
-[node name="Camera2D" type="Camera2D" parent="." unique_id=116552879]
-position = Vector2(576, 324)
+[node name="ReturnPrompt" type="CanvasLayer" parent="." unique_id=1109633135]
 
-[node name="ReturnPrompt" type="CanvasLayer" parent="."]
-
-[node name="Label" type="Label" parent="ReturnPrompt"]
+[node name="Label" type="Label" parent="ReturnPrompt" unique_id=1975769840]
 visible = false
 offset_left = 32.0
 offset_top = 32.0
@@ -73,4 +72,4 @@ offset_right = 600.0
 offset_bottom = 64.0
 text = "PRESS E TO RETURN"
 
-[node name="HUD" parent="." instance=ExtResource("6_hud")]
+[node name="HUD" parent="." unique_id=955738561 instance=ExtResource("6_hud")]
