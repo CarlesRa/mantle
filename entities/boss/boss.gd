@@ -6,6 +6,8 @@ const TELEGRAPH_TINT_COLOR: Color = Color(1.0, 0.25, 0.25)
 
 signal died
 
+@export var death_fade_duration: float = 1.5
+
 ## Form whose visuals, attacks, and audio are used by this boss.
 @export var form: PlayerForm
 ## Maximum health.
@@ -101,6 +103,9 @@ func finish_death() -> void:
 	_audio_handler.play_death()
 	died.emit()
 	set_physics_process(false)
+	var fade_tween: Tween = create_tween()
+	fade_tween.tween_property(_sprite, "modulate:a", 0.0, death_fade_duration)
+	fade_tween.finished.connect(queue_free)
 
 
 func distance_to_target() -> float:
