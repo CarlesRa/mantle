@@ -326,7 +326,7 @@ shape = SubResource("RectangleShape2D_tg2c1")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Visuals" unique_id=375608670]
 sprite_frames = SubResource("SpriteFrames_ttqfo")
-animation = &"death"
+animation = &"idle"
 offset = Vector2(0, -13)
 
 [node name="WallRay" type="RayCast2D" parent="Visuals" unique_id=1945191854]
