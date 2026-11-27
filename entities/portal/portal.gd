@@ -8,7 +8,9 @@ signal reward_taken(form: PlayerForm)
 const PORTAL_TINT_SHADER: Shader = preload("res://entities/portal/portal_tint.gdshader")
 
 @onready var _sprite: AnimatedSprite2D = $AnimatedSprite2D
+@onready var _audio_player: AudioStreamPlayer2D = $AudioStreamPlayer2D
 var _tint_material: ShaderMaterial
+var _audio_tween: Tween
 var _is_active: bool = true
 var _reward_emitted: bool = false
 
@@ -32,7 +34,30 @@ func set_active(value: bool) -> void:
 	set_physics_process(value)
 	_reward_emitted = false
 	if value:
-		AudioManager.play_sfx(sfx, 0.6)
+		_play_portal_sound()
+	else:
+		_stop_portal_sound()
+
+func _play_portal_sound() -> void:
+	if not _audio_player:
+		return
+	if sfx and sfx.stream:
+		_audio_player.stream = sfx.stream
+	if not _audio_player.stream:
+		return
+	if _audio_tween and _audio_tween.is_valid():
+		_audio_tween.kill()
+	var target_db: float = sfx.volume_db if sfx else 0.0
+	_audio_player.volume_db = -80.0
+	_audio_player.play()
+	_audio_tween = create_tween()
+	_audio_tween.tween_property(_audio_player, "volume_db", target_db, 0.6)
+
+func _stop_portal_sound() -> void:
+	if _audio_tween and _audio_tween.is_valid():
+		_audio_tween.kill()
+	if _audio_player:
+		_audio_player.stop()
 
 func _update_sprite_color() -> void:
 	if is_instance_valid(_tint_material):
