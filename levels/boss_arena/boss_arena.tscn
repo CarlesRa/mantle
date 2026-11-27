@@ -8,6 +8,7 @@
 [ext_resource type="Resource" uid="uid://d04dcpmilyh2l" path="res://entities/forms/base/base.tres" id="4_v1miw"]
 [ext_resource type="PackedScene" uid="uid://1gwq0k1kyvyj" path="res://entities/boss/male_wizard/boss_male_wizard.tscn" id="5_boss"]
 [ext_resource type="AudioStream" uid="uid://b1f2uehrmdirh" path="res://levels/boss_arena/audio/boss_01_music.wav" id="5_lytdw"]
+[ext_resource type="PackedScene" path="res://ui/hud/hud.tscn" id="6_hud"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqw7p"]
 size = Vector2(1152, 40)
@@ -71,3 +72,5 @@ offset_top = 32.0
 offset_right = 600.0
 offset_bottom = 64.0
 text = "PRESS E TO RETURN"
+
+[node name="HUD" parent="." instance=ExtResource("6_hud")]

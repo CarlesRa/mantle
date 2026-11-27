@@ -29,6 +29,10 @@ signal player_died
 @warning_ignore("unused_signal")
 signal player_attacked(attack: AttackData)
 
+## Emitted when the player's health changes, and once at startup with the initial health.
+@warning_ignore("unused_signal")
+signal player_health_changed(current: int, max_value: int)
+
 # Game flow
 
 @warning_ignore("unused_signal")
