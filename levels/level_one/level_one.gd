@@ -236,6 +236,14 @@ func _enter_boss_arena() -> void:
 	return_config.sword_collected = _sword_collected
 	GameManager.arena_return = return_config
 
+	var checkpoint_config := ArenaReturnConfig.new()
+	checkpoint_config.scene_path = scene_file_path
+	checkpoint_config.player_position = player.global_position
+	checkpoint_config.reward_form = player.form
+	checkpoint_config.trap_done = _trap_done
+	checkpoint_config.sword_collected = _sword_collected
+	GameManager.set_level_checkpoint(checkpoint_config)
+
 	var error: Error
 	if GameManager.run_state == GameManager.RunState.MENU:
 		error = await GameManager.start_run(boss_arena_scene, boss_encounter)

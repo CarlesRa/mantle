@@ -6,6 +6,7 @@ const PLAYER_GROUP: StringName = &"player"
 
 var run_state: RunState = RunState.MENU
 var arena_return: ArenaReturnConfig
+var level_checkpoint: ArenaReturnConfig
 
 
 func _ready() -> void:
@@ -99,7 +100,20 @@ func return_to_menu(scene_path: String) -> Error:
 
 	run_state = RunState.MENU
 	arena_return = null
+	level_checkpoint = null
 	return OK
+
+
+func set_level_checkpoint(config: ArenaReturnConfig) -> void:
+	level_checkpoint = config
+
+
+func get_level_checkpoint() -> ArenaReturnConfig:
+	return level_checkpoint
+
+
+func clear_level_checkpoint() -> void:
+	level_checkpoint = null
 
 
 ## Saves the current scene and player's global position as the checkpoint.

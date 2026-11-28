@@ -10,6 +10,7 @@
 [ext_resource type="AudioStream" uid="uid://b1f2uehrmdirh" path="res://levels/boss_arena/audio/boss_01_music.wav" id="5_lytdw"]
 [ext_resource type="PackedScene" path="res://ui/hud/hud.tscn" id="6_hud"]
 [ext_resource type="FontFile" uid="uid://de63dhqsvhl6v" path="res://ui/theme/fonts/Gothic_pixel_font(0S).ttf" id="7_font"]
+[ext_resource type="PackedScene" path="res://ui/game_over/game_over.tscn" id="8_game_over"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqw7p"]
 size = Vector2(1152, 40)
@@ -80,3 +81,5 @@ label_settings = SubResource("LabelSettings_return")
 horizontal_alignment = 1
 
 [node name="HUD" parent="." unique_id=955738561 instance=ExtResource("6_hud")]
+
+[node name="GameOver" parent="." instance=ExtResource("8_game_over")]
