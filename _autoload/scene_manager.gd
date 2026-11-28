@@ -2,6 +2,8 @@ extends Node
 
 
 const DEFAULT_FADE_DURATION: float = 0.25
+const MAIN_MENU_PATH: String = "res://ui/main_menu/main_menu.tscn"
+const FIRST_SCENE_PATH: String = "res://levels/level_one/level_one.tscn"
 
 var _overlay: ColorRect
 var _is_transitioning: bool = false

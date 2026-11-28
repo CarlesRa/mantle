@@ -42,9 +42,24 @@ func _enter_tree() -> void:
 	_player_ray = $Visuals/PlayerRay
 	_attack_hitbox = $Visuals/AttackHitBox
 	_state_machine = $StateMachine
-	
+
+
 func _ready() -> void:
 	face(float(initial_direction))
+	EventBus.player_died.connect(_on_player_died)
+
+
+func _exit_tree() -> void:
+	if EventBus.player_died.is_connected(_on_player_died):
+		EventBus.player_died.disconnect(_on_player_died)
+
+
+func _on_player_died() -> void:
+	target = null
+	if is_instance_valid(_attack_hitbox):
+		_attack_hitbox.set_deferred(&"monitoring", false)
+	set_physics_process(false)
+
 
 func _physics_process(delta: float) -> void:
 	if not is_on_floor():
