@@ -15,6 +15,7 @@ const CAMERA_SMOOTH_SPEED: float = 6.0
 @export var music: AudioStream
 @export var background: Texture2D
 @export var return_prompt: Label
+@export var prompt_offset: Vector2 = Vector2(0.0, -100.0)
 @export var camera_zoom: Vector2 = Vector2(2, 2)
 
 var _portal_crossed: bool = false
@@ -77,6 +78,8 @@ func _ready() -> void:
 func _unhandled_input(event: InputEvent) -> void:
 	if not _portal_crossed or _returning or not event.is_action_pressed("interact", false):
 		return
+	if return_prompt and not return_prompt.visible:
+		return
 	_return_to_level()
 
 
@@ -85,7 +88,12 @@ func _on_reward_taken(_form: PlayerForm) -> void:
 		return
 	_portal_crossed = true
 	if return_prompt:
+		var scaled_width: float = return_prompt.size.x * return_prompt.scale.x
+		return_prompt.global_position = portal.global_position + prompt_offset - Vector2(scaled_width * 0.5, 0.0)
+		return_prompt.modulate.a = 0.0
 		return_prompt.visible = true
+		var prompt_tween: Tween = create_tween()
+		prompt_tween.tween_property(return_prompt, "modulate:a", 1.0, 0.3)
 
 
 func _physics_process(delta: float) -> void:

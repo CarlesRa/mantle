@@ -9,12 +9,18 @@
 [ext_resource type="PackedScene" uid="uid://1gwq0k1kyvyj" path="res://entities/boss/male_wizard/boss_male_wizard.tscn" id="5_boss"]
 [ext_resource type="AudioStream" uid="uid://b1f2uehrmdirh" path="res://levels/boss_arena/audio/boss_01_music.wav" id="5_lytdw"]
 [ext_resource type="PackedScene" path="res://ui/hud/hud.tscn" id="6_hud"]
+[ext_resource type="FontFile" uid="uid://de63dhqsvhl6v" path="res://ui/theme/fonts/Gothic_pixel_font(0S).ttf" id="7_font"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_hqw7p"]
 size = Vector2(1152, 40)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_5gq24"]
 size = Vector2(40, 648)
+
+[sub_resource type="LabelSettings" id="LabelSettings_return"]
+font = ExtResource("7_font")
+outline_size = 2
+outline_color = Color(0, 0, 0, 1)
 
 [node name="BossArena" type="Node2D" unique_id=2115166904 node_paths=PackedStringArray("portal", "return_prompt")]
 script = ExtResource("3_arena")
@@ -24,7 +30,7 @@ player_form = ExtResource("4_v1miw")
 portal = NodePath("Portal")
 music = ExtResource("5_lytdw")
 background = ExtResource("1_um8cj")
-return_prompt = NodePath("ReturnPrompt/Label")
+return_prompt = NodePath("ReturnPrompt")
 camera_zoom = Vector2(1.5, 1.5)
 
 [node name="Backgound" type="Sprite2D" parent="." unique_id=1491523058]
@@ -62,14 +68,15 @@ position = Vector2(576, 560)
 starts_active = false
 form = ExtResource("2_um8cj")
 
-[node name="ReturnPrompt" type="CanvasLayer" parent="." unique_id=1109633135]
-
-[node name="Label" type="Label" parent="ReturnPrompt" unique_id=1975769840]
+[node name="ReturnPrompt" type="Label" parent="." unique_id=1975769840]
 visible = false
-offset_left = 32.0
-offset_top = 32.0
-offset_right = 600.0
-offset_bottom = 64.0
-text = "PRESS E TO RETURN"
+z_index = 10
+offset_right = 320.0
+offset_bottom = 48.0
+scale = Vector2(0.5, 0.5)
+text = "There is no turning back now.
+(Press E)"
+label_settings = SubResource("LabelSettings_return")
+horizontal_alignment = 1
 
 [node name="HUD" parent="." unique_id=955738561 instance=ExtResource("6_hud")]
