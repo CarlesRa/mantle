@@ -97,6 +97,8 @@ func _ready() -> void:
 		npc_talk_zone.body_entered.connect(_on_npc_talk_zone_body_entered)
 		npc_talk_zone.body_exited.connect(_on_npc_talk_zone_body_exited)
 
+	EventBus.player_form_changed.connect(_on_player_form_changed)
+
 	cave_background.modulate = Color(1.0, 1.0, 1.0, 0.0)
 	cave_zone.body_entered.connect(_on_cave_zone_body_entered)
 	cave_zone.body_exited.connect(_on_cave_zone_body_exited)
@@ -268,3 +270,8 @@ func _blend_background(shown: Node2D, hidden: Node2D) -> void:
 	_background_tween = create_tween().set_parallel()
 	_background_tween.tween_property(shown, "modulate:a", 1.0, background_fade_time)
 	_background_tween.tween_property(hidden, "modulate:a", 0.0, background_fade_time)
+
+
+func _on_player_form_changed(form: PlayerForm) -> void:
+	if form and form.music:
+		AudioManager.play_music(form.music)

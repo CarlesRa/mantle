@@ -5,6 +5,7 @@
 [ext_resource type="SpriteFrames" uid="uid://cbymtso388jnd" path="res://entities/forms/male_wizard/male_wizard_frames.tres" id="2_4nxa3"]
 [ext_resource type="Resource" uid="uid://cxwmynuqxwrp1" path="res://entities/forms/male_wizard/audio/attack_sound.tres" id="3_3fmtx"]
 [ext_resource type="Resource" uid="uid://co8y8d6fh0wpi" path="res://entities/forms/male_wizard/audio/male_wizard_audio.tres" id="3_audio"]
+[ext_resource type="AudioStream" uid="uid://bhufyp7htsbye" path="res://entities/forms/male_wizard/audio/male_wizard_music.wav" id="3_icxmd"]
 [ext_resource type="Resource" path="res://entities/forms/male_wizard/audio/fire_loop_sound.tres" id="4_fire_loop"]
 
 [sub_resource type="Resource" id="Resource_wvtmh"]
@@ -43,6 +44,7 @@ sprite_offset = Vector2(6, -42)
 portal_color = Color(0.42, 0.04, 0.58, 1)
 audio = ExtResource("3_audio")
 form_loop_sfx = ExtResource("4_fire_loop")
+music = ExtResource("3_icxmd")
 primary_attack = SubResource("Resource_wvtmh")
 secondary_attack = SubResource("Resource_3mm8w")
 metadata/_custom_type_script = "uid://do51y0xqtaore"
