@@ -6,6 +6,8 @@ const ARENA_RIGHT: float = 1152.0
 const ARENA_TOP: float = 0.0
 const ARENA_BOTTOM: float = 648.0
 const CAMERA_SMOOTH_SPEED: float = 6.0
+const PORTAL_Y: float = 560.0
+const PORTAL_PLAYER_CLEARANCE: float = 60.0
 
 @export var player_scene: PackedScene
 @export var boss_scene: PackedScene
@@ -17,6 +19,7 @@ const CAMERA_SMOOTH_SPEED: float = 6.0
 @export var return_prompt: Label
 @export var prompt_offset: Vector2 = Vector2(0.0, -100.0)
 @export var camera_zoom: Vector2 = Vector2(2, 2)
+@export var portal_wall_margin: float = 80.0
 
 var _portal_crossed: bool = false
 var _returning: bool = false
@@ -24,6 +27,7 @@ var _player: Player
 var _boss: Boss
 var _camera: Camera2D
 var _boss_alive: bool = true
+var _portal_active: bool = false
 
 
 ## Applies encounter-specific resources before the arena enters the scene tree.
@@ -108,7 +112,9 @@ func _physics_process(delta: float) -> void:
 
 func _get_camera_target() -> Vector2:
 	var target: Vector2 = _player.global_position
-	if _boss_alive and is_instance_valid(_boss):
+	if _portal_active:
+		target = (_player.global_position + portal.global_position) * 0.5
+	elif _boss_alive and is_instance_valid(_boss):
 		target = (_player.global_position + _boss.global_position) * 0.5
 	var half_view: Vector2 = (get_viewport_rect().size * 0.5) / _camera.zoom
 	target.x = clampf(target.x, ARENA_LEFT + half_view.x, ARENA_RIGHT - half_view.x)
@@ -117,8 +123,23 @@ func _get_camera_target() -> Vector2:
 
 
 func _on_boss_died() -> void:
-	_boss_alive = false
+	var boss_x: float = _boss.global_position.x if is_instance_valid(_boss) else portal.global_position.x
 	var fade_duration: float = _boss.death_fade_duration if is_instance_valid(_boss) else 0.0
+	_boss_alive = false
+	var left_limit: float = ARENA_LEFT + portal_wall_margin
+	var right_limit: float = ARENA_RIGHT - portal_wall_margin
+	var death_x: float = clampf(boss_x, left_limit, right_limit)
+	if is_instance_valid(_player) and absf(death_x - _player.global_position.x) < PORTAL_PLAYER_CLEARANCE:
+		var away_direction: float = signf(death_x - _player.global_position.x)
+		if is_zero_approx(away_direction):
+			away_direction = 1.0
+		var alternate_x: float = clampf(death_x + away_direction * PORTAL_PLAYER_CLEARANCE, left_limit, right_limit)
+		if absf(alternate_x - _player.global_position.x) < PORTAL_PLAYER_CLEARANCE:
+			alternate_x = clampf(death_x - away_direction * PORTAL_PLAYER_CLEARANCE, left_limit, right_limit)
+		if absf(alternate_x - _player.global_position.x) >= PORTAL_PLAYER_CLEARANCE:
+			death_x = alternate_x
+	portal.global_position = Vector2(death_x, PORTAL_Y)
+	_portal_active = true
 	portal.set_active(true, fade_duration)
 
 
