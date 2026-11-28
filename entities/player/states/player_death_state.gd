@@ -1,29 +1,38 @@
 class_name PlayerDeathState
 extends PlayerState
 
-## Seconds before player_died is emitted, so the animation can play.
-@export var death_time: float = 0.1
-
-var _time_left: float = 0.0
+var _death_finished: bool = false
 
 func enter() -> void:
-	# Die flying away from whatever hit the player last.
+	# Preserve the knockback's vertical launch, but prevent horizontal drift.
 	player.velocity = player.knockback
-	# Face the source so the fall animation matches the knockback.
+	player.velocity.x = 0.0
 	player.face(-player.knockback.x)
 	player.knockback = Vector2.ZERO
-	_time_left = death_time
-	player.play_animation(PlayerAnimations.DEATH)
+	_death_finished = false
+	player.play_animation(PlayerAnimations.DEATH, true)
+	var sprite: AnimatedSprite2D = player.get_node("Visuals/AnimatedSprite2D")
+	if not sprite.animation_finished.is_connected(_on_animation_finished):
+		sprite.animation_finished.connect(_on_animation_finished)
+	if not sprite.sprite_frames or not sprite.sprite_frames.has_animation(PlayerAnimations.DEATH):
+		_on_animation_finished()
 
 func exit() -> void:
-	pass
+	var sprite: AnimatedSprite2D = player.get_node("Visuals/AnimatedSprite2D")
+	if sprite.animation_finished.is_connected(_on_animation_finished):
+		sprite.animation_finished.disconnect(_on_animation_finished)
 
-# No input and no exit: death is final until the level reacts.
+# Death is final, but the body continues falling and can land.
 func physics_update(delta: float) -> void:
-	if player.is_on_floor():
-		player.velocity.x = 0.0
-	if _time_left <= 0.0:
+	player.velocity.x = 0.0
+	if not player.is_on_floor():
+		player.velocity.y = minf(player.velocity.y + player.gravity * delta, player.max_fall_speed)
+	else:
+		player.velocity.y = 0.0
+	player.move_and_slide()
+
+func _on_animation_finished() -> void:
+	if _death_finished:
 		return
-	_time_left -= delta
-	if _time_left <= 0.0:
-		EventBus.player_died.emit()
+	_death_finished = true
+	EventBus.player_died.emit()
