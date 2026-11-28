@@ -3,6 +3,7 @@
 [ext_resource type="Script" uid="uid://drmmief64qgf" path="res://entities/forms/attack_data.gd" id="1_80sgk"]
 [ext_resource type="PackedScene" uid="uid://oft8gaydphv4" path="res://entities/forms/female_wizard/female_wizard_projectile.tscn" id="1_ck02r"]
 [ext_resource type="Script" uid="uid://do51y0xqtaore" path="res://entities/forms/player_form.gd" id="2_ck02r"]
+[ext_resource type="AudioStream" uid="uid://dau2hfrcw50nn" path="res://entities/forms/female_wizard/audio/female_wizar_music.wav" id="2_tao2s"]
 [ext_resource type="SpriteFrames" uid="uid://csf3558f6727a" path="res://entities/forms/female_wizard/female_wizard_frames.tres" id="3_fejxq"]
 [ext_resource type="Resource" uid="uid://cyb61n03a47kx" path="res://entities/forms/female_wizard/audio/female_wizard_audio.tres" id="4_audio"]
 [ext_resource type="Resource" uid="uid://bro2rfwly07my" path="res://entities/forms/female_wizard/audio/attack_sound.tres" id="4_s3yda"]
@@ -30,5 +31,6 @@ sprite_frames = ExtResource("3_fejxq")
 sprite_offset = Vector2(2, -27)
 portal_color = Color(0.08, 0.38, 0.88, 1)
 audio = ExtResource("4_audio")
+music = ExtResource("2_tao2s")
 primary_attack = SubResource("Resource_ef8vx")
 metadata/_custom_type_script = "uid://do51y0xqtaore"
